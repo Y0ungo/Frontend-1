@@ -4,9 +4,10 @@ import styled from 'styled-components';
 //공통 컴포넌트
 import Button from './components/Button.jsx';
 import Header from './components/Header.jsx';
+import BottomBar from './components/Bottom.jsx';
 
 //공통 컴포넌트 확인용
-import Homepage from './pages/pages.jsx';
+import Home from './pages/pages.jsx';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <PageWrapper>
         <Router> 
           <Routes>
-            <Route path="/" element={<PageWrapper orientation="portrait"><Homepage /></PageWrapper>} />
+            <Route path="/home" element={<PageWrapper orientation="portrait"><Home /></PageWrapper>} />
             {/* <Route path="/" element={<PageWrapper orientation="portrait"><LoginPage /></PageWrapper>}/> */}
           </Routes>
         </Router>
