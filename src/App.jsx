@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, matchPath } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, matchPath } from 'react-router-dom'; // Navigate 제거
 import styled from 'styled-components';
 
 //공통 컴포넌트
@@ -8,6 +8,7 @@ import BottomBar from './components/Bottom.jsx';
 
 //공통 컴포넌트 확인용
 import Home from './pages/pages.jsx';
+import OnboardingIntro from './pages/onboarding/main.jsx'; //온보딩 첫 화면
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
           <Routes>
             <Route path="/home" element={<PageWrapper orientation="portrait"><Home /></PageWrapper>} />
             {/* <Route path="/" element={<PageWrapper orientation="portrait"><LoginPage /></PageWrapper>}/> */}
+
+            {/* 온보딩 페이지 추가 */}
+            <Route path="/onboarding" element={<PageWrapper orientation="portrait"><OnboardingIntro /></PageWrapper>} />
           </Routes>
         </Router>
       </PageWrapper>
