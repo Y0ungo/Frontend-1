@@ -12,7 +12,7 @@ function App() {
   return (
     <Root>
       <PageWrapper>
-        <Router>
+        <Router> 
           <Routes>
             <Route path="/" element={<PageWrapper orientation="portrait"><Homepage /></PageWrapper>} />
             {/* <Route path="/" element={<PageWrapper orientation="portrait"><LoginPage /></PageWrapper>}/> */}
