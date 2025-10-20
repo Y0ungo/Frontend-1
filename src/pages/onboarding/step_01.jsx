@@ -10,7 +10,6 @@ const RECORD_ICON = '/img/onboarding/sound.svg'; // 녹음하기
 const CHARACTERS = [ //온보딩 캐릭터
   { key: 'dog',  src: '/img/onboarding/Avatar.svg' },
   { key: 'bear', src: '/img/onboarding/Avatar_1.svg' },
-  { key: 'lion', src: '/img/onboarding/Avatar_2.svg' },
   { key: 'cat',  src: '/img/onboarding/Avatar_3.svg' },
   { key: 'alien',src: '/img/onboarding/Avatar_4.svg' },
 ];
@@ -24,10 +23,11 @@ const OnboardingStep01 = () => {
 
   return (
     <Screen>
-      {/* Header: 뒤로가기 X, 우측 액션 */}
+      {/* Header: 뒤로가기, 우측 액션 */}
       <Header
         title="목소리 설정"
-        showBack={false}
+        showBack={true}
+        onBack={() => navigate(-1)}
         action={{ text: '건너뛰기', handler: () => navigate('/home') }}
       />
 
@@ -43,6 +43,7 @@ const OnboardingStep01 = () => {
               key={key}
               onClick={() => setSelected(key)}
               aria-pressed={key === selected}
+              $active={key === selected}
             >
               <SelectIllust src={src} alt={`${key} 캐릭터`} />
             </SelectButton>
@@ -67,7 +68,7 @@ const OnboardingStep01 = () => {
         <Button bgColor="#342E29" color="#FFF" onClick={() => navigate('/onboarding/step_02')}>
           <BtnContent>
             <BtnIcon src={RECORD_ICON} alt="" aria-hidden="true" />
-            <span>녹음하기</span>
+            <BtnText>녹음하기</BtnText>
           </BtnContent>
         </Button>
       </BottomArea>
@@ -96,8 +97,8 @@ const Content = styled.section`
 const MainIllust = styled.img`
   width: 144px;
   height: auto;
-  margin-top: 8px;
-  margin-bottom: 16px;
+  margin-top: 48px;
+  margin-bottom: 32px;
   object-fit: contain;
   user-select: none;
   pointer-events: none;
@@ -106,20 +107,25 @@ const MainIllust = styled.img`
 const SelectorRow = styled.div`
   display: flex;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 48px;
 `;
 
 const SelectButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-tap-highlight-color: transparent;
+background: none;
+cursor: pointer;
+padding: 0;
+width: 62px;               
+height: 62px;
+aspect-ratio: 1 / 1;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+-webkit-tap-highlight-color: transparent;
+border: ${({ $active }) => ($active ? '2px solid #FFD342' : '2px solid transparent')};
+box-shadow: ${({ $active }) => ($active ? '0 0 0 2px rgba(255, 211, 66, 0.25) inset' : 'none')};
+transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+&:active { transform: scale(0.98); }
 `;
 
 const SelectIllust = styled.img`
@@ -130,7 +136,7 @@ const SelectIllust = styled.img`
 `;
 
 const FieldGroup = styled.div`
-  width: 100%;
+  width: 343px;
   margin-top: 6px;
 `;
 
@@ -171,6 +177,7 @@ const BottomArea = styled.div`
 const BtnContent = styled.span`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-weight: 800;
 `;
@@ -180,4 +187,14 @@ const BtnIcon = styled.img`
   height: 18px;
   object-fit: contain;
   display: block;
+`;
+
+const BtnText = styled.span`
+  color: var(--color-text-interactive-inverse, #FFF);
+  text-align: center;
+  font-family: 'NanumSquareRound';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 24px; /* 150% */
 `;
