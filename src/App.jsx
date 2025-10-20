@@ -10,7 +10,7 @@ import BottomBar from './components/Bottom.jsx';
 import Home from './pages/pages.jsx';
 import OnboardingIntro from './pages/onboarding/main.jsx'; //온보딩 첫 화면
 import OnboardingStep01 from './pages/onboarding/step_01.jsx'; // 온보딩 두번째
-// import OnboardingStep02 from './pages/onboarding/step_02.jsx'; // 온보딩 세번째
+import OnboardingStep02 from './pages/onboarding/step_02.jsx'; // 온보딩 세번째
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
             {/* 온보딩 페이지 추가 */}
             <Route path="/onboarding" element={<PageWrapper orientation="portrait"><OnboardingIntro /></PageWrapper>} />
             <Route path="/onboarding/step_01" element={<PageWrapper orientation="portrait"><OnboardingStep01 /></PageWrapper>} />
-            {/* <Route path="/onboarding/step_02" element={<PageWrapper orientation="portrait"><OnboardingStep02 /></PageWrapper>} /> */}
+            <Route path="/onboarding/step_02" element={<PageWrapper orientation="portrait"><OnboardingStep02 /></PageWrapper>} />
           </Routes>
         </Router>
       </PageWrapper>
