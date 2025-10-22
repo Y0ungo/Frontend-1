@@ -148,7 +148,7 @@ const FieldLabel = styled.div`
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 343px;
   height: 52px;
   border-radius: 12px;
   border: 1px solid #eee;
@@ -156,6 +156,7 @@ const Input = styled.input`
   padding: 0 16px;
   font-size: 14px;
   color: #393939;
+  box-sizing: border-box;
 
   &::placeholder {
     color: #bdbdbd;

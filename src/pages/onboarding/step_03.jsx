@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header.jsx';
 import Button from '../../components/Button.jsx';
 
-const Onboarding_intro_01 = () => {
+const Onboardingsetp03 = () => {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +13,7 @@ const Onboarding_intro_01 = () => {
       <Header
         title="목소리 설정"
         showBack={false}
-        action={{ text: '건너뛰기', handler: () => navigate('/home') }}
+        action={false}
       />
 
       {/* 중앙 콘텐츠 */}
@@ -34,13 +34,13 @@ const Onboarding_intro_01 = () => {
 
       {/* 하단 버튼 */}
       <BottomArea>
-        <Button onClick={() => navigate('/onboarding/step_01')}>다음</Button>
+        <Button onClick={() => navigate('/onboarding/step_04')}>다음</Button>
       </BottomArea>
     </Screen>
   );
 };
 
-export default Onboarding_intro_01;
+export default Onboardingsetp03;
 
 // 스타일 컴포넌트
 const Screen = styled.div`

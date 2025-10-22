@@ -87,7 +87,7 @@ const OnboardingStep02 = () => {
                 <img src={ICON_PAUSE} alt="" width="64" height="64" />
               </IconBtn>
 
-              <IconBtn type="button" aria-label="완료" onClick={() => { /* 완료 동작 */ }}>
+              <IconBtn type="button" aria-label="완료" onClick={() => navigate('/onboarding/step_03')}>
                 <img src={ICON_DONE} alt="" width="64" height="64" />
               </IconBtn>
             </ControlRow>
@@ -189,7 +189,7 @@ const Spacer = styled.div`
 
 const ArcArea = styled.div`
   position: relative;
-  width: 100%;
+  width: 390px;
   height: 330px;
   display: flex;
   align-items: flex-end;
@@ -201,8 +201,8 @@ const Arc = styled.div`
   position: absolute;
   inset: 0;
   background: #fff5d2;
-  border-top-left-radius: 100% 100%;
-  border-top-right-radius: 100% 100%;
+  border-top-left-radius: 40% 40%;
+  border-top-right-radius: 40% 40%;
 `;
 
 /* 반원 안 텍스트*/

@@ -11,6 +11,10 @@ import Home from './pages/pages.jsx';
 import OnboardingIntro from './pages/onboarding/main.jsx'; //온보딩 첫 화면
 import OnboardingStep01 from './pages/onboarding/step_01.jsx'; // 온보딩 두번째
 import OnboardingStep02 from './pages/onboarding/step_02.jsx'; // 온보딩 세번째
+import OnboardingStep03 from './pages/onboarding/step_03.jsx'; // 온보딩 네번째
+import OnboardingStep04 from './pages/onboarding/step_04.jsx'; // 온보딩 다섯번째
+import OnboardingStep05 from './pages/onboarding/step_05.jsx'; // 온보딩 여섯번째
+import Onboardingend from './pages/onboarding/end.jsx'; // 온보딩 끝
 
 function App() {
   return (
@@ -25,6 +29,10 @@ function App() {
             <Route path="/onboarding" element={<PageWrapper orientation="portrait"><OnboardingIntro /></PageWrapper>} />
             <Route path="/onboarding/step_01" element={<PageWrapper orientation="portrait"><OnboardingStep01 /></PageWrapper>} />
             <Route path="/onboarding/step_02" element={<PageWrapper orientation="portrait"><OnboardingStep02 /></PageWrapper>} />
+            <Route path="/onboarding/step_03" element={<PageWrapper orientation="portrait"><OnboardingStep03 /></PageWrapper>} />
+            <Route path="/onboarding/step_04" element={<PageWrapper orientation="portrait"><OnboardingStep04 /></PageWrapper>} />
+            <Route path="/onboarding/step_05" element={<PageWrapper orientation="portrait"><OnboardingStep05 /></PageWrapper>} />
+            <Route path="/onboarding/end" element={<PageWrapper orientation="portrait"><Onboardingend /></PageWrapper>} />
           </Routes>
         </Router>
       </PageWrapper>
