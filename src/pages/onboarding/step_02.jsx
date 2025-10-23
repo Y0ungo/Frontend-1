@@ -170,6 +170,7 @@ const Badge = styled.span`
   background: #ffd342;
   color: #fff;
   font-size: 12px;
+  font-family: NanumSquareRound;
   font-weight: 800;
 `;
 
@@ -177,7 +178,8 @@ const Quote = styled.p`
   margin: 0;
   text-align: center;
   color: #3a372f;
-  font-size: 18px;
+  font-size: 20px;
+  font-family: NanumSquareRound;
   font-weight: 700;
   line-height: 28px;
   letter-spacing: -0.02em;
@@ -294,7 +296,7 @@ const Modal = styled.div`
 const ModalTitle = styled.h3`
   margin: 6px 0 8px;
   color: #3a372f;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 800;
   line-height: 24px;
   letter-spacing: -0.01em;
@@ -303,7 +305,8 @@ const ModalTitle = styled.h3`
 const ModalDesc = styled.p`
   margin: 0 0 16px;
   color: #7a7a7a;
-  font-size: 12px;
+  font-size: 14px;
+  font-family: NanumSquareRound;
   line-height: 18px;
 `;
 

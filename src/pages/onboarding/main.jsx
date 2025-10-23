@@ -75,7 +75,8 @@ const Illust = styled.img`
 const Title = styled.h1`
   margin: 0;
   color: #3a372f;
-  font-size: 22px;
+  font-size: 24px;
+  font-family: "SOYO Maple TTF";
   font-weight: 800;
   line-height: 1.5;
   letter-spacing: -0.02em;
@@ -85,6 +86,7 @@ const Subtitle = styled.p`
   margin: 6px 0 0;
   color: #8e8e8e;
   font-size: 12px;
+  font-family: "SOYO Maple TTF";
   line-height: 1.6;
   letter-spacing: -0.01em;
 `;

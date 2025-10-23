@@ -141,8 +141,9 @@ const FieldGroup = styled.div`
 `;
 
 const FieldLabel = styled.div`
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
+  font-family: NanumSquareRound;
   color: #3a372f;
   margin-bottom: 8px;
 `;
@@ -154,7 +155,8 @@ const Input = styled.input`
   border: 1px solid #eee;
   background: #fff;
   padding: 0 16px;
-  font-size: 14px;
+  font-size: 16px;
+  font-family: NanumSquareRound;
   color: #393939;
   box-sizing: border-box;
 

@@ -85,7 +85,7 @@ const CenterCopy = styled.h1`
   color: var(--color-text-interactive-secondary, #342E29);
   text-align: center;
 
-  font-family: "SOYO Maple TTF", sans-serif;
+  font-family: "SOYO Maple TTF";
   font-size: 24px;
   font-style: normal;
   font-weight: 700;

@@ -73,7 +73,8 @@ const Illust = styled.img`
 const Title = styled.h1`
   margin: 0;
   color: #3a372f;
-  font-size: 22px;
+  font-size: 24px;
+  font-family: "SOYO Maple TTF";
   font-weight: 800;
   line-height: 1.5;
   letter-spacing: -0.02em;
