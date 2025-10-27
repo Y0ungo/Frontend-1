@@ -16,9 +16,11 @@ import OnboardingStep03 from './pages/onboarding/step_03.jsx'; // 온보딩 네�
 import OnboardingStep04 from './pages/onboarding/step_04.jsx'; // 온보딩 다섯번째
 import OnboardingStep05 from './pages/onboarding/step_05.jsx'; // 온보딩 여섯번째
 import Onboardingend from './pages/onboarding/end.jsx'; // 온보딩 끝
-import Signup from './pages/signup/signup.jsx'; //회원가입
-import SignupAgree from './pages/signup/signup-agree.jsx'; //약관 설명 페이지
-import Login from './pages/login/login.jsx';
+import Signup from './pages/signup/signup.jsx'; // 회원가입
+import SignupAgree from './pages/signup/signup-agree.jsx'; // 약관 설명 페이지
+import Login from './pages/login/login.jsx'; // 로그인 페이지
+import Intro from './pages/intro/intro.jsx'; // 인트로 페이지
+import Splash from './pages/intro/splash.jsx'; //로고 띄우는 페이지
 
 function App() {
   return (
@@ -43,6 +45,9 @@ function App() {
             <Route path="/signup/agree/:type" element={<PageWrapper orientation="portrait"><SignupAgree /></PageWrapper>} />
             {/* 로그인 페이지 */}
             <Route path='/login' element={<PageWrapper orientation="portrait"><Login /></PageWrapper>} />
+            {/* 인트로 페이지 */}
+            <Route path='/intro' element={<PageWrapper orientation="portrait"><Intro /></PageWrapper>} />
+            <Route path='/splash' element={<PageWrapper orientation="portrait"><Splash /></PageWrapper>} />
           </Routes>
         </Router>
       </PageWrapper>

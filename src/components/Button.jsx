@@ -17,23 +17,16 @@ export default function Button({ children, ...props }) {
 }
 
 const StyledButton = styled.button`
-    /* 1. Primary 디자인 */
-    height: 56px;
-    width: 358px;
+    height: ${({ $height }) => $height || '56px'};
+    width: ${({ $width }) => $width || '358px'};
+    background-color: ${({ $bgColor }) => $bgColor || '#FFD342'};
+    color: ${({ $color }) => $color || '#FFF'};
     padding: 0 16px;
     border: none;
     border-radius: 999px;
-    background-color: #FFD342;
-    color: #FFF;
     font-size: 16px;
     font-weight: 800;
     cursor: pointer;
-
-    /* 2. Props로 전달된 값으로 덮어쓰기 - 다른 디자인 이용하실 때*/
-    height: ${({height}) => height}; /* 48, 40 */
-    width: ${({ width }) => width}; /* 147, 132 */
-    background-color: ${({ bgColor }) => bgColor}; /* #342E29, #F1F1F1 */
-    color: ${({ color }) => color}; /* #7A7A7A */
 
     /* 비활성화 스타일 */
     &:disabled {

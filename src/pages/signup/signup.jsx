@@ -56,7 +56,7 @@ function Signup() {
         <Header
             title="회원가입"
             showBack={true}
-            onBack={() => navigate(-1)}
+            onBack={() => navigate('/intro')}
         />
         {/* 인트로로 변경 예정 */}
         <Contents>
