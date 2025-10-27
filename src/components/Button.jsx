@@ -19,7 +19,7 @@ export default function Button({ children, ...props }) {
 const StyledButton = styled.button`
     /* 1. Primary 디자인 */
     height: 56px;
-    width: 343px;
+    width: 358px;
     padding: 0 16px;
     border: none;
     border-radius: 999px;

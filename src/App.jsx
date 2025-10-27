@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, matchPath } from 'react-router-dom'; // Navigate 제거
 import styled from 'styled-components';
+import GlobalStyle from './components/GlobalStyle.jsx';
 
 //공통 컴포넌트
 import Button from './components/Button.jsx';
@@ -15,10 +16,14 @@ import OnboardingStep03 from './pages/onboarding/step_03.jsx'; // 온보딩 네�
 import OnboardingStep04 from './pages/onboarding/step_04.jsx'; // 온보딩 다섯번째
 import OnboardingStep05 from './pages/onboarding/step_05.jsx'; // 온보딩 여섯번째
 import Onboardingend from './pages/onboarding/end.jsx'; // 온보딩 끝
+import Signup from './pages/signup/signup.jsx'; //회원가입
+import SignupAgree from './pages/signup/signup-agree.jsx'; //약관 설명 페이지
+import Login from './pages/login/login.jsx';
 
 function App() {
   return (
     <Root>
+      <GlobalStyle />
       <PageWrapper>
         <Router> 
           <Routes>
@@ -33,6 +38,11 @@ function App() {
             <Route path="/onboarding/step_04" element={<PageWrapper orientation="portrait"><OnboardingStep04 /></PageWrapper>} />
             <Route path="/onboarding/step_05" element={<PageWrapper orientation="portrait"><OnboardingStep05 /></PageWrapper>} />
             <Route path="/onboarding/end" element={<PageWrapper orientation="portrait"><Onboardingend /></PageWrapper>} />
+            {/* 회원가입 페이지 */}
+            <Route path="/signup" element={<PageWrapper orientation="portrait"><Signup /></PageWrapper>} />
+            <Route path="/signup/agree/:type" element={<PageWrapper orientation="portrait"><SignupAgree /></PageWrapper>} />
+            {/* 로그인 페이지 */}
+            <Route path='/login' element={<PageWrapper orientation="portrait"><Login /></PageWrapper>} />
           </Routes>
         </Router>
       </PageWrapper>
@@ -53,7 +63,7 @@ const Root = styled.div`
 // PageWrapper: 페이지 중앙 고정 + 세로/가로 모드
 const PageWrapper = styled.div`
   width: ${props => props.orientation === 'landscape' ? '844px' : '390px'};
-  height: ${props => props.orientation === 'landscape' ? '390px' : '898px'};
+  height: ${props => props.orientation === 'landscape' ? '390px' : '852px'};
   display: flex;
   flex-direction: column;
   background-color: #fff;
