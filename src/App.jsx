@@ -20,7 +20,9 @@ import SignupAgree from './pages/signup/signup-agree.jsx'; // 약관 설명 페�
 import Login from './pages/login/login.jsx'; // 로그인 페이지
 import Intro from './pages/intro/intro.jsx'; // 인트로 페이지
 import Splash from './pages/intro/splash.jsx'; //로고 띄우는 페이지
-import Home from './pages/home/home.jsx';
+import Home from './pages/home/home.jsx'; // 홈 페이지
+import Mylib from './pages/mylib/mylib.jsx'; //내 서재 페이지
+import Script from './pages/mylib/mylib-script.jsx'; // 내 서재와 연결되는 스크립트 페이지
 
 function App() {
   return (
@@ -49,6 +51,9 @@ function App() {
             <Route path='/splash' element={<PageWrapper orientation="portrait"><Splash /></PageWrapper>} />
             {/* 홈 페이지 */}
             <Route path="/home" element={<PageWrapper orientation="portrait"><Home /></PageWrapper>} />
+            {/* 내 서재 페이지 */}
+            <Route path='/mylib' element={<PageWrapper orientation="portrait"><Mylib /></PageWrapper>} />
+            <Route path='/mylib-script/:bookId' element={<PageWrapper orientation="portrait"><Script /></PageWrapper>} />
           </Routes>
         </Router>
       </PageWrapper>

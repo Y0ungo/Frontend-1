@@ -1,7 +1,50 @@
 import styled from 'styled-components';
 import BottomBar from '../../components/Bottom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+    const navigate = useNavigate();
+
+    const recentHistory = [
+        { title: '빨간망토', time: '3:36', img: '/icons/book.svg' },
+        { title: '빨간망토', time: '3:36', img: '/icons/book.svg' },
+    ];
+
+    const myStories = [
+        { id: 1, title: '꿈꾸는 코스모스', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 2, title: '수박 수영장', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 3, title: '초코파이', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 4, title: '충성스런 개스', min: '3~4분', img: '/imges/created_story.svg' }
+    ];
+
+    const recommendedStories = [
+        { id: 1, title: '강아지똥', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 2, title: '선녀와 나무꾼', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 3, title: '책 먹는 여우', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 4, title: '이상한 나라의 앨리스', min: '3~4분', img: '/imges/created_story.svg' }
+    ];
+
+    const [activeMyStoryId, setActiveMyStoryId] = useState(null);
+    const [activeRecommendedId, setActiveRecommendedId] = useState(null);
+
+
+    const handleMyStoryClick = (id) => {
+        setActiveMyStoryId(activeMyStoryId === id ? null : id);
+    };
+
+    const handleRecommendedClick = (id) => {
+        setActiveRecommendedId(activeRecommendedId === id ? null : id);
+    };
+
+    const playBook = (story) => console.log('재생', story.title);
+
+    const viewScript = (story) => {
+        navigate(`/mylib-script/${story.id}`);
+    };
+
+    const deleteBook = (story) => console.log('삭제', story.title);
+
     return (
         <>
         <Logo>
@@ -19,30 +62,20 @@ function Home() {
                     <img src='/icons/right-part.svg' width={20} height={20} />
                 </StoryLabel>
                 <StoryScroll>
-                    <HistoryContainer>
-                        <Card>
-                            <img src='/icons/book.svg' />
-                            <Badge>
-                                <img src='/icons/Bookmark.svg' width={25}/>
-                            </Badge>
-                        </Card>
-                        <TextBox>
-                            <StoryTitle>빨간망토</StoryTitle>
-                            <StoryTime>3:36</StoryTime>
-                        </TextBox>
-                    </HistoryContainer>
-                    <HistoryContainer>
-                        <Card>
-                            <img src='/icons/book.svg' />
-                            <Badge>
-                                <img src='/icons/Bookmark.svg' width={25}/>
-                            </Badge>
-                        </Card>
-                        <TextBox>
-                            <StoryTitle>빨간망토</StoryTitle>
-                            <StoryTime>3:36</StoryTime>
-                        </TextBox>
-                    </HistoryContainer>
+                    {recentHistory.map((story, index) => (
+                        <HistoryContainer key={index}>
+                            <Card>
+                                <img src={story.img} />
+                                <Badge>
+                                    <img src='/icons/Bookmark.svg' width={25}/>
+                                </Badge>
+                            </Card>
+                            <TextBox>
+                                <StoryTitle>{story.title}</StoryTitle>
+                                <StoryTime>{story.time}</StoryTime>
+                            </TextBox>
+                        </HistoryContainer>
+                    ))}
                 </StoryScroll>
             </StoryContent>
 
@@ -52,28 +85,26 @@ function Home() {
                     <img src='/icons/right-part.svg' width={20} height={20} />
                 </StoryLabel>
                 <CreatedStoryScroll>
-                    <CreatedContainer>
-                        <img src='/imges/created_story.svg' />
-                        <CreatedTitle>꿈꾸는 코스모스</CreatedTitle>
-                        <CreatedMin>3~4분</CreatedMin>
-                    </CreatedContainer>
-
-                    <CreatedContainer>
-                        <img src='/imges/created_story.svg' />
-                        <CreatedTitle>꿈꾸는 코스모스</CreatedTitle>
-                        <CreatedMin>3~4분</CreatedMin>
-                    </CreatedContainer>
-                    <CreatedContainer>
-                        <img src='/imges/created_story.svg' />
-                        <CreatedTitle>꿈꾸는 코스모스</CreatedTitle>
-                        <CreatedMin>3~4분</CreatedMin>
-                    </CreatedContainer>
-                    <CreatedContainer>
-                        <img src='/imges/created_story.svg' />
-                        <CreatedTitle>꿈꾸는 코스모스</CreatedTitle>
-                        <CreatedMin>3~4분</CreatedMin>
-                    </CreatedContainer>
-
+                    {myStories.map((story, index) => (
+                        <CreatedContainer key={index} onClick={() => handleMyStoryClick(story.id)}>
+                                {activeMyStoryId === story.id ? (
+                                    <OptionCard>
+                                        <CloseBtn onClick={(e) => { e.stopPropagation(); setActiveMyStoryId(null); }}>×</CloseBtn>
+                                        <Option onClick={() => playBook(story)}>재생하기</Option>
+                                        <Option onClick={() => viewScript(story)}>스크립트 보기</Option>
+                                        <Option onClick={() => deleteBook(story)}>삭제하기</Option>
+                                    </OptionCard>
+                                ) : (
+                                    <>
+                                        <BookWrapper>
+                                            <img src={story.img} alt={story.title} />
+                                        </BookWrapper>
+                                    </>
+                                )}
+                            <CreatedTitle>{story.title}</CreatedTitle>
+                            <CreatedMin>{story.min}</CreatedMin>
+                        </CreatedContainer>
+                    ))}
                 </CreatedStoryScroll>
             </CreatedStoryContent>
 
@@ -83,28 +114,26 @@ function Home() {
                     <img src='/icons/right-part.svg' width={20} height={20} />
                 </StoryLabel>
                 <CreatedStoryScroll>
-                    <CreatedContainer>
-                        <img src='/imges/created_story.svg' />
-                        <CreatedTitle>꿈꾸는 코스모스</CreatedTitle>
-                        <CreatedMin>3~4분</CreatedMin>
-                    </CreatedContainer>
-
-                    <CreatedContainer>
-                        <img src='/imges/created_story.svg' />
-                        <CreatedTitle>꿈꾸는 코스모스</CreatedTitle>
-                        <CreatedMin>3~4분</CreatedMin>
-                    </CreatedContainer>
-                    <CreatedContainer>
-                        <img src='/imges/created_story.svg' />
-                        <CreatedTitle>꿈꾸는 코스모스</CreatedTitle>
-                        <CreatedMin>3~4분</CreatedMin>
-                    </CreatedContainer>
-                    <CreatedContainer>
-                        <img src='/imges/created_story.svg' />
-                        <CreatedTitle>꿈꾸는 코스모스</CreatedTitle>
-                        <CreatedMin>3~4분</CreatedMin>
-                    </CreatedContainer>
-                    
+                    {recommendedStories.map((story, index) => (
+                        <CreatedContainer key={index} onClick={() => handleRecommendedClick(story.id)}>
+                            {activeRecommendedId === story.id ? (
+                                    <OptionCard>
+                                        <CloseBtn onClick={(e) => { e.stopPropagation(); setActiveRecommendedId(null); }}>×</CloseBtn>
+                                        <Option onClick={() => playBook(story)}>재생하기</Option>
+                                        <Option onClick={() => viewScript(story)}>스크립트 보기</Option>
+                                        <Option onClick={() => deleteBook(story)}>삭제하기</Option>
+                                    </OptionCard>
+                                ) : (
+                                    <>
+                                        <BookWrapper>
+                                            <img src={story.img} alt={story.title} />
+                                        </BookWrapper>
+                                    </>
+                                )}
+                            <CreatedTitle>{story.title}</CreatedTitle>
+                            <CreatedMin>{story.min}</CreatedMin>
+                        </CreatedContainer>
+                    ))}
                 </CreatedStoryScroll>
             </CreatedStoryContent>
         </Contents>
@@ -298,3 +327,54 @@ const CreatedMin = styled.div`
     font-style: normal;
     font-weight: 400;
 `
+
+const OptionCard = styled.div`
+  width: 110px;
+  height: 154px;
+  border-radius: 12px;
+  background: url('/icons/click-card.svg') center / cover no-repeat; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  position: relative;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+`;
+
+const Option = styled.div`
+  font-size: 12px;
+  margin: 6px 0;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const CloseBtn = styled.div`
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+`;
+
+const BookWrapper = styled.div`
+  position: relative;
+  width: 110px;
+  height: 154px;
+  border-radius: 12px;
+  border: 0.5px solid #DEDEDE;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: white;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;

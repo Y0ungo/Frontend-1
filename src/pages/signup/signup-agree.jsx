@@ -12,11 +12,11 @@ function SignupAgree() {
             content: '서비스 이용과 관련된 자세한 약관 내용이 여기에 들어갑니다.',
         },
         privacy: {
-            title: '개인정보 처리방침',
+            title: '개인정보 수집 및 이용 동의',
             content: '개인정보 수집 및 이용에 대한 내용이 여기에 들어갑니다.',
         },
         marketing: {
-            title: '마케팅 정보 수신 동의',
+            title: '마케팅 및 메시지 수신 동의',
             content: '광고성 정보 수신 및 관련 안내가 여기에 들어갑니다.',
         },
     };
