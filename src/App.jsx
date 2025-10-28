@@ -15,6 +15,7 @@ import OnboardingStep03 from './pages/onboarding/step_03.jsx'; // 온보딩 네�
 import OnboardingStep04 from './pages/onboarding/step_04.jsx'; // 온보딩 다섯번째
 import OnboardingStep05 from './pages/onboarding/step_05.jsx'; // 온보딩 여섯번째
 import Onboardingend from './pages/onboarding/end.jsx'; // 온보딩 끝
+import VoiceSettingMain from './pages/setting_voice/main.jsx'; //목소리 세팅
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
             <Route path="/home" element={<PageWrapper orientation="portrait"><Home /></PageWrapper>} />
             {/* <Route path="/" element={<PageWrapper orientation="portrait"><LoginPage /></PageWrapper>}/> */}
 
-            {/* 온보딩 페이지 추가 */}
+            {/* 온보딩 페이지 */}
             <Route path="/onboarding" element={<PageWrapper orientation="portrait"><OnboardingIntro /></PageWrapper>} />
             <Route path="/onboarding/step_01" element={<PageWrapper orientation="portrait"><OnboardingStep01 /></PageWrapper>} />
             <Route path="/onboarding/step_02" element={<PageWrapper orientation="portrait"><OnboardingStep02 /></PageWrapper>} />
@@ -33,6 +34,8 @@ function App() {
             <Route path="/onboarding/step_04" element={<PageWrapper orientation="portrait"><OnboardingStep04 /></PageWrapper>} />
             <Route path="/onboarding/step_05" element={<PageWrapper orientation="portrait"><OnboardingStep05 /></PageWrapper>} />
             <Route path="/onboarding/end" element={<PageWrapper orientation="portrait"><Onboardingend /></PageWrapper>} />
+            {/* 목소리 세팅 페이지 */}
+            <Route path="/mypage/voice_set/main" element={<PageWrapper orientation="portrait"><VoiceSettingMain /></PageWrapper>} />
           </Routes>
         </Router>
       </PageWrapper>
