@@ -52,8 +52,10 @@ const Bar = styled.nav`
   align-items: center;
   width: 100%;
   height: 80px;
-  background: var(--background-color);
-  padding-bottom: env(safe-area-inset-bottom, 0);
+  background: #fff;
+  border-top: 0.5px solid #F1F1F1;
+  background: #FFF;
+  backdrop-filter: blur(10px);
 `;
 
 const Button = styled.button`
@@ -61,6 +63,7 @@ const Button = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   background: none;
   border: none;

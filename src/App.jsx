@@ -8,7 +8,6 @@ import Header from './components/Header.jsx';
 import BottomBar from './components/Bottom.jsx';
 
 //공통 컴포넌트 확인용
-import Home from './pages/pages.jsx';
 import OnboardingIntro from './pages/onboarding/main.jsx'; //온보딩 첫 화면
 import OnboardingStep01 from './pages/onboarding/step_01.jsx'; // 온보딩 두번째
 import OnboardingStep02 from './pages/onboarding/step_02.jsx'; // 온보딩 세번째
@@ -21,6 +20,7 @@ import SignupAgree from './pages/signup/signup-agree.jsx'; // 약관 설명 페�
 import Login from './pages/login/login.jsx'; // 로그인 페이지
 import Intro from './pages/intro/intro.jsx'; // 인트로 페이지
 import Splash from './pages/intro/splash.jsx'; //로고 띄우는 페이지
+import Home from './pages/home/home.jsx';
 
 function App() {
   return (
@@ -29,7 +29,6 @@ function App() {
       <PageWrapper>
         <Router> 
           <Routes>
-            <Route path="/home" element={<PageWrapper orientation="portrait"><Home /></PageWrapper>} />
             {/* <Route path="/" element={<PageWrapper orientation="portrait"><LoginPage /></PageWrapper>}/> */}
 
             {/* 온보딩 페이지 추가 */}
@@ -48,6 +47,8 @@ function App() {
             {/* 인트로 페이지 */}
             <Route path='/intro' element={<PageWrapper orientation="portrait"><Intro /></PageWrapper>} />
             <Route path='/splash' element={<PageWrapper orientation="portrait"><Splash /></PageWrapper>} />
+            {/* 홈 페이지 */}
+            <Route path="/home" element={<PageWrapper orientation="portrait"><Home /></PageWrapper>} />
           </Routes>
         </Router>
       </PageWrapper>
