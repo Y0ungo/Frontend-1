@@ -129,7 +129,7 @@ const MylibHeader = styled.div`
 
 const MylibContainer = styled.div`
     width: 390px;
-    height: 738px;
+    height: 708px;
     overflow-y: auto;
     scrollbar-width: none;
     display: flex;

@@ -1,0 +1,411 @@
+import styled, { css } from 'styled-components';
+import Header from '../../components/Header';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Button from '../../components/Button';
+
+function KidRegister() {
+    const navigate = useNavigate();
+
+    const [nickname, setNickname] = useState('');
+    const [birth, setBirth] = useState('');
+    const [seledtedAvatar, setSelectedAvatar] = useState('/icons/avatar1.svg')
+    const [seledtedGender, setSelectedGender] = useState('female');
+
+    const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+    const handleRegister = () => {
+        setShowRegisterModal(true);
+    };
+
+    const AddRegister = () => {
+        setShowRegisterModal(false);
+        navigate(0)
+    }
+
+    const confirmRegister = () => {
+        setShowRegisterModal(false);
+        navigate('/mypage')
+    }
+
+    const avatars = [
+        '/icons/avatar1.svg',
+        '/icons/avatar2.svg',
+        '/icons/avatar3.svg',
+        '/icons/avatar4.svg',
+    ]
+
+    const isButtonActive = nickname.trim().length > 0 && birth.trim().length > 0;
+
+    return (
+        <Wrapper>
+        <Header
+            title="아이 정보 등록"
+            showBack={true}
+            onBack={() => (navigate(-1))}
+        />
+
+        <Contents>
+            <AvatarContainer>
+                <SelectedAvatar>
+                    <img src={seledtedAvatar} />
+                </SelectedAvatar>
+                <AvatarList>
+                    {avatars.map((src, index) => (
+                        <AvatarBtn
+                            key={index}
+                            $isSelected={seledtedAvatar === src}
+                            onClick={() => setSelectedAvatar(src)}
+                            aria-pressed= {setSelectedAvatar === src}
+                            aria-label={`아바타 ${index + 1}`}
+                        >
+                            <img src={src} />
+                        </AvatarBtn>
+                    ))}
+                </AvatarList>
+            </AvatarContainer>
+
+            <InputContainer>
+                <InputLabel>이름</InputLabel>
+                <Input
+                    type='text'
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                    placeholder='이름을 입력해주세요.'
+                    $filled={nickname !== ''}
+                />
+            </InputContainer>
+
+            <InputContainer>
+                <InputLabel>출생연도</InputLabel>
+                <Input
+                    type='text'
+                    value={birth}
+                    onChange={(e) => setBirth(e.target.value)}
+                    placeholder='출생연도를 입력해주세요.'
+                    $filled={birth !== ''}
+                />
+            </InputContainer>
+
+            <GenderContainer>
+                <GenderLabel>성별</GenderLabel>
+                <GenderSelect>
+                    <Female onClick={() => setSelectedGender('female')}>
+                        {seledtedGender === 'female'
+                            ? <img src='/icons/radio-filled.svg' />
+                            : <img src='/icons/radio.svg' />
+                        }
+                        여자
+                    </Female>
+                    <Female onClick={() => setSelectedGender('male')}>
+                        {seledtedGender === 'male'
+                            ? <img src='/icons/radio-filled.svg' />
+                            : <img src='/icons/radio.svg' />
+                        }
+                        남자
+                    </Female>
+                </GenderSelect>
+            </GenderContainer>
+        </Contents>
+
+        <BtnContainer>
+            <Button
+                disabled={!isButtonActive}
+                onClick={handleRegister}
+                $bgColor='#342e29'
+                $color='#fff'
+            >
+                등록하기
+            </Button>
+        </BtnContainer>
+
+        {showRegisterModal && (
+            <ModalOverlay>
+                <ModalBox>
+                    <ModalHeader>아이 정보 등록이 완료되었어요</ModalHeader>
+                    <ModalText>이제 아이에게 맞는<br />동화를 손쉽게 만들 수 있어요.</ModalText>
+                    <ModalBtnContainer>
+                        <AddBtn onClick={AddRegister}>추가 등록</AddBtn>
+                        <ConfirmBtn onClick={confirmRegister}>확인</ConfirmBtn>
+                    </ModalBtnContainer>
+                </ModalBox>
+            </ModalOverlay>
+        )}
+        </Wrapper>
+    );
+}
+
+export default KidRegister;
+
+const Wrapper = styled.div`
+    width: 390px;
+    height: 852px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+`
+const Contents = styled.div`
+    width: 390px;
+    height: 708px;
+    padding: 24px 16px 64px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    overflow-y: auto;
+    scrollbar-width: none;
+`
+
+const AvatarContainer = styled.div`
+    width: 358px;
+    height: 256px;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+`
+
+const SelectedAvatar = styled.div`
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+`
+
+const AvatarList = styled.div`
+    width: 358px;
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+`
+
+const AvatarBtn = styled.button`
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: ${({ $isSelected}) => ( $isSelected ? '2px solid #fff1c4' : '2px solid transparent')};
+    background: none;
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+`
+
+const InputContainer = styled.div`
+    height: 86px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+`;
+
+const InputLabel = styled.div`
+    color: #393939;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+`;
+
+const Input = styled.input`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    color: #DEDEDE;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    width: 358px;
+    height: 54px;
+    padding: 0 16px;
+    border-radius: 8px;
+    border: 1px solid #DEDEDE;
+    background: #FFF;
+    outline: none;
+
+    ${({ $filled }) =>
+        $filled &&
+        css`
+        border-color: #FFD342;
+        color: #393939;
+    `}
+
+    &:focus {
+        border-color: ${({ $error }) => ($error ? '#FF4242' : '#FFD342')};
+        color: #393939;
+    }
+
+    ${({ $error }) =>
+        $error &&
+        css`
+        border-color: #FF4242;
+    `}
+
+    &::placeholder {
+        color: #dedede;
+    }
+`;
+
+const BtnContainer = styled.div`
+    width: 390px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+const GenderContainer = styled.div`
+    width: 358px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`
+
+const GenderLabel = styled.div`
+    width: 358px;
+    height: 24px;
+    font-size: 16px;
+    font-weight: 800;
+`
+
+const GenderSelect = styled.div`
+    width: 358px;
+    height: 24px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+`
+
+const Female = styled.div`
+    width: 62px;
+    height: 24px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    color: #393939;
+    font-size: 16px;
+    font-weight: 800;
+    align-items: center;
+    cursor: pointer;
+`
+
+const ToastModal = styled.div`
+    height: 46px;
+    width: 358px;
+    padding: 12px;
+    background-color: #fff8e3;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 16px;
+`
+
+const DeleteContainer = styled.div`
+    width: 358px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    color: #bbb;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    cursor: pointer;
+`
+
+const ModalOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 390px;
+    height: 852px;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+`
+
+const ModalBox = styled.div`
+    width: 320px;
+    height: 196px;
+    padding: 24px 24px 16px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: #fff;
+`
+
+const ModalHeader = styled.div`
+    color: #393939;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+`
+
+const ModalText = styled.div`
+    color: #7a7a7a;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+`
+
+const ModalBtnContainer = styled.div`
+    display: flex;
+    gap: 12px;
+`
+
+const AddBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #f1f1f1;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+`
+
+const ConfirmBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #ffd342;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+`

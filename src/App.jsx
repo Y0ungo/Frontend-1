@@ -19,10 +19,14 @@ import Signup from './pages/signup/signup.jsx'; // 회원가입
 import SignupAgree from './pages/signup/signup-agree.jsx'; // 약관 설명 페이지
 import Login from './pages/login/login.jsx'; // 로그인 페이지
 import Intro from './pages/intro/intro.jsx'; // 인트로 페이지
-import Splash from './pages/intro/splash.jsx'; //로고 띄우는 페이지
+import Splash from './pages/intro/splash.jsx'; // 로고 띄우는 페이지
 import Home from './pages/home/home.jsx'; // 홈 페이지
-import Mylib from './pages/mylib/mylib.jsx'; //내 서재 페이지
+import Mylib from './pages/mylib/mylib.jsx'; // 내 서재 페이지
 import Script from './pages/mylib/mylib-script.jsx'; // 내 서재와 연결되는 스크립트 페이지
+import Mypage from './pages/mypage/mypage.jsx'; // 마이 페이지
+import Profile from './pages/mypage/mypage-profile.jsx'; //프로필 편집 페이지
+import MypageKid from './pages/mypage/mypage-kid.jsx'; // 아이 정보 페이지
+import KidRegister from './pages/mypage/mypage-kid-register.jsx'; // 아이 정보 등록 페이지
 
 function App() {
   return (
@@ -54,6 +58,11 @@ function App() {
             {/* 내 서재 페이지 */}
             <Route path='/mylib' element={<PageWrapper orientation="portrait"><Mylib /></PageWrapper>} />
             <Route path='/mylib-script/:bookId' element={<PageWrapper orientation="portrait"><Script /></PageWrapper>} />
+            {/* 마이 페이지 */}
+            <Route path='/mypage' element={<PageWrapper orientation="portrait"><Mypage /></PageWrapper>} />
+            <Route path='/mypage-profile' element={<PageWrapper orientation="portrait"><Profile /></PageWrapper>} />
+            <Route path='/mypage-kid' element={<PageWrapper orientation="portrait"><MypageKid /></PageWrapper>} />
+            <Route path='/mypage-kid-register' element={<PageWrapper orientation="portrait"><KidRegister /></PageWrapper>} />
           </Routes>
         </Router>
       </PageWrapper>
