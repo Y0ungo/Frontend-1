@@ -27,13 +27,15 @@ import Mypage from './pages/mypage/mypage.jsx'; // 마이 페이지
 import Profile from './pages/mypage/mypage-profile.jsx'; //프로필 편집 페이지
 import MypageKid from './pages/mypage/mypage-kid.jsx'; // 아이 정보 페이지
 import KidRegister from './pages/mypage/mypage-kid-register.jsx'; // 아이 정보 등록 페이지
+import IllustPortrait from './pages/illust/illust-portrait.jsx'; // 삽화 스타일 설정 페이지
+import IllustLandscape from './pages/illust/illust-landscape.jsx'; //삽화 페이지 별 내용 생성 페이지
+import StoryPlay from './pages/illust/story-play.jsx'; // 동화 생성 후 재생 및 종료 페이지
 
 function App() {
   return (
     <Root>
       <GlobalStyle />
-      <PageWrapper>
-        <Router> 
+        <Router>
           <Routes>
             {/* <Route path="/" element={<PageWrapper orientation="portrait"><LoginPage /></PageWrapper>}/> */}
 
@@ -63,9 +65,12 @@ function App() {
             <Route path='/mypage-profile' element={<PageWrapper orientation="portrait"><Profile /></PageWrapper>} />
             <Route path='/mypage-kid' element={<PageWrapper orientation="portrait"><MypageKid /></PageWrapper>} />
             <Route path='/mypage-kid-register' element={<PageWrapper orientation="portrait"><KidRegister /></PageWrapper>} />
+            {/* 삽화 생성 페이지 */}
+            <Route path='/illust-portrait' element={<PageWrapper orientation="portrait"><IllustPortrait /></PageWrapper>} />
+            <Route path='/illust-landscape' element={<PageWrapper orientation="landscape"><IllustLandscape /></PageWrapper>} />
+            <Route path='/story-play' element={<PageWrapper orientation="landscape"><StoryPlay /></PageWrapper>} />
           </Routes>
         </Router>
-      </PageWrapper>
     </Root>
   );
 }
@@ -82,8 +87,8 @@ const Root = styled.div`
 
 // PageWrapper: 페이지 중앙 고정 + 세로/가로 모드
 const PageWrapper = styled.div`
-  width: ${props => props.orientation === 'landscape' ? '844px' : '390px'};
-  height: ${props => props.orientation === 'landscape' ? '390px' : '852px'};
+  width: ${props => props.orientation === 'landscape' ? '798px' : '390px'};
+  height: ${props => props.orientation === 'landscape' ? '390px' : '798px'};
   display: flex;
   flex-direction: column;
   background-color: #fff;

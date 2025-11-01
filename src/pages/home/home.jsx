@@ -88,7 +88,10 @@ function Home() {
                     {myStories.map((story, index) => (
                         <CreatedContainer key={index} onClick={() => handleMyStoryClick(story.id)}>
                                 {activeMyStoryId === story.id ? (
-                                    <OptionCard>
+                                    <OptionCard
+                                        $imgUrl={story.img}
+                                        onClick={e => e.stopPropagation()}
+                                    >
                                         <CloseBtn onClick={(e) => { e.stopPropagation(); setActiveMyStoryId(null); }}>×</CloseBtn>
                                         <Option onClick={() => playBook(story)}>재생하기</Option>
                                         <Option onClick={() => viewScript(story)}>스크립트 보기</Option>
@@ -117,7 +120,10 @@ function Home() {
                     {recommendedStories.map((story, index) => (
                         <CreatedContainer key={index} onClick={() => handleRecommendedClick(story.id)}>
                             {activeRecommendedId === story.id ? (
-                                    <OptionCard>
+                                    <OptionCard 
+                                        $imgUrl={story.img}
+                                        onClick={e => e.stopPropagation()}
+                                    >
                                         <CloseBtn onClick={(e) => { e.stopPropagation(); setActiveRecommendedId(null); }}>×</CloseBtn>
                                         <Option onClick={() => playBook(story)}>재생하기</Option>
                                         <Option onClick={() => viewScript(story)}>스크립트 보기</Option>
@@ -329,52 +335,53 @@ const CreatedMin = styled.div`
 `
 
 const OptionCard = styled.div`
-  width: 110px;
-  height: 154px;
-  border-radius: 12px;
-  background: url('/icons/click-card.svg') center / cover no-repeat; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 800;
-  position: relative;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    width: 110px;
+    height: 154px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #393939 0%, rgba(39, 34, 31, 0.70) 100%), url(${props => props.$imgUrl}) lightgray 50% / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    position: relative;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #dedede;
 `;
 
 const Option = styled.div`
-  font-size: 12px;
-  margin: 6px 0;
-  cursor: pointer;
-  transition: 0.2s;
+    font-size: 12px;
+    margin: 6px 0;
+    cursor: pointer;
+    transition: 0.2s;
 
-  &:hover {
-    transform: scale(1.05);
-  }
+    &:hover {
+        transform: scale(1.05);
+    }
 `;
 
 const CloseBtn = styled.div`
-  position: absolute;
-  top: 6px;
-  right: 10px;
-  font-size: 18px;
-  cursor: pointer;
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    font-size: 18px;
+    cursor: pointer;
 `;
 
 const BookWrapper = styled.div`
-  position: relative;
-  width: 110px;
-  height: 154px;
-  border-radius: 12px;
-  border: 0.5px solid #DEDEDE;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  background: white;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    position: relative;
+    width: 110px;
+    height: 154px;
+    border-radius: 12px;
+    border: 0.5px solid #DEDEDE;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: white;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 `;
