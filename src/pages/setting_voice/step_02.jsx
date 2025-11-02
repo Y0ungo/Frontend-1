@@ -13,7 +13,6 @@ const ICON_DONE      = '/img/onboarding/done.svg';
 const VoiceSetStep02 = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
   const [status, setStatus] = useState('idle');
 
   const handleMicClick = () => {
@@ -68,12 +67,10 @@ const VoiceSetStep02 = () => {
         {/* 하단 반원 영역 */}
         <ArcArea>
           <Arc />
-
           <ArcTexts>{renderArcTexts()}</ArcTexts>
 
           {/* 상태별 컨트롤 */}
           {status !== 'paused' ? (
-            // 단일 마이크 버튼
             <MicButton type="button" onClick={handleMicClick} aria-label="녹음 컨트롤">
               <img src={statusIcon} alt="" width="64" height="64" />
             </MicButton>
@@ -87,7 +84,7 @@ const VoiceSetStep02 = () => {
                 <img src={ICON_PAUSE} alt="" width="64" height="64" />
               </IconBtn>
 
-              <IconBtn type="button" aria-label="완료" onClick={() => navigate('/mypage/voice_set/step_03')}>
+              <IconBtn type="button" aria-label="완료" onClick={() => navigate('/mypage/voice_set/step03')}>
                 <img src={ICON_DONE} alt="" width="64" height="64" />
               </IconBtn>
             </ControlRow>
@@ -95,6 +92,7 @@ const VoiceSetStep02 = () => {
         </ArcArea>
       </Content>
 
+      {/* 모달창 (VoiceSetStep03 동일 디자인 적용) */}
       {open && (
         <Dim onClick={() => setOpen(false)}>
           <Modal role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
@@ -106,24 +104,12 @@ const VoiceSetStep02 = () => {
             </ModalDesc>
 
             <BtnRow>
-              <Button
-                width="132px"
-                height="48px"
-                bgColor="#F1F1F1"
-                color="#7A7A7A"
-                onClick={() => { setOpen(false); navigate('/home'); }}
-              >
-                건너뛰기
-              </Button>
-              <Button
-                width="147px"
-                height="48px"
-                bgColor="#FFD342"
-                color="#342E29"
-                onClick={() => { setOpen(false); /* 이어서 설정 */ }}
-              >
+              <CancelBtn onClick={() => { setOpen(false); navigate('/home'); }}>
+                나가기
+              </CancelBtn>
+              <DeleteBtn onClick={() => setOpen(false)}>
                 이어서 설정
-              </Button>
+              </DeleteBtn>
             </BtnRow>
           </Modal>
         </Dim>
@@ -134,7 +120,7 @@ const VoiceSetStep02 = () => {
 
 export default VoiceSetStep02;
 
-// 스타일 컴포넌트
+//스타일 컴포넌트
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
@@ -207,7 +193,7 @@ const Arc = styled.div`
   border-top-right-radius: 40% 40%;
 `;
 
-/* 반원 안 텍스트*/
+/* 반원 안 텍스트 */
 const ArcTexts = styled.div`
   position: absolute;
   bottom: 176px;
@@ -218,19 +204,16 @@ const ArcTexts = styled.div`
   text-align: center;
 `;
 
-/* 텍스트 스타일 */
 const ArcText = styled.div`
   color: var(--color-text-interactive-secondary-hovered, #736A64);
   text-align: center;
-
   font-family: 'NanumSquareRound';
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 22px; /* 157.143% */
+  line-height: 22px;
 `;
 
-/* 마이크 버튼 */
 const MicButton = styled.button`
   position: absolute;
   bottom: 80px;
@@ -247,7 +230,6 @@ const MicButton = styled.button`
   cursor: pointer;
 `;
 
-/* 일시정지 상태 컨트롤 */
 const ControlRow = styled.div`
   position: absolute;
   bottom: 80px;
@@ -268,15 +250,16 @@ const IconBtn = styled.button`
   cursor: pointer;
 `;
 
-// 모달창
+//모달창 스타일
 const Dim = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
+  z-index: 1000;
 `;
 
 const Modal = styled.div`
@@ -286,9 +269,9 @@ const Modal = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: var(--border-radius-2xl, 16px);
-  background: var(--bg-panel, #FFF);
-  box-shadow: 0 0 1px 0 rgba(24, 24, 27, 0.30),
-              0 8px 16px 0 rgba(24, 24, 27, 0.10);
+  background: var(--bg-panel, #fff);
+  box-shadow: 0 0 1px 0 rgba(24, 24, 27, 0.3),
+              0 8px 16px 0 rgba(24, 24, 27, 0.1);
   padding: 20px;
   text-align: center;
 `;
@@ -298,8 +281,9 @@ const ModalTitle = styled.h3`
   color: #3a372f;
   font-size: 20px;
   font-weight: 800;
-  line-height: 24px;
+  line-height: 28px;
   letter-spacing: -0.01em;
+  text-align: center;
 `;
 
 const ModalDesc = styled.p`
@@ -307,7 +291,12 @@ const ModalDesc = styled.p`
   color: #7a7a7a;
   font-size: 14px;
   font-family: NanumSquareRound;
-  line-height: 18px;
+  line-height: 22px;
+  width: 100%;
+  max-width: 272px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const BtnRow = styled.div`
@@ -315,4 +304,29 @@ const BtnRow = styled.div`
   margin-bottom: 4px;
   display: flex;
   gap: 8px;
+`;
+
+const CancelBtn = styled.button`
+  width: 132px;
+  height: 48px;
+  border: none;
+  border-radius: 24px;
+  background: #f1f1f1;
+  color: #7a7a7a;
+  font-family: NanumSquareRound;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+const DeleteBtn = styled.button`
+  width: 132px;
+  height: 48px;
+  border: none;
+  border-radius: 24px;
+  background: #ffd342;
+  color: #fff;
+  font-family: NanumSquareRound;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
 `;

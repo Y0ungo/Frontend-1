@@ -26,7 +26,7 @@ const VoiceSettingMain = () => {
   const [targetId, setTargetId] = useState(null);
 
   const handleAddClick = () => {
-    navigate("/voice_set/step01");
+    navigate("/mypage/voice_set/step01");
   };
 
   const handleDeleteClick = (id) => {

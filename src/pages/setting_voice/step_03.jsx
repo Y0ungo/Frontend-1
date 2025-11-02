@@ -52,7 +52,12 @@ const VoiceSetStep03 = () => {
     // 자동닫기
     setTimeout(() => {
       setSnack((s) => ({ ...s, open: false }));
-    }, 2200);
+
+      //자동 페이지 이동
+      if (!duplicate) {
+      navigate("/mypage/voice_set/main");
+    }
+  }, 2200);
   };
 
   return (

@@ -62,7 +62,7 @@ const VoiceSetStep01 = () => {
         <Button
           bgColor="#342E29"
           color="#FFF"
-          onClick={() => navigate('/mypage/voice_set/step_02')} // 다음 단계 연결 필요 시 여기 경로만 교체
+          onClick={() => navigate('/mypage/voice_set/step02')} // 다음 단계 연결 필요 시 여기 경로만 교체
         >
           <BtnContent>
             <BtnIcon src={RECORD_ICON} alt="" aria-hidden="true" />

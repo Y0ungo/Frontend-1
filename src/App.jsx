@@ -54,9 +54,9 @@ function App() {
 
             {/* 목소리 세팅 */}
             <Route path="/mypage/voice_set/main" element={<PageWrapper orientation="portrait"><VoiceSettingMain /></PageWrapper>} />
-            <Route path="/mypage/voice_set/step_01" element={<PageWrapper orientation="portrait"><VoiceSetStep01 /></PageWrapper>} />
-            <Route path="/mypage/voice_set/step_02" element={<PageWrapper orientation="portrait"><VoiceSetStep02 /></PageWrapper>} />
-            <Route path="/mypage/voice_set/step_03" element={<PageWrapper orientation="portrait"><VoiceSetStep03 /></PageWrapper>} />
+            <Route path="/mypage/voice_set/step01" element={<PageWrapper orientation="portrait"><VoiceSetStep01 /></PageWrapper>} />
+            <Route path="/mypage/voice_set/step02" element={<PageWrapper orientation="portrait"><VoiceSetStep02 /></PageWrapper>} />
+            <Route path="/mypage/voice_set/step03" element={<PageWrapper orientation="portrait"><VoiceSetStep03 /></PageWrapper>} />
 
             {/* 회원가입 페이지 */}
             <Route path="/signup" element={<PageWrapper orientation="portrait"><Signup /></PageWrapper>} />
@@ -81,7 +81,7 @@ function App() {
             <Route path='/mypage-profile' element={<PageWrapper orientation="portrait"><Profile /></PageWrapper>} />
             <Route path='/mypage-kid' element={<PageWrapper orientation="portrait"><MypageKid /></PageWrapper>} />
             <Route path='/mypage-kid-register' element={<PageWrapper orientation="portrait"><KidRegister /></PageWrapper>} />
-            
+
             {/* 삽화 생성 페이지 */}
             <Route path='/illust-portrait' element={<PageWrapper orientation="portrait"><IllustPortrait /></PageWrapper>} />
             <Route path='/illust-landscape' element={<PageWrapper orientation="landscape"><IllustLandscape /></PageWrapper>} />
