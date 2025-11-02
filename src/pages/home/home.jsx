@@ -1,0 +1,387 @@
+import styled from 'styled-components';
+import BottomBar from '../../components/Bottom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+function Home() {
+    const navigate = useNavigate();
+
+    const recentHistory = [
+        { title: '빨간망토', time: '3:36', img: '/icons/book.svg' },
+        { title: '빨간망토', time: '3:36', img: '/icons/book.svg' },
+    ];
+
+    const myStories = [
+        { id: 1, title: '꿈꾸는 코스모스', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 2, title: '수박 수영장', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 3, title: '초코파이', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 4, title: '충성스런 개스', min: '3~4분', img: '/imges/created_story.svg' }
+    ];
+
+    const recommendedStories = [
+        { id: 1, title: '강아지똥', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 2, title: '선녀와 나무꾼', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 3, title: '책 먹는 여우', min: '3~4분', img: '/imges/created_story.svg' },
+        { id: 4, title: '이상한 나라의 앨리스', min: '3~4분', img: '/imges/created_story.svg' }
+    ];
+
+    const [activeMyStoryId, setActiveMyStoryId] = useState(null);
+    const [activeRecommendedId, setActiveRecommendedId] = useState(null);
+
+
+    const handleMyStoryClick = (id) => {
+        setActiveMyStoryId(activeMyStoryId === id ? null : id);
+    };
+
+    const handleRecommendedClick = (id) => {
+        setActiveRecommendedId(activeRecommendedId === id ? null : id);
+    };
+
+    const playBook = (story) => console.log('재생', story.title);
+
+    const viewScript = (story) => {
+        navigate(`/mylib-script/${story.id}`);
+    };
+
+    const deleteBook = (story) => console.log('삭제', story.title);
+
+    return (
+        <>
+        <Logo>
+            <img src='/icons/logo_home.svg' />
+        </Logo>
+
+        <Contents>
+            <Banner>
+                <img src='/icons/banner.svg' />
+            </Banner>
+
+            <StoryContent>
+                <StoryLabel>
+                    최근 본 히스토리
+                    <img src='/icons/right-part.svg' width={20} height={20} />
+                </StoryLabel>
+                <StoryScroll>
+                    {recentHistory.map((story, index) => (
+                        <HistoryContainer key={index}>
+                            <Card>
+                                <img src={story.img} />
+                                <Badge>
+                                    <img src='/icons/Bookmark.svg' width={25}/>
+                                </Badge>
+                            </Card>
+                            <TextBox>
+                                <StoryTitle>{story.title}</StoryTitle>
+                                <StoryTime>{story.time}</StoryTime>
+                            </TextBox>
+                        </HistoryContainer>
+                    ))}
+                </StoryScroll>
+            </StoryContent>
+
+            <CreatedStoryContent>
+                <StoryLabel>
+                    내가 만든 동화
+                    <img src='/icons/right-part.svg' width={20} height={20} />
+                </StoryLabel>
+                <CreatedStoryScroll>
+                    {myStories.map((story, index) => (
+                        <CreatedContainer key={index} onClick={() => handleMyStoryClick(story.id)}>
+                                {activeMyStoryId === story.id ? (
+                                    <OptionCard
+                                        $imgUrl={story.img}
+                                        onClick={e => e.stopPropagation()}
+                                    >
+                                        <CloseBtn onClick={(e) => { e.stopPropagation(); setActiveMyStoryId(null); }}>×</CloseBtn>
+                                        <Option onClick={() => playBook(story)}>재생하기</Option>
+                                        <Option onClick={() => viewScript(story)}>스크립트 보기</Option>
+                                        <Option onClick={() => deleteBook(story)}>삭제하기</Option>
+                                    </OptionCard>
+                                ) : (
+                                    <>
+                                        <BookWrapper>
+                                            <img src={story.img} alt={story.title} />
+                                        </BookWrapper>
+                                    </>
+                                )}
+                            <CreatedTitle>{story.title}</CreatedTitle>
+                            <CreatedMin>{story.min}</CreatedMin>
+                        </CreatedContainer>
+                    ))}
+                </CreatedStoryScroll>
+            </CreatedStoryContent>
+
+            <CreatedStoryContent>
+                <StoryLabel>
+                    추천 명작 동화
+                    <img src='/icons/right-part.svg' width={20} height={20} />
+                </StoryLabel>
+                <CreatedStoryScroll>
+                    {recommendedStories.map((story, index) => (
+                        <CreatedContainer key={index} onClick={() => handleRecommendedClick(story.id)}>
+                            {activeRecommendedId === story.id ? (
+                                    <OptionCard 
+                                        $imgUrl={story.img}
+                                        onClick={e => e.stopPropagation()}
+                                    >
+                                        <CloseBtn onClick={(e) => { e.stopPropagation(); setActiveRecommendedId(null); }}>×</CloseBtn>
+                                        <Option onClick={() => playBook(story)}>재생하기</Option>
+                                        <Option onClick={() => viewScript(story)}>스크립트 보기</Option>
+                                        <Option onClick={() => deleteBook(story)}>삭제하기</Option>
+                                    </OptionCard>
+                                ) : (
+                                    <>
+                                        <BookWrapper>
+                                            <img src={story.img} alt={story.title} />
+                                        </BookWrapper>
+                                    </>
+                                )}
+                            <CreatedTitle>{story.title}</CreatedTitle>
+                            <CreatedMin>{story.min}</CreatedMin>
+                        </CreatedContainer>
+                    ))}
+                </CreatedStoryScroll>
+            </CreatedStoryContent>
+        </Contents>
+
+        <BottomBar />
+        </>
+    );
+}
+
+export default Home;
+
+const Logo = styled.div`
+    width: 390px;
+    height: 64px;
+`
+
+const Banner = styled.div`
+    width: 390px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -32px;
+`
+
+const Contents = styled.div`
+    width: 390px;
+    height: 708px;
+    padding: 0 0 64px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    overflow-y: auto;
+    scrollbar-width: none;
+`
+
+const StoryContent = styled.div`
+    height: 170px;
+    width: 390px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+`
+
+const CreatedStoryContent = styled.div`
+    height: 246px;
+    width: 390px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+`
+
+const StoryLabel = styled.div`
+    height: 28px;
+    width: 390px;
+    display: flex;
+    justify-content: space-between;
+    color: #393939;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    padding: 0 16px;
+    align-items: center;
+`
+
+const StoryScroll = styled.div`
+    height: 126px;
+    margin-left: 16px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-right: 16px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`
+
+const CreatedStoryScroll = styled.div`
+    height: 202px;
+    margin-left: 16px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-right: 16px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`
+
+const HistoryContainer = styled.div`
+    position: relative;
+`
+
+const Card = styled.div`
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    width: 80px;
+    height: 112px;
+    border-radius: 10px;
+    border: 0.5px solid #DEDEDE;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.10);
+
+    img {
+        width: 80px;
+        height: 112px;
+        object-fit: contain;
+    }
+`;
+
+const Badge = styled.div`
+    width: 25px;
+    height: 18px;
+    position: absolute;
+    left: 56px;
+    bottom: 12px;
+    padding: 0;
+    margin: 0;
+
+    img {
+        width: 25px;
+        height: 18px;
+        object-fit: cover;
+        display: block;
+    }
+`;
+
+const TextBox = styled.div`
+    margin-top: 30px;
+    padding-left: 107px;
+    padding-top: 33px;
+    width: 200px;
+    height: 96px;
+    border-radius: 8px 20px 0 8px;
+    border: 1px solid #F1F1F1;
+    background: linear-gradient(0deg, #FFF) 0%, #FFF 100%, #D9D9D9;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
+`;
+
+const StoryTitle = styled.div`
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    align-self: stretch;
+    color: #393939;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    margin-bottom: 6px;
+`;
+
+const StoryTime = styled.div`
+    color: #BBB;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 400;
+`;
+
+const CreatedContainer = styled.div`
+    width: 110px;
+    height: 202px;
+`
+
+const CreatedTitle = styled.div`
+    margin-top: 6px;
+    width: 110px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    align-self: stretch;
+    overflow: hidden;
+    color: #393939;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+`
+
+const CreatedMin = styled.div`
+    margin-top: 6px;
+    width: 110px;
+    color: #BBB;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+`
+
+const OptionCard = styled.div`
+    width: 110px;
+    height: 154px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #393939 0%, rgba(39, 34, 31, 0.70) 100%), url(${props => props.$imgUrl}) lightgray 50% / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    position: relative;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #dedede;
+`;
+
+const Option = styled.div`
+    font-size: 12px;
+    margin: 6px 0;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+`;
+
+const CloseBtn = styled.div`
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    font-size: 18px;
+    cursor: pointer;
+`;
+
+const BookWrapper = styled.div`
+    position: relative;
+    width: 110px;
+    height: 154px;
+    border-radius: 12px;
+    border: 0.5px solid #DEDEDE;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: white;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+`;

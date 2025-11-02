@@ -10,7 +10,7 @@ function Homepage() {
     <>
       <Header
         title="로그인"
-        showBack={true} 
+        showBack={true}
         onBack={() => navigate(-1)}
         action={{ text: '건너뛰기' }}
       />

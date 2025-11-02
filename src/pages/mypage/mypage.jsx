@@ -1,0 +1,320 @@
+import styled from 'styled-components';
+import BottomBar from '../../components/Bottom';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
+function Mypage() {
+    const navigate = useNavigate();
+
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+    const handleLogout= () => {
+        setShowLogoutModal(true);
+    };
+
+    const confirmLogout = () => {
+        setShowLogoutModal(false);
+        navigate('/login');
+    };
+
+    const cancelLogout = () => {
+        setShowLogoutModal(false);
+    };
+
+    return (
+        <Wrapper>
+        <MypageHeader>마이페이지</MypageHeader>
+
+        <Contents>
+            <UserContainer>
+                <UserProfile>
+                    <img src='/icons/Avatar.svg' />
+                </UserProfile>
+                <UserContent>
+                    <UserName>사용자1</UserName>
+                    <UserId>ewha1234</UserId>
+                </UserContent>
+                <UserEdit onClick={() => (navigate('/mypage-profile'))}>프로필 편집</UserEdit>
+            </UserContainer>
+
+            <Banner>
+                <img src='/imges/mypage-banner.svg' />
+            </Banner>
+
+            <ModifyContainer>
+                <ModifyHeader>아이 정보</ModifyHeader>
+                <ModifyContent>
+                    아이1
+                    <ArrowRightBtn onClick={() => (navigate('/mypage-kid'))}><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                </ModifyContent>
+                <RegisterContent onClick={() => (navigate('/mypage-kid-register'))}>+ 등록하기</RegisterContent>
+            </ModifyContainer>
+
+            <ModifyContainer>
+                <ModifyHeader>목소리 설정</ModifyHeader>
+                <ModifyContent>
+                    나의 목소리
+                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                </ModifyContent>
+                <ModifyContent>
+                    성우 목소리
+                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                </ModifyContent>
+                <RegisterContent>+ 등록하기</RegisterContent>
+            </ModifyContainer>
+
+            <ModifyContainer>
+                <ModifyHeader>고객 지원</ModifyHeader>
+                <ModifyContent>
+                    기기 및 버전 정보
+                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                </ModifyContent>
+                <ModifyContent>
+                    고객센터
+                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                </ModifyContent>
+                <ModifyContent>
+                    약관 및 정책
+                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                </ModifyContent>
+            </ModifyContainer>
+
+            <ModifyContainer>
+                <Logout onClick={handleLogout}>로그아웃</Logout>
+                <Logout>계정삭제</Logout>
+            </ModifyContainer>
+        </Contents>
+
+        {showLogoutModal && (
+            <ModalOverlay>
+                <ModalBox>
+                    <ModalHeader>로그아웃 하시겠습니까?</ModalHeader>
+                    <ModalText>로그아웃하면 저장된 동화를<br />해당 기기에서 볼 수 없어요.</ModalText>
+                    <ModalBtnContainer>
+                        <CancelBtn onClick={cancelLogout}>취소</CancelBtn>
+                        <ConfirmBtn onClick={confirmLogout}>로그아웃</ConfirmBtn>
+                    </ModalBtnContainer>
+                </ModalBox>
+            </ModalOverlay>
+        )}
+
+        <BottomBar />
+        </Wrapper>
+    );
+}
+
+export default Mypage;
+
+const Wrapper = styled.div`
+    position: relative;
+    width: 390px;
+    height: 852px;
+`
+
+const MypageHeader = styled.div`
+    width: 390px;
+    height: 64px;
+    padding: 16px;
+    font-weight: 800;
+    font-size: 24px;
+`
+
+const Contents = styled.div`
+    height: 708px;
+    width: 390px;
+    padding: 24px 16px 64px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    overflow-y: auto;
+    scrollbar-width: none;
+`
+
+const UserContainer = styled.div`
+    width: 358px;
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+`
+
+const UserProfile = styled.div`
+    width: 56px;
+    height: 56px;
+    border-radius: 99px;
+`
+
+const UserContent = styled.div`
+    width: 192px;
+    height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 0;
+`
+
+const UserName = styled.div`
+    width: 192px;
+    height: 24px;
+    font-size: 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+`
+
+const UserId = styled.div`
+    width: 192px;
+    height: 22px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #bbb;
+    display: flex;
+    align-items: center;
+`
+
+const UserEdit = styled.button`
+    color: #bbb;
+    font-size: 12px;
+    font-weight: 700;
+    width: 78px;
+    height: 28px;
+    border-radius: 99px;
+    border: 0.5px solid #dedede;
+    background-color: #fff;
+    cursor: pointer;
+`
+
+const Banner = styled.div`
+    width: 358px;
+    height: 100px;
+`
+
+const ModifyContainer = styled.div`
+    width: 358px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`
+
+const ModifyHeader = styled.div`
+    width: 358px;
+    height: 20px;
+    display: flex;
+    align-items: flex-start;
+    color: #bbb;
+    font-size: 12px;
+    font-weight: 700;
+`
+
+const ModifyContent = styled.div`
+    width: 358px;
+    height: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #393939;
+    font-size: 14px;
+    font-weight: 700;
+`
+
+const RegisterContent = styled.div`
+    width: 358px;
+    height: 22px;
+    color: #bbb;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+`
+
+const Logout = styled.div`
+    width: 358px;
+    height: 22px;
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+`
+
+const ArrowRightBtn = styled.div`
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+`
+
+const ModalOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 390px;
+    height: 852px;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+`
+
+const ModalBox = styled.div`
+    width: 320px;
+    height: 196px;
+    padding: 24px 24px 16px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: #fff;
+`
+
+const ModalHeader = styled.div`
+    color: #393939;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+`
+
+const ModalText = styled.div`
+    color: #7a7a7a;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+`
+
+const ModalBtnContainer = styled.div`
+    display: flex;
+    gap: 12px;
+`
+
+const CancelBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #f1f1f1;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+`
+
+const ConfirmBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #ffd342;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+`
