@@ -23,36 +23,34 @@ const Onboardingend = () => {
           <br />
           동화를 시작해보세요
         </CenterCopy>
-      </Content>
 
-      {/* 하단 버튼 두 개 */}
-      <BottomArea>
+        {/* 버튼 두 개 (문구 바로 아래로 이동) */}
         <ButtonsCol>
           <StyledButton
-            bgColor="var(--color-bg-primary, #FFD342)"
+            bgColor="#FFD342"
             color="#FFF"
             onClick={() => navigate('/home')}
           >
             홈으로
           </StyledButton>
 
+          {/* ✅ 아래 버튼은 클래스명 'dark'로 색상 분리 */}
           <StyledButton
-            bgColor="var(--color-bg-inverse-bold, #342E29)"
-            color="#FFF"
+            className="dark"
             onClick={() => navigate('/home')} 
-            // 동화만들기로 라우터 수정 필요 
+            // 동화 만들기로 라우터 수정 필요
           >
             동화 만들기
           </StyledButton>
         </ButtonsCol>
-      </BottomArea>
+      </Content>
     </Screen>
   );
 };
 
 export default Onboardingend;
 
-// 스타일 컴포넌트
+//스타일 컴포넌트
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
@@ -67,14 +65,14 @@ const Content = styled.section`
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 16px;
+  gap: 20px;
   padding: 0 20px;
 `;
 
 const Illust = styled.img`
   width: 160px;
   height: auto;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 8px;
   user-select: none;
   pointer-events: none;
@@ -82,9 +80,8 @@ const Illust = styled.img`
 
 const CenterCopy = styled.h1`
   margin: 0;
-  color: var(--color-text-interactive-secondary, #342E29);
+  color: #342E29;
   text-align: center;
-
   font-family: "SOYO Maple TTF";
   font-size: 24px;
   font-style: normal;
@@ -93,21 +90,12 @@ const CenterCopy = styled.h1`
   letter-spacing: -0.02em;
 `;
 
-const BottomArea = styled.div`
-  margin-top: 48px;
-  padding: 0 24px calc(env(safe-area-inset-bottom, 0) + 24px + 12px);
-  display: flex;
-  justify-content: center;
-`;
-
 const ButtonsCol = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
   width: 220px;
-  gap: 8px;             
-  top: -240px;
-  align-items: stretch;   
+  gap: 10px;
+  margin-top: 28px;
 `;
 
 /* 공통 버튼 스타일 오버라이드 */
@@ -117,7 +105,13 @@ const StyledButton = styled(Button)`
   padding: 0 12px;
   justify-content: center;
   align-items: center;
-  gap: 4px;
-  align-self: stretch;
   border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+
+  &.dark {
+    background-color: #342E29 !important;
+    color: #FFF !important;
+  }
 `;

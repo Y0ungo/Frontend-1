@@ -18,7 +18,7 @@ const OnboardingStep05 = () => {
   const [selected, setSelected] = useState(CHARACTERS[0].key);
   const [name, setName] = useState('');
   const [birthYear, setBirthYear] = useState('');
-  const [gender, setGender] = useState(''); // 'female' | 'male' | ''
+  const [gender, setGender] = useState('');
 
   // 모달 상태
   const [openSkip, setOpenSkip] = useState(false);
@@ -26,7 +26,6 @@ const OnboardingStep05 = () => {
 
   const current = CHARACTERS.find(c => c.key === selected) || CHARACTERS[0];
 
-  // 유효성: 이름 + 출생연도(숫자 4자리) + 성별
   const isValid = useMemo(() => {
     const yearOk = /^\d{4}$/.test(birthYear);
     return name.trim().length > 0 && yearOk && (gender === 'female' || gender === 'male');
@@ -47,7 +46,6 @@ const OnboardingStep05 = () => {
 
   return (
     <Screen>
-      {/* 헤더: 건너뛰기 → 확인 모달 */}
       <Header
         title="아이 정보 등록"
         showBack={true}
@@ -55,12 +53,9 @@ const OnboardingStep05 = () => {
         action={{ text: '건너뛰기', handler: () => setOpenSkip(true) }}
       />
 
-      {/* 콘텐츠 */}
       <Content as="form" onSubmit={handleSubmit}>
-        {/* 선택된 캐릭터 크게 표시 */}
         <MainIllust src={current.src} alt="선택된 캐릭터" />
 
-        {/* 캐릭터 선택 리스트 */}
         <SelectorRow>
           {CHARACTERS.map(({ key, src }) => (
             <SelectButton
@@ -75,7 +70,6 @@ const OnboardingStep05 = () => {
           ))}
         </SelectorRow>
 
-        {/* 이름 */}
         <FieldGroup>
           <FieldLabel>이름</FieldLabel>
           <Input
@@ -83,11 +77,9 @@ const OnboardingStep05 = () => {
             value={name}
             onChange={e => setName(e.target.value)}
             placeholder="이름을 입력해주세요."
-            aria-label="이름 입력"
           />
         </FieldGroup>
 
-        {/* 출생연도 */}
         <FieldGroup>
           <FieldLabel>출생연도</FieldLabel>
           <Input
@@ -100,19 +92,16 @@ const OnboardingStep05 = () => {
               setBirthYear(onlyNum);
             }}
             placeholder="출생연도를 입력해주세요"
-            aria-label="출생연도 입력"
           />
         </FieldGroup>
 
-        {/* 성별 */}
         <FieldGroup>
           <FieldLabel>성별</FieldLabel>
-          <GenderRow role="radiogroup" aria-label="성별 선택">
+          <GenderRow>
             <GenderOption
               type="button"
-              aria-checked={gender === 'female'}
-              onClick={() => setGender('female')}
               $active={gender === 'female'}
+              onClick={() => setGender('female')}
             >
               <RadioIcon $active={gender === 'female'} />
               <span>여자</span>
@@ -120,9 +109,8 @@ const OnboardingStep05 = () => {
 
             <GenderOption
               type="button"
-              aria-checked={gender === 'male'}
-              onClick={() => setGender('male')}
               $active={gender === 'male'}
+              onClick={() => setGender('male')}
             >
               <RadioIcon $active={gender === 'male'} />
               <span>남자</span>
@@ -131,7 +119,6 @@ const OnboardingStep05 = () => {
         </FieldGroup>
       </Content>
 
-      {/* 하단: 등록하기 (유효 시 노란색 / 비활성 시 회색) */}
       <BottomArea>
         <Button
           width="343px"
@@ -150,29 +137,14 @@ const OnboardingStep05 = () => {
         <Dim onClick={() => setOpenSkip(false)}>
           <Modal role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
             <ModalTitle>등록을 건너뛰시겠습니까?</ModalTitle>
-            <ModalDesc>
-              지금까지 입력한 정보는 저장되지 않아요.
-            </ModalDesc>
-
+            <ModalDesc>지금까지 입력한 정보는 저장되지 않아요.</ModalDesc>
             <BtnRow>
-              <Button
-                width="132px"
-                height="48px"
-                bgColor="#F1F1F1"
-                color="#7A7A7A"
-                onClick={() => { setOpenSkip(false); }}
-              >
+              <CancelBtn onClick={() => { setOpenSkip(false); navigate('/home'); }}>
                 건너뛰기
-              </Button>
-              <Button
-                width="147px"
-                height="48px"
-                bgColor="#FFD342"
-                color="#ff"
-                onClick={() => setOpenSkip(false)}
-              >
+              </CancelBtn>
+              <DeleteBtn onClick={() => setOpenSkip(false)}>
                 이어서 등록
-              </Button>
+              </DeleteBtn>
             </BtnRow>
           </Modal>
         </Dim>
@@ -185,24 +157,12 @@ const OnboardingStep05 = () => {
             <ModalTitle>아이 정보 등록이 완료되었어요</ModalTitle>
             <ModalDesc>등록된 아이 정보로 맞춤 동화를 만들 수 있어요.</ModalDesc>
             <BtnRow>
-              <Button
-                width="132px"
-                height="48px"
-                bgColor="#F1F1F1"
-                color="#7A7A7A"
-                onClick={() => { setOpenDone(false); resetForm(); }}
-              >
+              <CancelBtn onClick={() => { setOpenDone(false); resetForm(); }}>
                 추가 등록
-              </Button>
-              <Button
-                width="147px"
-                height="48px"
-                bgColor="#FFD342"
-                color="#FF"
-                onClick={() => navigate('/onboarding/end')}
-              >
+              </CancelBtn>
+              <DeleteBtn onClick={() => navigate('/onboarding/end')}>
                 확인
-              </Button>
+              </DeleteBtn>
             </BtnRow>
           </Modal>
         </Dim>
@@ -213,7 +173,7 @@ const OnboardingStep05 = () => {
 
 export default OnboardingStep05;
 
-// 스타일 컴포넌트
+//스타일 컴포넌트
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
@@ -235,8 +195,6 @@ const MainIllust = styled.img`
   margin-top: 48px;
   margin-bottom: 32px;
   object-fit: contain;
-  user-select: none;
-  pointer-events: none;
 `;
 
 const SelectorRow = styled.div`
@@ -251,15 +209,13 @@ const SelectButton = styled.button`
   padding: 0;
   width: 62px;
   height: 62px;
-  aspect-ratio: 1 / 1;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-tap-highlight-color: transparent;
   border: ${({ $active }) => ($active ? '2px solid #FFD342' : '2px solid transparent')};
-  box-shadow: ${({ $active }) => ($active ? '0 0 0 2px rgba(255, 211, 66, 0.25) inset' : 'none')};
-  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+  box-shadow: ${({ $active }) => ($active ? '0 0 0 2px rgba(255,211,66,0.25) inset' : 'none')};
+  transition: border-color 120ms ease, transform 120ms ease;
   &:active { transform: scale(0.98); }
 `;
 
@@ -267,15 +223,11 @@ const SelectIllust = styled.img`
   width: 56px;
   height: 56px;
   object-fit: contain;
-  pointer-events: none;
 `;
 
 const FieldGroup = styled.div`
   width: 343px;
   margin-top: 24px;
-  &:first-of-type {
-    margint-top: 0px;
-    }
 `;
 
 const FieldLabel = styled.div`
@@ -294,25 +246,19 @@ const Input = styled.input`
   padding: 0 16px;
   font-size: 16px;
   color: #393939;
-  box-sizing: border-box;
 
-  &::placeholder {
-    color: #bdbdbd;
-  }
-
+  &::placeholder { color: #bdbdbd; }
   &:focus {
     outline: none;
     border-color: #ffd342;
-    box-shadow: 0 0 0 3px rgba(255, 211, 66, 0.25);
+    box-shadow: 0 0 0 3px rgba(255,211,66,0.25);
   }
 `;
 
 const GenderRow = styled.div`
   display: flex;
   gap: 20px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 343px; 
+  width: 343px;
 `;
 
 const GenderOption = styled.button`
@@ -322,25 +268,20 @@ const GenderOption = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
-  padding: 0px;
-  color: ${({ $active }) => ($active ? '#3a372f' : '#7A7A7A')};
+  color: ${({ $active }) => ($active ? '#3a372f' : '#7a7a7a')};
   font-size: 16px;
   font-weight: 600;
 `;
 
 const RadioIcon = styled.span`
-    position: relative;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    box-sizing: border-box;
-    border: 2px solid ${({ $active }) => ($active ? '#FFD342' : '#D8D8D8')};
-    background: #FFF;
-    display: inline-block;
-    box-shadow: ${({ $active }) =>
-        $active ? '0 0 0 2px rgba(255, 211, 66, 0.20) inset' : 'none'};
-    /* 내부 점 */
-    &::after {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid ${({ $active }) => ($active ? '#FFD342' : '#D8D8D8')};
+  background: #fff;
+  box-shadow: ${({ $active }) => ($active ? '0 0 0 2px rgba(255,211,66,0.2) inset' : 'none')};
+  &::after {
     content: '';
     position: absolute;
     left: 50%;
@@ -351,7 +292,7 @@ const RadioIcon = styled.span`
     border-radius: 50%;
     background: #FFD342;
     transition: width 120ms ease, height 120ms ease;
-    }
+  }
 `;
 
 const BottomArea = styled.div`
@@ -360,15 +301,16 @@ const BottomArea = styled.div`
   justify-content: center;
 `;
 
+//모달창
 const Dim = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
-  z-index: 999;
+  z-index: 1000;
 `;
 
 const Modal = styled.div`
@@ -378,10 +320,8 @@ const Modal = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 16px;
-  background: #FFF;
-  box-shadow:
-    0 0 1px 0 rgba(24, 24, 27, 0.30),
-    0 8px 16px 0 rgba(24, 24, 27, 0.10);
+  background: #fff;
+  box-shadow: 0 0 1px 0 rgba(24,24,27,0.3), 0 8px 16px 0 rgba(24,24,27,0.1);
   padding: 20px;
   text-align: center;
 `;
@@ -389,17 +329,24 @@ const Modal = styled.div`
 const ModalTitle = styled.h3`
   margin: 6px 0 8px;
   color: #3a372f;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 800;
-  line-height: 24px;
+  line-height: 28px;
   letter-spacing: -0.01em;
+  text-align: center;
 `;
 
 const ModalDesc = styled.p`
   margin: 0 0 16px;
   color: #7a7a7a;
-  font-size: 16px;
-  line-height: 18px;
+  font-size: 14px;
+  font-family: NanumSquareRound;
+  line-height: 22px;
+  width: 100%;
+  max-width: 272px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const BtnRow = styled.div`
@@ -407,4 +354,29 @@ const BtnRow = styled.div`
   margin-bottom: 4px;
   display: flex;
   gap: 8px;
+`;
+
+const CancelBtn = styled.button`
+  width: 132px;
+  height: 48px;
+  border: none;
+  border-radius: 24px;
+  background: #f1f1f1;
+  color: #7a7a7a;
+  font-family: NanumSquareRound;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+const DeleteBtn = styled.button`
+  width: 132px;
+  height: 48px;
+  border: none;
+  border-radius: 24px;
+  background: #ffd342;
+  color: #fff;
+  font-family: NanumSquareRound;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
 `;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import GlobalStyle from '../../components/GlobalStyle.jsx';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header.jsx';
 import Button from '../../components/Button.jsx';
@@ -8,35 +9,40 @@ const Onboardingsetp03 = () => {
   const navigate = useNavigate();
 
   return (
-    <Screen>
-      {/* 헤더: 뒤로가기 X, 이름 수정 */}
-      <Header
-        title="목소리 설정"
-        showBack={false}
-        action={false}
-      />
+    <>
+      {/* 전역 스타일*/}
+      <GlobalStyle />
 
-      {/* 중앙 콘텐츠 */}
-      <Content>
-        <Illust
-          src="/img/onboarding/character_main.svg"
-          alt="헤드셋을 쓴 토끼 일러스트"
+      <Screen>
+        {/* 헤더: 뒤로가기 X, 이름 수정 */}
+        <Header
+          title="목소리 설정"
+          showBack={false}
+          action={false}
         />
-        <Title>
-          목소리 설정이
-          <br />
-          완료되었어요 :)
-        </Title>
-        <Subtitle>
-          이제 아이에게 목소리를 들려줄 때 00님의 목소리가 함께해요.
-        </Subtitle>
-      </Content>
 
-      {/* 하단 버튼 */}
-      <BottomArea>
-        <Button onClick={() => navigate('/onboarding/step_04')}>다음</Button>
-      </BottomArea>
-    </Screen>
+        {/* 중앙 콘텐츠 */}
+        <Content>
+          <Illust
+            src="/img/onboarding/character_main.svg"
+            alt="헤드셋을 쓴 토끼 일러스트"
+          />
+          <Title>
+            목소리 설정이
+            <br />
+            완료되었어요 :)
+          </Title>
+          <Subtitle>
+            이제 아이에게 목소리를 들려줄 때 00님의 목소리가 함께해요.
+          </Subtitle>
+        </Content>
+
+        {/* 하단 버튼 */}
+        <BottomArea>
+          <Button onClick={() => navigate('/onboarding/step_04')}>다음</Button>
+        </BottomArea>
+      </Screen>
+    </>
   );
 };
 
@@ -74,7 +80,7 @@ const Title = styled.h1`
   margin: 0;
   color: #3a372f;
   font-size: 24px;
-  font-family: "SOYO Maple TTF";
+  font-family: 'SOYO Maple', sans-serif;
   font-weight: 800;
   line-height: 1.5;
   letter-spacing: -0.02em;

@@ -1,34 +1,27 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-
-  /* NanumSquareRound 폰트 등록*/
+  /* SOYO Maple Regular */
   @font-face {
-    font-family: 'NanumSquareRound';
-    src: url('/fonts/NanumSquareRound.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-    /* SOYO Maple TTF 폰트 등록 */
-  @font-face {
-    font-family: 'SOYO Maple TTF';
-    src: url('/fonts/SOYOMapleTTF.ttf') format('truetype');
+    font-family: 'SOYO Maple';
+    src: url('/font/SOYO Maple Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
   }
 
-  /* 전체 초기화 + 기본 폰트 지정 */
+  /* SOYO Maple Bold */
+  @font-face {
+    font-family: 'SOYO Maple';
+    src: url('/font/SOYO Maple Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'NanumSquareRound', 'SOYO Maple TTF', sans-serif;
-  }
-
-  body {
-    background-color: #fff;
-    color: #000;
+    font-family: 'NanumSquareRound', sans-serif;
   }
 `;
 
