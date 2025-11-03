@@ -4,12 +4,12 @@ import Header from "../../components/Header.jsx";
 import { useNavigate } from "react-router-dom";
 
 const CHARACTER = "/img/end_rewrite/elephant.svg";
-const MIC_ICON = "/img/end_rewrite/record.svg";
+const play_icon = "/img/end_rewrite/yellow_plat.svg";
 const FLOWER = "/img/end_rewrite/flower.svg";
 const DECO = "/img/end_rewrite/deco.svg";
 const MINI_HOME = "/img/end_rewrite/mini_home.svg";
 
-const Endwritemain = () => {
+const Endwritestep04 = () => {
     const navigate = useNavigate(); 
   return (
     <Screen>
@@ -24,31 +24,32 @@ const Endwritemain = () => {
       <Content>
         <Character src={CHARACTER} alt="코끼리 캐릭터" />
         <TextGroup>
-          <Line1>안녕, 스토니!</Line1>
+          <Line1>스토니가 쓴</Line1>
           <Line2>
-            <Highlight>신데렐라</Highlight> 동화에 대해
+            <Highlight>신데렐라</Highlight> 동화가
             <br />
-            같이 이야기해볼까?
+            완성되었어!
           </Line2>
         </TextGroup>
       </Content>
 
       {/*녹음*/}
       <BottomArea>
-        <MicButton type="button" onClick={() => navigate('/rewrite_end/step01')}>
-          <img src={MIC_ICON} alt="녹음 버튼" />
+        <MicButton type="button" onClick={() => navigate('/rewrite_end/main')}> 
+            {/* 라우터 수정 필요: 제작동화 1-1로 이동 */}
+          <img src={play_icon} alt="녹음 버튼" />
         </MicButton>
         <HintText>
           버튼을 눌러
           <br />
-          대화를 시작해보세요
+          동화를 시작해보세요
         </HintText>
       </BottomArea>
     </Screen>
   );
 };
 
-export default Endwritemain;
+export default Endwritestep04;
 
 //스타일 컴포넌트
 

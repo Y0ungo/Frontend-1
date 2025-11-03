@@ -34,6 +34,11 @@ import KidRegister from './pages/mypage/mypage-kid-register.jsx'; // 아이 정�
 import IllustPortrait from './pages/illust/illust-portrait.jsx'; // 삽화 스타일 설정 페이지
 import IllustLandscape from './pages/illust/illust-landscape.jsx'; //삽화 페이지 별 내용 생성 페이지
 import StoryPlay from './pages/illust/story-play.jsx'; // 동화 생성 후 재생 및 종료 페이지
+import Endwritemain from './pages/end_rewirte/main.jsx' //결말 확장
+import Endwritestep01 from './pages/end_rewirte/step_01.jsx' //결말 확장 로딩
+import Endwritestep02 from './pages/end_rewirte/step_02.jsx' //결말 확장 음성
+import Endwritestep03 from './pages/end_rewirte/step_03.jsx' //결말 확장 채팅
+import Endwritestep04 from './pages/end_rewirte/step_04.jsx' //결말 확장 완성
 
 function App() {
   return (
@@ -86,6 +91,13 @@ function App() {
             <Route path='/illust-portrait' element={<PageWrapper orientation="portrait"><IllustPortrait /></PageWrapper>} />
             <Route path='/illust-landscape' element={<PageWrapper orientation="landscape"><IllustLandscape /></PageWrapper>} />
             <Route path='/story-play' element={<PageWrapper orientation="landscape"><StoryPlay /></PageWrapper>} />
+
+            {/* 결말확장 */}
+            <Route path='/rewrite_end' element={<PageWrapper orientation="portrait"><Endwritemain/></PageWrapper>} />
+            <Route path='/rewrite_end/step01' element={<PageWrapper orientation="portrait"><Endwritestep01/></PageWrapper>} />
+            <Route path='/rewrite_end/step02' element={<PageWrapper orientation="portrait"><Endwritestep02/></PageWrapper>} />
+            <Route path='/rewrite_end/step03' element={<PageWrapper orientation="portrait"><Endwritestep03/></PageWrapper>} />
+            <Route path='/rewrite_end/step04' element={<PageWrapper orientation="portrait"><Endwritestep04/></PageWrapper>} />
           </Routes>
         </Router>
     </Root>

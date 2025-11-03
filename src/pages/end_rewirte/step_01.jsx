@@ -1,18 +1,18 @@
 import styled, { keyframes } from 'styled-components';
 
-function LoadingModal() {
+function Endwritestep01() {
     return (
         <Overlay>
             <Spinner>
                 <Dot1 />
                 <Dot2 />
             </Spinner>
-            <Text>대화를 위해<br />토니를 부르고 있어요!<br>조금만 기다려주세요</br></Text>
+            <Text>대화를 위해<br />토니를 부르고 있어요!<br/>조금만 기다려주세요</Text>
         </Overlay>
     );
 }
 
-export default LoadingModal;
+export default Endwritestep01;
 
 const moveLeft = keyframes`
     0%, 100% { transform: translateX(-13px); }
