@@ -98,7 +98,11 @@ function IllustLandscape() {
                 </Button>
             </BtnContainer>
         </Contents2>
-        {isLoading && <LoadingModal />}
+        {isLoading &&
+            <LoadingModal
+                text={<>동화를 완성하고 있어요!<br />조금만 기다려주세요</>} 
+            />
+        }
         </Wrapper>
     );
 }

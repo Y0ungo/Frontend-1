@@ -81,7 +81,11 @@ function IllustPortrait() {
         <ButtonContainer>
             <Button onClick={handleNext}>다음</Button>
         </ButtonContainer>
-        {isLoading && <LoadingModal />}
+        {isLoading &&
+            <LoadingModal
+                text={<>삽화를 만들고 있어요!<br />조금만 기다려주세요</>} 
+            />
+        }
         </>
     );
 }

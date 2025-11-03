@@ -1,13 +1,13 @@
 import styled, { keyframes } from 'styled-components';
 
-function LoadingModal() {
+function LoadingModal({ text }) {
     return (
         <Overlay>
             <Spinner>
                 <Dot1 />
                 <Dot2 />
             </Spinner>
-            <Text>삽화를 만들고 있어요!<br />조금만 기다려주세요</Text>
+            <Text>{text}</Text>
         </Overlay>
     );
 }
