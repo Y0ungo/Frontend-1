@@ -167,7 +167,7 @@ const Banner = styled.div`
 
 const Contents = styled.div`
     width: 390px;
-    height: 708px;
+    flex: 1;
     padding: 0 0 64px 0;
     display: flex;
     flex-direction: column;

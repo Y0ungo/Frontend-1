@@ -83,7 +83,10 @@ function IllustLandscape() {
             <PageLabel>{selectedImg?.page}</PageLabel>
             <PageContent>
                 <ContentContainer>{selectedImg?.content}</ContentContainer>
-                <img src='/icons/sound.svg' />
+                <img
+                    style={{ cursor: 'pointer' }}
+                    src='/icons/sound.svg'
+                />
             </PageContent>
             <BtnContainer>
                 <Button

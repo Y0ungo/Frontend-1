@@ -13,6 +13,7 @@ function StoryPlay() {
                     <Button
                         $width='260px'
                         $height='48px'
+                        onClick={() => navigate('/story-player')}
                     >
                         바로 재생
                     </Button>

@@ -39,6 +39,7 @@ import Endwritestep01 from './pages/end_rewirte/step_01.jsx' //결말 확장 로
 import Endwritestep02 from './pages/end_rewirte/step_02.jsx' //결말 확장 음성
 import Endwritestep03 from './pages/end_rewirte/step_03.jsx' //결말 확장 채팅
 import Endwritestep04 from './pages/end_rewirte/step_04.jsx' //결말 확장 완성
+import StoryPlayer from './pages/player/story-player.jsx'; // 동화 재생하기 페이지
 
 function App() {
   return (
@@ -98,6 +99,9 @@ function App() {
             <Route path='/rewrite_end/step02' element={<PageWrapper orientation="portrait"><Endwritestep02/></PageWrapper>} />
             <Route path='/rewrite_end/step03' element={<PageWrapper orientation="portrait"><Endwritestep03/></PageWrapper>} />
             <Route path='/rewrite_end/step04' element={<PageWrapper orientation="portrait"><Endwritestep04/></PageWrapper>} />
+
+            {/* 동화 플레이어 페이지 */}
+            <Route path='/story-player' element={<PageWrapper orientation="landscape"><StoryPlayer /></PageWrapper>} />
           </Routes>
         </Router>
     </Root>
@@ -114,13 +118,19 @@ const Root = styled.div`
   background-color: #f5f5f5;
 `;
 
-// PageWrapper: 페이지 중앙 고정 + 세로/가로 모드
 const PageWrapper = styled.div`
-  width: ${props => props.orientation === 'landscape' ? '798px' : '390px'};
-  height: ${props => props.orientation === 'landscape' ? '390px' : '798px'};
+  width: ${({ orientation }) => (orientation === 'landscape' ? '798px' : '390px')};
+  height: ${({ orientation }) => (orientation === 'landscape' ? '390px' : '798px')};
+  
   display: flex;
   flex-direction: column;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   overflow: hidden;
+
+  /* 화면 중앙 고정 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

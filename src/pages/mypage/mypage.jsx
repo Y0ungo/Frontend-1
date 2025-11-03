@@ -7,8 +7,9 @@ function Mypage() {
     const navigate = useNavigate();
 
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    const handleLogout= () => {
+    const handleLogout = () => {
         setShowLogoutModal(true);
     };
 
@@ -19,6 +20,19 @@ function Mypage() {
 
     const cancelLogout = () => {
         setShowLogoutModal(false);
+    };
+
+    const handleDelete = () => {
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = () => {
+        setShowDeleteModal(false);
+        navigate('/intro');
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteModal(false);
     };
 
     return (
@@ -81,7 +95,7 @@ function Mypage() {
 
             <ModifyContainer>
                 <Logout onClick={handleLogout}>로그아웃</Logout>
-                <Logout>계정삭제</Logout>
+                <Logout onClick={handleDelete}>계정삭제</Logout>
             </ModifyContainer>
         </Contents>
 
@@ -98,6 +112,19 @@ function Mypage() {
             </ModalOverlay>
         )}
 
+        {showDeleteModal && (
+            <ModalOverlay>
+                <ModalBox>
+                    <ModalHeader>계정을 삭제하시겠습니까?</ModalHeader>
+                    <ModalText>계정을 삭제하면 지금까지 만든<br />동화가 모두 없어져요.</ModalText>
+                    <ModalBtnContainer>
+                        <CancelBtn onClick={cancelDelete}>취소</CancelBtn>
+                        <ConfirmBtn onClick={confirmDelete}>삭제</ConfirmBtn>
+                    </ModalBtnContainer>
+                </ModalBox>
+            </ModalOverlay>
+        )}
+
         <BottomBar />
         </Wrapper>
     );
@@ -108,7 +135,9 @@ export default Mypage;
 const Wrapper = styled.div`
     position: relative;
     width: 390px;
-    height: 852px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 `
 
 const MypageHeader = styled.div`
@@ -120,7 +149,7 @@ const MypageHeader = styled.div`
 `
 
 const Contents = styled.div`
-    height: 708px;
+    flex: 1;
     width: 390px;
     padding: 24px 16px 64px 16px;
     display: flex;

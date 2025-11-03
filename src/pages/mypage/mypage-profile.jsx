@@ -179,7 +179,7 @@ export default Profile;
 
 const Wrapper = styled.div`
     width: 390px;
-    height: 852px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -187,7 +187,7 @@ const Wrapper = styled.div`
 `
 const Contents = styled.div`
     width: 390px;
-    height: 708px;
+    flex: 1;
     padding: 24px 16px 64px 16px;
     display: flex;
     flex-direction: column;
