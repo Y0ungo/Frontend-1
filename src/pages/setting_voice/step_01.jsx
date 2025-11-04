@@ -76,7 +76,7 @@ const VoiceSetStep01 = () => {
 
 export default VoiceSetStep01;
 
-/* ----- styles ----- */
+//스타일
 const Screen = styled.div`
   display: flex;
   flex-direction: column;

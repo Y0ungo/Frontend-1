@@ -4,7 +4,7 @@ const GlobalStyle = createGlobalStyle`
   /* SOYO Maple Regular */
   @font-face {
     font-family: 'SOYO Maple';
-    src: url('/font/SOYO Maple Regular.ttf') format('truetype');
+    src: url('/font/SOYO-Maple-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
   }
@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
   /* SOYO Maple Bold */
   @font-face {
     font-family: 'SOYO Maple';
-    src: url('/font/SOYO Maple Bold.ttf') format('truetype');
+    src: url('/font/SOYO-Maple-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
   }
