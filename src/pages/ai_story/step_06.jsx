@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-function Endwritestep01() {
+function Storystep06() {
     return (
         <Overlay>
             <Spinner>
@@ -12,7 +12,7 @@ function Endwritestep01() {
     );
 }
 
-export default Endwritestep01;
+export default Storystep06;
 
 const moveLeft = keyframes`
     0%, 100% { transform: translateX(-13px); }

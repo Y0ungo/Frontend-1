@@ -39,6 +39,16 @@ import Endwritestep01 from './pages/end_rewirte/step_01.jsx' //결말 확장 로
 import Endwritestep02 from './pages/end_rewirte/step_02.jsx' //결말 확장 음성
 import Endwritestep03 from './pages/end_rewirte/step_03.jsx' //결말 확장 채팅
 import Endwritestep04 from './pages/end_rewirte/step_04.jsx' //결말 확장 완성
+import Storystep01 from './pages/ai_story/step_01.jsx' //AI 스토리 생성
+import Storystep02 from './pages/ai_story/step_02.jsx' //AI 스토리 생성 음성
+import Storystep03 from './pages/ai_story/step_03.jsx' //AI 스토리 생성 텍스트
+import Storystep04 from './pages/ai_story/step_04.jsx' //AI 스토리 생성 수정하기
+// import Storystep05 from './pages/ai_story/step_05.jsx' //AI 스토리 생성 교훈 선택
+import Storystep06 from './pages/ai_story/step_06.jsx' //AI 스토리 생성 로딩
+// import Storystep07 from './pages/ai_story/step_07.jsx' //AI 스토리 생성 최종
+
+
+
 
 function App() {
   return (
@@ -98,7 +108,15 @@ function App() {
             <Route path='/rewrite_end/step02' element={<PageWrapper orientation="portrait"><Endwritestep02/></PageWrapper>} />
             <Route path='/rewrite_end/step03' element={<PageWrapper orientation="portrait"><Endwritestep03/></PageWrapper>} />
             <Route path='/rewrite_end/step04' element={<PageWrapper orientation="portrait"><Endwritestep04/></PageWrapper>} />
+
+            {/* AI 스토리 생성 */}
+            <Route path='/mystory/ai_story/step01' element={<PageWrapper orientation="portrait"><Storystep01/></PageWrapper>} />
+            <Route path='/mystory/ai_story/step02' element={<PageWrapper orientation="portrait"><Storystep02/></PageWrapper>} />
+            <Route path='/mystory/ai_story/step03' element={<PageWrapper orientation="portrait"><Storystep03/></PageWrapper>} />
+            <Route path='/mystory/ai_story/step04' element={<PageWrapper orientation="portrait"><Storystep04/></PageWrapper>} />
+            <Route path='/mystory/ai_story/step06' element={<PageWrapper orientation="portrait"><Storystep06/></PageWrapper>} />
           </Routes>
+
         </Router>
     </Root>
   );
