@@ -176,22 +176,23 @@ const Spacer = styled.div`
 `;
 
 const ArcArea = styled.div`
-  position: relative;
-  width: 390px;
-  height: 330px;
+  position: relative;       
+  width: 390px;             
+  height: 330px;             
   display: flex;
   align-items: flex-end;
   justify-content: center;
 `;
 
-/* 노란 반원 */
+
 const Arc = styled.div`
   position: absolute;
   inset: 0;
-  background: #fff5d2;
-  border-top-left-radius: 40% 40%;
-  border-top-right-radius: 40% 40%;
+  background: #FFF8E3;     
+  border-top-left-radius: 90% 50%;
+  border-top-right-radius: 90% 50%;
 `;
+
 
 /* 반원 안 텍스트 */
 const ArcTexts = styled.div`
