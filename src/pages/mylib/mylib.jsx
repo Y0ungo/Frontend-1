@@ -51,22 +51,25 @@ function Mylib() {
         <MylibHeader>내 서재</MylibHeader>
 
         <MylibContainer>
-                  <SortHeader>
-        <SortMenu>
-          <SortButton onClick={() => setOpen(!open)}>
-            {sortType === 'recentView' ? '최근 시청 순' : '최근 제작 순'}
-            <img src='/icons/arrow-down.svg' />
-          </SortButton>
-          <Dropdown open={open}>
-            <li onClick={() => { setSortType('recentView'); setOpen(false); }}>최근 시청순</li>
-            <li onClick={() => { setSortType('recentCreate'); setOpen(false); }}>최근 제작순</li>
-          </Dropdown>
-        </SortMenu>
-      </SortHeader>
+          <SortHeader>
+            <SortMenu>
+              <SortButton onClick={() => setOpen(!open)}>
+                {sortType === 'recentView' ? '최근 시청 순' : '최근 제작 순'}
+                <img src='/icons/arrow-down.svg' />
+              </SortButton>
+              <Dropdown open={open}>
+                <li onClick={() => { setSortType('recentView'); setOpen(false); }}>최근 시청순</li>
+                <li onClick={() => { setSortType('recentCreate'); setOpen(false); }}>최근 제작순</li>
+              </Dropdown>
+            </SortMenu>
+          </SortHeader>
 
+          {sortedBooks.length === 0 ? (
+            <Empty><img src='/imges/empty3.svg' /></Empty>
+          ) : (
             <BookGrid>
-                {sortedBooks.map((book) => (
-                  <BookCard key={book.id} onClick={() => handleCardClick(book.id)}>
+              {sortedBooks.map((book) => (
+                <BookCard key={book.id} onClick={() => handleCardClick(book.id)}>
                   {activeBookId === book.id ? (
                     <OptionCard>
                       <CloseBtn onClick={(e) => { e.stopPropagation(); setActiveBookId(null); }}>×</CloseBtn>
@@ -83,16 +86,16 @@ function Mylib() {
                       </ProgressContainer>
                     </BookWrapper>
                     <Badge>
-                        <img
-                          src={
-                            book.bookmark === '명작'
-                            ? '/icons/Bookmark-cream.svg'
-                            : book.bookmark === '확장'
-                            ? '/icons/Bookmark-yellow.svg'
-                            : '/icons/Bookmark-black.svg'
-                          }
-                        />
-                      </Badge>
+                      <img
+                        src={
+                          book.bookmark === '명작'
+                          ? '/icons/Bookmark-cream.svg'
+                          : book.bookmark === '확장'
+                          ? '/icons/Bookmark-yellow.svg'
+                          : '/icons/Bookmark-black.svg'
+                        }
+                      />
+                    </Badge>
                     </>
                   )}
                     <Title>{book.title}</Title>
@@ -104,9 +107,9 @@ function Mylib() {
                     </ViewMin>
                   </BookCard>
                 ))}
-            </BookGrid>
+              </BookGrid>
+            )}
         </MylibContainer>
-
         <BottomBar />
         </>
     );
@@ -319,3 +322,8 @@ const BookWrapper = styled.div`
     object-fit: cover;
   }
 `;
+
+const Empty = styled.div`
+  width: 358px;
+  height: 590px;
+`
