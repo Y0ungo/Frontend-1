@@ -117,26 +117,28 @@ const Question = styled.p`
 
 // 반원 배경
 const ArcArea = styled.div`
-  position: relative;
-  width: 390px;
-  height: 300px;
+  position: relative;       
+  width: 390px;            
+  height: 330px;             
   display: flex;
   align-items: flex-end;
   justify-content: center;
 `;
 
+
 const Arc = styled.div`
   position: absolute;
   inset: 0;
-  background: #fff5d2;
-  border-top-left-radius: 50% 40%;
-  border-top-right-radius: 50% 40%;
+  background: #FFF8E3;     
+  border-top-left-radius: 90% 50%;
+  border-top-right-radius: 90% 50%;
 `;
+
 
 // 초록 점
 const DotWrapper = styled.div`
   position: absolute;
-  bottom: 150px;
+  bottom: 180px;
   display: flex;
   gap: 10px;
 `;
