@@ -31,10 +31,10 @@ function IllustPortrait() {
     ]);
 
     const [styles] = useState([
-        { label: '수채화', img: '/imges/illust-style.png'},
-        { label: '유화', img: '/imges/illust-style.png'},
-        { label: '크레파스', img: '/imges/illust-style.png'},
-        { label: '색연필', img: '/imges/illust-style.png'},
+        { label: '수채화', img: '/icons/illust-style-1.svg'},
+        { label: '유화', img: '/icons/illust-style-2.svg'},
+        { label: '크레파스', img: '/icons/illust-style-3.svg'},
+        { label: '색연필', img: '/icons/illust-style.svg'},
     ]);
 
     const [selectedStyle, setSelectedStyle] = useState(null);
