@@ -190,7 +190,7 @@ const AvatarList = styled.div`
     height: 56px;
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    gap: 24px;
     align-items: center;
     justify-content: center;
 `
