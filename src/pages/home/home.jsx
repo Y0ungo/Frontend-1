@@ -61,7 +61,11 @@ function Home() {
                     최근 본 히스토리
                     <img src='/icons/right-part.svg' width={20} height={20} />
                 </StoryLabel>
-                <StoryScroll>
+                
+                {recentHistory.length === 0 ? (
+                    <Empty1><img src='/icons/empty1.svg' /></Empty1>
+                ) : (
+                    <StoryScroll>
                     {recentHistory.map((story, index) => (
                         <HistoryContainer key={index}>
                             <Card>
@@ -76,7 +80,8 @@ function Home() {
                             </TextBox>
                         </HistoryContainer>
                     ))}
-                </StoryScroll>
+                    </StoryScroll>
+                )}
             </StoryContent>
 
             <CreatedStoryContent>
@@ -84,7 +89,11 @@ function Home() {
                     내가 만든 동화
                     <img src='/icons/right-part.svg' width={20} height={20} />
                 </StoryLabel>
-                <CreatedStoryScroll>
+
+                {myStories.length === 0 ? (
+                    <Empty2><img src='/icons/empty2.svg' /></Empty2>
+                ) : (
+                    <CreatedStoryScroll>
                     {myStories.map((story, index) => (
                         <CreatedContainer key={index} onClick={() => handleMyStoryClick(story.id)}>
                                 {activeMyStoryId === story.id ? (
@@ -108,7 +117,8 @@ function Home() {
                             <CreatedMin>{story.min}</CreatedMin>
                         </CreatedContainer>
                     ))}
-                </CreatedStoryScroll>
+                    </CreatedStoryScroll>
+                )}
             </CreatedStoryContent>
 
             <CreatedStoryContent>
@@ -385,3 +395,15 @@ const BookWrapper = styled.div`
         object-fit: cover;
     }
 `;
+
+const Empty1 = styled.div`
+    width: 358px;
+    height: 126px;
+    margin-left: 16px;
+`
+
+const Empty2 = styled.div`
+    width: 358px;
+    height: 202px;
+    margin-left: 16px;
+`

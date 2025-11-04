@@ -275,7 +275,7 @@ const CheckLabel = styled.label`
 `;
 
 const CustomBox = styled.span`
-    position: relative; /* 중요! 기준 잡기 */
+    position: relative;
     width: 24px;
     height: 24px;
     border: 2px solid #dedede;
