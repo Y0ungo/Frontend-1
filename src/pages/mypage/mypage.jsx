@@ -6,6 +6,11 @@ import { useState } from 'react';
 function Mypage() {
     const navigate = useNavigate();
 
+    const [kids] = useState([
+        { id: 1, name: '유이진' },
+        { id: 2, name: '아이2' },
+    ]);
+
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -57,11 +62,23 @@ function Mypage() {
 
             <ModifyContainer>
                 <ModifyHeader>아이 정보</ModifyHeader>
-                <ModifyContent>
-                    아이1
-                    <ArrowRightBtn onClick={() => (navigate('/mypage-kid'))}><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
-                </ModifyContent>
-                <RegisterContent onClick={() => (navigate('/mypage-kid-register'))}>+ 등록하기</RegisterContent>
+
+                {kids.length === 0 ? (
+                    <>
+                        <Empty>등록한 아이 정보가 없어요</Empty>
+                        <RegisterContent onClick={() => (navigate('/mypage-kid-register'))}>+ 등록하기</RegisterContent>
+                    </>
+                ) : (
+                    <>
+                        {kids.map((kid) => (
+                            <ModifyContent key={kid.id}>
+                                {kid.name}
+                                <ArrowRightBtn onClick={() => (navigate('/mypage-kid'))}><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                            </ModifyContent>
+                        ))}
+                        <RegisterContent onClick={() => (navigate('/mypage-kid-register'))}>+ 등록하기</RegisterContent>
+                    </>
+                )}
             </ModifyContainer>
 
             <ModifyContainer>
@@ -346,4 +363,12 @@ const ConfirmBtn = styled.button`
     font-size: 14px;
     font-weight: 800;
     cursor: pointer;
+`
+
+const Empty = styled.div`
+    width: 358px;
+    height: 22px;
+    color: #393939;
+    font-size: 14px;
+    font-weight: 700;
 `
