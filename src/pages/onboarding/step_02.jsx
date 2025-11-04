@@ -95,7 +95,7 @@ const OnboardingStep02 = () => {
         </ArcArea>
       </Content>
 
-      {/* 모달창 (VoiceSetStep03 동일 스타일) */}
+      {/* 모달창*/}
       {open && (
         <Dim onClick={() => setOpen(false)}>
           <Modal role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
@@ -178,21 +178,23 @@ const Spacer = styled.div`
 `;
 
 const ArcArea = styled.div`
-  position: relative;
-  width: 390px;
-  height: 330px;
+  position: relative;       
+  width: 390px;             
+  height: 330px;             
   display: flex;
   align-items: flex-end;
   justify-content: center;
 `;
 
+
 const Arc = styled.div`
   position: absolute;
   inset: 0;
-  background: #fff5d2;
-  border-top-left-radius: 40% 40%;
-  border-top-right-radius: 40% 40%;
+  background: #FFF8E3;      
+  border-top-left-radius: 90% 50%;
+  border-top-right-radius: 90% 50%;
 `;
+
 
 const ArcTexts = styled.div`
   position: absolute;
