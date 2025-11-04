@@ -58,7 +58,6 @@ function Signup() {
             showBack={true}
             onBack={() => navigate('/intro')}
         />
-        {/* 인트로로 변경 예정 */}
         <Contents>
             <InputContainer>
                 <InputLabel>아이디</InputLabel>
@@ -276,10 +275,12 @@ const CheckLabel = styled.label`
 `;
 
 const CustomBox = styled.span`
+    position: relative; /* 중요! 기준 잡기 */
     width: 24px;
     height: 24px;
     border: 2px solid #dedede;
     border-radius: 8px;
+    background-color: #fff;
 
     ${CheckLabel} input:checked + & {
         background-color: #FFD342;
@@ -289,12 +290,15 @@ const CustomBox = styled.span`
     ${CheckLabel} input:checked + &::after {
         content: '✓';
         position: absolute;
-        top: -2px;
-        left: 3px;
-        color: #fff;
-        font-size: 16px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -58%);
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
     }
 `;
+
 
 const Line = styled.div`
     background-color: #dedede;
