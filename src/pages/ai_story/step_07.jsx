@@ -7,6 +7,7 @@ const EDIT_ICON = "/img/setting_voice/edit.svg";
 
 const Storystep07 = () => {
   const navigate = useNavigate();
+
   const [title, setTitle] = useState("여우, 두루미와의 피크닉");
   const [story, setStory] = useState(
     `옛날옛날에 여우와 두루미가 살았어요. 여우는 털이 북슬북슬하고 두루미는 아주 키가 컸어요.옛날옛날에 여우와 두루미가 살았어요.
@@ -15,6 +16,14 @@ const Storystep07 = () => {
 
 여우는 털이 북슬북슬하고 두루미는 아주 키가 컸어요.옛날옛날에 여우와 두루미가 살았어요. 여우는 털이 북슬북슬하고 두루미는 아주 키가 컸어요.옛날옛날에 여우와 두루미가 살았어요. 여우는 털이 북슬북슬하고 두루미는 아주 키가 컸어요.`
   );
+
+  //제목 상태
+  const [isEditing, setIsEditing] = useState(false);
+
+  //edit 클릭 시 편집 모드
+  const handleEditClick = () => {
+    setIsEditing((prev) => !prev);
+  };
 
   return (
     <Screen>
@@ -31,8 +40,14 @@ const Storystep07 = () => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            readOnly={!isEditing}
           />
-          <EditIcon src={EDIT_ICON} alt="수정 아이콘" />
+          <EditIcon
+            src={EDIT_ICON}
+            alt="수정 아이콘"
+            onClick={handleEditClick}
+            $active={isEditing}
+          />
         </TitleInputWrapper>
 
         <Label>스토리</Label>
@@ -118,6 +133,14 @@ const TitleInput = styled.input`
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
+
+
+  ${({ readOnly }) =>
+    readOnly &&
+    `
+      color: #7a7a7a;
+      cursor: default;
+  `}
 `;
 
 const EditIcon = styled.img`
@@ -126,7 +149,8 @@ const EditIcon = styled.img`
   width: 20px;
   height: 20px;
   cursor: pointer;
-  opacity: 0.8;
+  opacity: ${({ $active }) => ($active ? 1 : 0.7)};
+  transition: opacity 0.2s ease;
 `;
 
 const StoryBox = styled.textarea`
@@ -139,7 +163,6 @@ const StoryBox = styled.textarea`
   resize: none;
   overflow-y: scroll;
 
-  /* 폰트 속성 (H5/regular) */
   color: var(--color-text-primary, #393939);
   font-family: NanumSquareRound;
   font-size: 16px;
