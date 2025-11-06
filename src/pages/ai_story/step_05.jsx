@@ -23,7 +23,7 @@ const Storystep05 = () => {
   const [customList, setCustomList] = useState([]);
   const [focused, setFocused] = useState(false);
 
-  // === 5초 뒤 AI 추천 교훈 표시 ===
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setRecommended(RECOMMENDED_VALUES);
@@ -32,7 +32,6 @@ const Storystep05 = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // === 교훈 선택 (최대 3개) ===
   const toggleValue = (value) => {
     if (selected.includes(value)) {
       setSelected(selected.filter((v) => v !== value));
@@ -41,7 +40,7 @@ const Storystep05 = () => {
     }
   };
 
-  // === 직접 입력 Enter 처리 ===
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && customInput.trim() !== "") {
       e.preventDefault();
@@ -53,7 +52,6 @@ const Storystep05 = () => {
     }
   };
 
-  // === 직접 입력 칩 삭제 ===
   const removeCustom = (value) => {
     setCustomList(customList.filter((v) => v !== value));
   };
@@ -67,7 +65,6 @@ const Storystep05 = () => {
         action={false}
       />
 
-      {/* ✅ 프로그레스 바 */}
       <ProgressBarContainer>
         <ProgressBar />
       </ProgressBarContainer>
@@ -80,7 +77,6 @@ const Storystep05 = () => {
           <Subtitle>최대 3개의 교훈을 선택할 수 있어요.</Subtitle>
         </TitleBox>
 
-        {/* === ✅ AI 추천 교훈 박스 === */}
         <AIBoxWrapper>
           <AIBox>
             <AIHeader>
@@ -115,7 +111,7 @@ const Storystep05 = () => {
           </AIBox>
         </AIBoxWrapper>
 
-        {/* === 일반 교훈 === */}
+
         <TagList>
           {ALL_VALUES.map((v) => (
             <DefaultTag
@@ -160,7 +156,6 @@ const Storystep05 = () => {
         </CustomBox>
       </Content>
 
-      {/* ✅ 하단 버튼 영역 */}
       <BottomArea>
         <ButtonWrapper>
           <Button
@@ -178,8 +173,8 @@ const Storystep05 = () => {
 
 export default Storystep05;
 
-/* ================= 스타일 ================= */
 
+//스타일 컴포넌트
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
@@ -188,7 +183,7 @@ const Screen = styled.div`
   overflow-x: hidden;
 `;
 
-/* ✅ 프로그레스 바 */
+
 const ProgressBarContainer = styled.div`
   width: 100%;
   height: 4px;
@@ -235,7 +230,7 @@ const Subtitle = styled.div`
   margin-top: 4px;
 `;
 
-/* === ✅ AI 추천 교훈 박스 (좌우 꽉 차게) === */
+
 const AIBoxWrapper = styled.div`
   margin-bottom: 24px;
 `;
@@ -417,7 +412,6 @@ const DeleteBtn = styled.button`
   cursor: pointer;
 `;
 
-/* ✅ 직접 입력하기 버튼 수정 (테두리만 회색, 배경 투명) */
 const InputWrapper = styled.div`
   display: flex;
   width: 138px;
@@ -453,7 +447,6 @@ const CustomInput = styled.input`
   }
 `;
 
-/* ✅ 하단 버튼 중앙 정렬 및 위치 보정 */
 const BottomArea = styled.div`
   padding: 0 24px calc(env(safe-area-inset-bottom, 0) + 20px);
   display: flex;
@@ -461,7 +454,7 @@ const BottomArea = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  transform: translateX(4px); /* ✅ 버튼을 시각적으로 중앙에 맞춤 */
+  transform: translateX(4px);
   width: 100%;
   display: flex;
   justify-content: center;
