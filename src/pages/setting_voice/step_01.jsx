@@ -1,6 +1,5 @@
-// src/pages/voice_set/step01.jsx
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header.jsx';
 import Button from '../../components/Button.jsx';
@@ -18,13 +17,23 @@ const VoiceSetStep01 = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(CHARACTERS[0].key);
   const [name, setName] = useState('');
+  const [error, setError] = useState(false); // 미입력 에러 상태
 
   const current = CHARACTERS.find(c => c.key === selected) || CHARACTERS[0];
+
+  // ✅ 버튼 클릭 시 이름 입력 검증
+  const handleNext = () => {
+    if (name.trim() === '') {
+      setError(true);
+      return;
+    }
+    navigate('/mypage/voice_set/step02');
+  };
 
   return (
     <Screen>
       <Header
-        title="목소리 등록하기"   // 디자인 캡쳐와 맞춤
+        title="목소리 등록하기"
         showBack={true}
         onBack={() => navigate(-1)}
         action={false}
@@ -46,15 +55,22 @@ const VoiceSetStep01 = () => {
           ))}
         </SelectorRow>
 
+        {/* 이름 입력 */}
         <FieldGroup>
           <FieldLabel>이름</FieldLabel>
           <Input
             type="text"
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              if (e.target.value.trim() !== '') setError(false); // 입력 시 에러 해제
+            }}
             placeholder="이름을 입력해주세요."
             aria-label="이름 입력"
+            $error={error}
+            $shake={error} // 흔들림 애니메이션 트리거
           />
+          {error && <ErrorText>목소리 이름을 입력해주세요.</ErrorText>}
         </FieldGroup>
       </Content>
 
@@ -62,7 +78,7 @@ const VoiceSetStep01 = () => {
         <Button
           bgColor="#342E29"
           color="#FFF"
-          onClick={() => navigate('/mypage/voice_set/step02')} // 다음 단계 연결 필요 시 여기 경로만 교체
+          onClick={handleNext} // 검증 로직 추가된 버튼
         >
           <BtnContent>
             <BtnIcon src={RECORD_ICON} alt="" aria-hidden="true" />
@@ -76,7 +92,14 @@ const VoiceSetStep01 = () => {
 
 export default VoiceSetStep01;
 
-//스타일
+//스토리
+// 흔들림 애니메이션 정의
+const shake = keyframes`
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+`;
+
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
@@ -150,20 +173,38 @@ const Input = styled.input`
   width: 343px;
   height: 52px;
   border-radius: 12px;
-  border: 1px solid #eee;
+  border: 1px solid ${({ $error }) => ($error ? '#F44336' : '#eee')};
   background: #fff;
   padding: 0 16px;
   font-size: 16px;
   font-family: NanumSquareRound;
   color: #393939;
   box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  ${({ $shake }) =>
+    $shake &&
+    css`
+      animation: ${shake} 0.3s ease;
+    `}
 
   &::placeholder { color: #bdbdbd; }
+
   &:focus {
     outline: none;
-    border-color: #ffd342;
-    box-shadow: 0 0 0 3px rgba(255, 211, 66, 0.25);
+    border-color: ${({ $error }) => ($error ? '#F44336' : '#FFD342')};
+    box-shadow: ${({ $error }) =>
+      $error
+        ? '0 0 0 3px rgba(244, 67, 54, 0.15)'
+        : '0 0 0 3px rgba(255, 211, 66, 0.25)'};
   }
+`;
+
+const ErrorText = styled.div`
+  color: #f44336;
+  font-size: 13px;
+  margin-top: 6px;
+  font-family: NanumSquareRound;
 `;
 
 const BottomArea = styled.div`
