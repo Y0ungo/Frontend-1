@@ -161,7 +161,7 @@ const Storystep05 = () => {
           <Button
             bgColor="#FFD342"
             color="#342E29"
-            onClick={() => navigate("/ai_story/step_06")}
+            onClick={() => navigate("/mystory/ai_story/step06")}
           >
             다음
           </Button>

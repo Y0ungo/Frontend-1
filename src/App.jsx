@@ -40,6 +40,7 @@ import Endwritestep02 from './pages/end_rewirte/step_02.jsx' //결말 확장 음
 import Endwritestep03 from './pages/end_rewirte/step_03.jsx' //결말 확장 채팅
 import Endwritestep04 from './pages/end_rewirte/step_04.jsx' //결말 확장 완성
 import StoryPlayer from './pages/player/story-player.jsx'; // 동화 재생하기 페이지
+import Storymain from './pages/ai_story/main.jsx' //AI 스토리 메인
 import Storystep01 from './pages/ai_story/step_01.jsx' //AI 스토리 생성
 import Storystep02 from './pages/ai_story/step_02.jsx' //AI 스토리 생성 음성
 import Storystep03 from './pages/ai_story/step_03.jsx' //AI 스토리 생성 텍스트
@@ -110,6 +111,7 @@ function App() {
             {/* 동화 플레이어 페이지 */}
             <Route path='/story-player' element={<PageWrapper orientation="landscape"><StoryPlayer /></PageWrapper>} />
             {/* AI 스토리 생성 */}
+            <Route path='/mystory/ai_story' element={<PageWrapper orientation="portrait"><Storymain/></PageWrapper>} />
             <Route path='/mystory/ai_story/step01' element={<PageWrapper orientation="portrait"><Storystep01/></PageWrapper>} />
             <Route path='/mystory/ai_story/step02' element={<PageWrapper orientation="portrait"><Storystep02/></PageWrapper>} />
             <Route path='/mystory/ai_story/step03' element={<PageWrapper orientation="portrait"><Storystep03/></PageWrapper>} />
