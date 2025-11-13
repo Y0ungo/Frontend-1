@@ -20,7 +20,7 @@ function Mypage() {
 
     const confirmLogout = () => {
         setShowLogoutModal(false);
-        navigate('/login');
+        navigate('/intro');
     };
 
     const cancelLogout = () => {
@@ -98,15 +98,21 @@ function Mypage() {
                 <ModifyHeader>고객 지원</ModifyHeader>
                 <ModifyContent>
                     기기 및 버전 정보
-                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                    <ArrowRightBtn onClick={() => navigate('/mypage-support/a')}>
+                        <img src='/icons/arrow-right-black.svg' width={16}/>
+                    </ArrowRightBtn>
                 </ModifyContent>
                 <ModifyContent>
                     고객센터
-                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                    <ArrowRightBtn onClick={() => navigate('/mypage-support/b')}>
+                        <img src='/icons/arrow-right-black.svg' width={16}/>
+                    </ArrowRightBtn>
                 </ModifyContent>
                 <ModifyContent>
                     약관 및 정책
-                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                    <ArrowRightBtn onClick={() => navigate('/mypage-support/c')}>
+                        <img src='/icons/arrow-right-black.svg' width={16}/>
+                        </ArrowRightBtn>
                 </ModifyContent>
             </ModifyContainer>
 
@@ -280,6 +286,8 @@ const Logout = styled.div`
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
 `
 
 const ArrowRightBtn = styled.div`

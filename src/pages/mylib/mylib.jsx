@@ -8,19 +8,23 @@ function Mylib() {
 
     const [activeBookId, setActiveBookId] = useState(null);
 
+    const [filter, setFilter] = useState('전체');
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
     const books = [
         { id: 1, title: '빨간망토', viewedAt: '25.10.27', createdAt: '25.09.01', min: '3~4분', bookmark: "제작", img: '/icons/book.svg', progress: 80 },
         { id: 2, title: '성냥팔이 소녀', viewedAt: '25.10.25', createdAt: '25.10.15', min: '3~4분', bookmark: "명작", img: '/icons/book.svg', progress: 30 },
-        { id: 3, title: '미운오리새끼', viewedAt: '25.10.28', createdAt: '25.10.10', min: '3~4분', bookmark: "명작", img: '/icons/book.svg', progress: 50 },
-        { id: 4, title: '미운오리새끼', viewedAt: '25.10.28', createdAt: '25.10.10', min: '3~4분', bookmark: "확장", img: '/icons/book.svg', progress: 10 },
-        { id: 5, title: '빨간망토', viewedAt: '25.10.27', createdAt: '25.09.01', min: '3~4분', bookmark: "제작", img: '/icons/book.svg', progress: 80 },
-        { id: 6, title: '성냥팔이 소녀', viewedAt: '25.10.25', createdAt: '25.10.15', min: '3~4분', bookmark: "명작", img: '/icons/book.svg', progress: 30 },
+        { id: 3, title: '미운오리새끼', viewedAt: '25.10.28', createdAt: '25.99.10', min: '3~4분', bookmark: "명작", img: '/icons/book.svg', progress: 50 },
+        { id: 4, title: '미운오리새끼', viewedAt: '25.10.29', createdAt: '25.09.10', min: '3~4분', bookmark: "확장", img: '/icons/book.svg', progress: 10 },
+        { id: 5, title: '빨간망토', viewedAt: '25.10.24', createdAt: '25.11.01', min: '3~4분', bookmark: "제작", img: '/icons/book.svg', progress: 80 },
+        { id: 6, title: '성냥팔이 소녀', viewedAt: '25.10.20', createdAt: '25.11.15', min: '3~4분', bookmark: "명작", img: '/icons/book.svg', progress: 30 },
         { id: 7, title: '미운오리새끼', viewedAt: '25.10.28', createdAt: '25.10.10', min: '3~4분', bookmark: "명작", img: '/icons/book.svg', progress: 50 },
-        { id: 8, title: '미운오리새끼', viewedAt: '25.10.28', createdAt: '25.10.10', min: '3~4분', bookmark: "확장", img: '/icons/book.svg', progress: 10 },
-        { id: 9, title: '빨간망토', viewedAt: '25.10.27', createdAt: '25.09.01', min: '3~4분', bookmark: "제작", img: '/icons/book.svg', progress: 80 },
+        { id: 8, title: '미운오리새끼', viewedAt: '25.10.28', createdAt: '25.11.10', min: '3~4분', bookmark: "확장", img: '/icons/book.svg', progress: 10 },
+        { id: 9, title: '빨간망토', viewedAt: '25.10.27', createdAt: '25.10.01', min: '3~4분', bookmark: "제작", img: '/icons/book.svg', progress: 80 },
         { id: 10, title: '성냥팔이 소녀', viewedAt: '25.10.25', createdAt: '25.10.15', min: '3~4분', bookmark: "명작", img: '/icons/book.svg', progress: 30 },
-        { id: 11, title: '미운오리새끼', viewedAt: '25.10.28', createdAt: '25.10.10', min: '3~4분', bookmark: "명작", img: '/icons/book.svg', progress: 50 },
-        { id: 12, title: '미운오리새끼', viewedAt: '25.10.28', createdAt: '25.10.10', min: '3~4분', bookmark: "확장", img: '/icons/book.svg', progress: 10 },
+        { id: 11, title: '미운오리새끼', viewedAt: '25.10.18', createdAt: '25.10.10', min: '3~4분', bookmark: "명작", img: '/icons/book.svg', progress: 50 },
+        { id: 12, title: '미운오리새끼', viewedAt: '25.10.28', createdAt: '25.12.10', min: '3~4분', bookmark: "확장", img: '/icons/book.svg', progress: 10 },
     ];
 
     const handleCardClick = (id) => {
@@ -34,11 +38,40 @@ function Mylib() {
       return new Date(2000 + yy, mm - 1, dd); // 25 -> 2025
     };
 
-    const sortedBooks = [...books].sort((a, b) => {
-      if (sortType === 'recentView') return parseDate(b.viewedAt) - parseDate(a.viewedAt);
-      if (sortType === 'recentCreate') return parseDate(b.createdAt) - parseDate(a.createdAt);
-    });
+    const sortedBooks = [...books]
+      .filter((book) => filter === '전체' || book.bookmark === filter)
+      .sort((a, b) => {
+        // 최근 시청순: viewedAt 내림차순
+        if (sortType === 'recentView') {
+          return parseDate(b.viewedAt) - parseDate(a.viewedAt);
+        }
 
+        // 최근 제작순
+        if (sortType === 'recentCreate') {
+          // 전체 필터 + 최근 제작순
+          if (filter === '전체') {
+            // 둘 다 명작이면 가나다순
+            if (a.bookmark === '명작' && b.bookmark === '명작') {
+              return a.title.localeCompare(b.title, 'ko');
+            }
+            // a가 명작이고 b가 명작이 아니면 a를 뒤로
+            if (a.bookmark === '명작' && b.bookmark !== '명작') return 1;
+            if (a.bookmark !== '명작' && b.bookmark === '명작') return -1;
+            // 나머지는 최근 제작순
+            return parseDate(b.createdAt) - parseDate(a.createdAt);
+          }
+
+          // 명작 필터 + 최근 제작순
+          if (filter === '명작') {
+            return a.title.localeCompare(b.title, 'ko');
+          }
+
+          // 나머지 필터 + 최근 제작순
+          return parseDate(b.createdAt) - parseDate(a.createdAt);
+        }
+
+        return 0;
+      });
 
     const [open, setOpen] = useState(false);
 
@@ -46,16 +79,48 @@ function Mylib() {
       navigate(`/mylib-script/${book.id}`, { state: { book } });
     }
 
+    const deleteBook = (book) => {
+      console.log('삭제', book.title);
+      handleDelete();
+    };
+
+        const handleDelete = () => {
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = () => {
+        setShowDeleteModal(false);
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteModal(false);
+    };
+
     return (
         <>
         <MylibHeader>내 서재</MylibHeader>
 
+        <BadgeContainer>
+          {['전체', '제작', '명작', '확장'].map((b) => (
+            <BadgeBtn
+              key={b}
+              active={filter === b}
+              onClick={() => setFilter(b)}
+            >
+              {b}
+            </BadgeBtn>
+          ))}
+        </BadgeContainer>
+
         <MylibContainer>
           <SortHeader>
+            <BookCount>
+              {sortedBooks.length}개
+            </BookCount>
             <SortMenu>
               <SortButton onClick={() => setOpen(!open)}>
                 {sortType === 'recentView' ? '최근 시청 순' : '최근 제작 순'}
-                <img src='/icons/arrow-down.svg' />
+                <img src={open ? '/icons/arrow-up.svg' : '/icons/arrow-down.svg'} />
               </SortButton>
               <Dropdown open={open}>
                 <li onClick={() => { setSortType('recentView'); setOpen(false); }}>최근 시청순</li>
@@ -100,9 +165,6 @@ function Mylib() {
                   )}
                     <Title>{book.title}</Title>
                     <ViewMin>
-                      <img src='/icons/time.svg' width={15} />
-                      {sortType === 'recentView' ? book.viewedAt : book.createdAt}
-                      <Separator>|</Separator>
                       {book.min}
                     </ViewMin>
                   </BookCard>
@@ -110,6 +172,20 @@ function Mylib() {
               </BookGrid>
             )}
         </MylibContainer>
+
+        {showDeleteModal && (
+            <ModalOverlay>
+                <ModalBox>
+                    <ModalHeader>정말 삭제하시겠어요?</ModalHeader>
+                    <ModalText>한 번 삭제하면 다시 되돌릴 수 없어요.<br />그래도 삭제하시겠어요?</ModalText>
+                    <ModalBtnContainer>
+                        <CancelBtn onClick={cancelDelete}>취소</CancelBtn>
+                        <ConfirmBtn onClick={confirmDelete}>삭제</ConfirmBtn>
+                    </ModalBtnContainer>
+                </ModalBox>
+            </ModalOverlay>
+        )}
+
         <BottomBar />
         </>
     );
@@ -147,12 +223,15 @@ const SortHeader = styled.div`
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    justify-content: flex-end;
+    justify-content: space-between;
 `;
 
 const SortMenu = styled.div`
     position: relative;
 `;
+
+const BookCount = styled.div`
+`
 
 const SortButton = styled.button`
     display: flex;
@@ -326,4 +405,105 @@ const BookWrapper = styled.div`
 const Empty = styled.div`
   width: 358px;
   height: 590px;
+`
+
+const BadgeContainer = styled.div`
+  width: 390px;
+  height: 62px;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+`
+
+const BadgeBtn = styled.button`
+  height: 34px;
+  width: 58px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 99px;
+  border: 1px solid ${({active}) => (active ? '#342e29' : '#f1f1f1')};
+  background-color: ${({active}) => (active ? '#342e29' : '#fff')};
+  color: ${({active}) => (active ? '#fff' : '#393939')};
+  font-size: 14px;
+  font-weight: 800;
+`
+
+const ModalOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 390px;
+    height: 852px;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+`
+
+const ModalBox = styled.div`
+    width: 320px;
+    height: 196px;
+    padding: 24px 24px 16px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: #fff;
+`
+
+const ModalHeader = styled.div`
+    color: #393939;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+`
+
+const ModalText = styled.div`
+    color: #7a7a7a;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+`
+
+const ModalBtnContainer = styled.div`
+    display: flex;
+    gap: 12px;
+`
+
+const CancelBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #f1f1f1;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+`
+
+const ConfirmBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #ffd342;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
 `

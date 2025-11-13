@@ -12,10 +12,10 @@ function Home() {
     ];
 
     const myStories = [
-        { id: 1, title: '꿈꾸는 코스모스', min: '3~4분', img: '/imges/created_story.svg' },
-        { id: 2, title: '수박 수영장', min: '3~4분', img: '/imges/created_story.svg' },
-        { id: 3, title: '초코파이', min: '3~4분', img: '/imges/created_story.svg' },
-        { id: 4, title: '충성스런 개스', min: '3~4분', img: '/imges/created_story.svg' }
+        { id: 1, title: '꿈꾸는 코스모스', min: '3~4분', img: '/imges/created_story.svg', date: "25.10.02" },
+        { id: 2, title: '수박 수영장', min: '3~4분', img: '/imges/created_story.svg', date: "25.10.02" },
+        { id: 3, title: '초코파이', min: '3~4분', img: '/imges/created_story.svg', date: "25.10.02" },
+        { id: 4, title: '충성스런 개스', min: '3~4분', img: '/imges/created_story.svg', date: "25.10.02" },
     ];
 
     const recommendedStories = [
@@ -25,8 +25,16 @@ function Home() {
         { id: 4, title: '이상한 나라의 앨리스', min: '3~4분', img: '/imges/created_story.svg' }
     ];
 
+    const reWriteStories = [
+        { id: 1, title: '꿈꾸는 코스모스', min: '3~4분', img: '/imges/created_story.svg', date: "25.10.02" },
+        { id: 2, title: '수박 수영장', min: '3~4분', img: '/imges/created_story.svg', date: "25.10.02" },
+        { id: 3, title: '초코파이', min: '3~4분', img: '/imges/created_story.svg', date: "25.10.02" },
+        { id: 4, title: '충성스런 개스', min: '3~4분', img: '/imges/created_story.svg', date: "25.10.02" },
+    ];
+
     const [activeMyStoryId, setActiveMyStoryId] = useState(null);
     const [activeRecommendedId, setActiveRecommendedId] = useState(null);
+    const [activeReWriteStoryId, setActiveReWriteStoryId] = useState(null);
 
 
     const handleMyStoryClick = (id) => {
@@ -37,13 +45,36 @@ function Home() {
         setActiveRecommendedId(activeRecommendedId === id ? null : id);
     };
 
+    const handleReWriteStoryClick = (id) => {
+        setActiveReWriteStoryId(activeReWriteStoryId === id? null : id);
+    }
+
     const playBook = (story) => console.log('재생', story.title);
 
     const viewScript = (story) => {
         navigate(`/mylib-script/${story.id}`);
     };
 
-    const deleteBook = (story) => console.log('삭제', story.title);
+    const deleteBook = (story) => {
+        console.log('삭제', story.title);
+        handleDelete();
+    };
+
+    const reWrite = (story) => console.log('결말 확장하기', story.title);
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const handleDelete = () => {
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = () => {
+        setShowDeleteModal(false);
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteModal(false);
+    };
 
     return (
         <>
@@ -86,7 +117,7 @@ function Home() {
 
             <CreatedStoryContent>
                 <StoryLabel>
-                    내가 만든 동화
+                    부모의 이야기를 아이에게
                     <img src='/icons/right-part.svg' width={20} height={20} />
                 </StoryLabel>
 
@@ -114,7 +145,11 @@ function Home() {
                                     </>
                                 )}
                             <CreatedTitle>{story.title}</CreatedTitle>
-                            <CreatedMin>{story.min}</CreatedMin>
+                            <CreatedMin>
+                                {story.min}
+                                <Separator>|</Separator>
+                                {story.date}
+                            </CreatedMin>
                         </CreatedContainer>
                     ))}
                     </CreatedStoryScroll>
@@ -136,8 +171,7 @@ function Home() {
                                     >
                                         <CloseBtn onClick={(e) => { e.stopPropagation(); setActiveRecommendedId(null); }}>×</CloseBtn>
                                         <Option onClick={() => playBook(story)}>재생하기</Option>
-                                        <Option onClick={() => viewScript(story)}>스크립트 보기</Option>
-                                        <Option onClick={() => deleteBook(story)}>삭제하기</Option>
+                                        <Option onClick={() => reWrite(story)}>결말 확장하기</Option>
                                     </OptionCard>
                                 ) : (
                                     <>
@@ -152,7 +186,61 @@ function Home() {
                     ))}
                 </CreatedStoryScroll>
             </CreatedStoryContent>
+
+            <CreatedStoryContent>
+                <StoryLabel>
+                    우리 아이가 다시 쓴 명작 동화
+                    <img src='/icons/right-part.svg' width={20} height={20} />
+                </StoryLabel>
+
+                {reWriteStories.length === 0 ? (
+                    <Empty2><img src='/icons/empty3.svg' /></Empty2>
+                ) : (
+                    <CreatedStoryScroll>
+                    {reWriteStories.map((story, index) => (
+                        <CreatedContainer key={index} onClick={() => handleReWriteStoryClick(story.id)}>
+                                {activeReWriteStoryId === story.id ? (
+                                    <OptionCard
+                                        $imgUrl={story.img}
+                                        onClick={e => e.stopPropagation()}
+                                    >
+                                        <CloseBtn onClick={(e) => { e.stopPropagation(); setActiveReWriteStoryId(null); }}>×</CloseBtn>
+                                        <Option onClick={() => playBook(story)}>재생하기</Option>
+                                        <Option onClick={() => viewScript(story)}>스크립트 보기</Option>
+                                        <Option onClick={() => deleteBook(story)}>삭제하기</Option>
+                                    </OptionCard>
+                                ) : (
+                                    <>
+                                        <BookWrapper>
+                                            <img src={story.img} alt={story.title} />
+                                        </BookWrapper>
+                                    </>
+                                )}
+                            <CreatedTitle>{story.title}</CreatedTitle>
+                            <CreatedMin>
+                                {story.min}
+                                <Separator>|</Separator>
+                                {story.date}
+                            </CreatedMin>
+                        </CreatedContainer>
+                    ))}
+                    </CreatedStoryScroll>
+                )}
+            </CreatedStoryContent>
         </Contents>
+
+        {showDeleteModal && (
+            <ModalOverlay>
+                <ModalBox>
+                    <ModalHeader>정말 삭제하시겠어요?</ModalHeader>
+                    <ModalText>한 번 삭제하면 다시 되돌릴 수 없어요.<br />그래도 삭제하시겠어요?</ModalText>
+                    <ModalBtnContainer>
+                        <CancelBtn onClick={cancelDelete}>취소</CancelBtn>
+                        <ConfirmBtn onClick={confirmDelete}>삭제</ConfirmBtn>
+                    </ModalBtnContainer>
+                </ModalBox>
+            </ModalOverlay>
+        )}
 
         <BottomBar />
         </>
@@ -406,4 +494,85 @@ const Empty2 = styled.div`
     width: 358px;
     height: 202px;
     margin-left: 16px;
+`
+const Separator = styled.span`
+    color: #DeDeDe;
+    margin: 0 4px;
+`;
+
+const ModalOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 390px;
+    height: 852px;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+`
+
+const ModalBox = styled.div`
+    width: 320px;
+    height: 196px;
+    padding: 24px 24px 16px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: #fff;
+`
+
+const ModalHeader = styled.div`
+    color: #393939;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+`
+
+const ModalText = styled.div`
+    color: #7a7a7a;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+`
+
+const ModalBtnContainer = styled.div`
+    display: flex;
+    gap: 12px;
+`
+
+const CancelBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #f1f1f1;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+`
+
+const ConfirmBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #ffd342;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
 `

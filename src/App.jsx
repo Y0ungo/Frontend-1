@@ -31,6 +31,7 @@ import Mypage from './pages/mypage/mypage.jsx'; // 마이 페이지
 import Profile from './pages/mypage/mypage-profile.jsx'; //프로필 편집 페이지
 import MypageKid from './pages/mypage/mypage-kid.jsx'; // 아이 정보 페이지
 import KidRegister from './pages/mypage/mypage-kid-register.jsx'; // 아이 정보 등록 페이지
+import MypageSupport from './pages/mypage/mypage-support.jsx'; // 고객 지원 페이지
 import IllustPortrait from './pages/illust/illust-portrait.jsx'; // 삽화 스타일 설정 페이지
 import IllustLandscape from './pages/illust/illust-landscape.jsx'; //삽화 페이지 별 내용 생성 페이지
 import StoryPlay from './pages/illust/story-play.jsx'; // 동화 생성 후 재생 및 종료 페이지
@@ -95,6 +96,7 @@ function App() {
             <Route path='/mypage-profile' element={<PageWrapper orientation="portrait"><Profile /></PageWrapper>} />
             <Route path='/mypage-kid' element={<PageWrapper orientation="portrait"><MypageKid /></PageWrapper>} />
             <Route path='/mypage-kid-register' element={<PageWrapper orientation="portrait"><KidRegister /></PageWrapper>} />
+            <Route path='/mypage-support/:type' element={<PageWrapper orientation="portrait"><MypageSupport /></PageWrapper>} />
 
             {/* 삽화 생성 페이지 */}
             <Route path='/illust-portrait' element={<PageWrapper orientation="portrait"><IllustPortrait /></PageWrapper>} />
@@ -110,6 +112,7 @@ function App() {
 
             {/* 동화 플레이어 페이지 */}
             <Route path='/story-player' element={<PageWrapper orientation="landscape"><StoryPlayer /></PageWrapper>} />
+
             {/* AI 스토리 생성 */}
             <Route path='/mystory/ai_story' element={<PageWrapper orientation="portrait"><Storymain/></PageWrapper>} />
             <Route path='/mystory/ai_story/step01' element={<PageWrapper orientation="portrait"><Storystep01/></PageWrapper>} />

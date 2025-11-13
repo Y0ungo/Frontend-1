@@ -61,7 +61,12 @@ function Login() {
             </InputContainer>
 
             <ButtonContainer>
-                <Button disabled={!isButtonActive}>로그인</Button>
+                <Button
+                    disabled={!isButtonActive}
+                    onClick={() => navigate('/home')}
+                >
+                    로그인
+                </Button>
             </ButtonContainer>
         </Contents>
         </>

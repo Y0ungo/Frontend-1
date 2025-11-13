@@ -26,9 +26,18 @@ const Header = ({
             {/* 3. 우측 영역 (액션 버튼) */}
             <StyledRight>
                 {action && (
-                    <StyledActionBtn onClick={action.handler}>
-                        {action.text}
-                    </StyledActionBtn>
+                    <>
+                        {action.text && (
+                            <StyledActionBtn onClick={action.handler}>
+                                {action.text}
+                            </StyledActionBtn>
+                        )}
+                        {action.icon && (
+                            <StyledIconBtn onClick={action.handler}>
+                                <img src={action.icon} alt="action icon" width="24" height="24" />
+                            </StyledIconBtn>
+                        )}
+                    </>
                 )}
             </StyledRight>
         </StyledHeader>
@@ -93,4 +102,19 @@ const StyledActionBtn = styled.button`
     font-size: 14px;
     font-weight: 800;
     color: #BBB;
+`;
+
+const StyledIconBtn = styled.button`
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
 `;
