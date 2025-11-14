@@ -104,7 +104,7 @@ function Mylib() {
           {['전체', '제작', '명작', '확장'].map((b) => (
             <BadgeBtn
               key={b}
-              active={filter === b}
+              $active={filter === b}
               onClick={() => setFilter(b)}
             >
               {b}
@@ -268,7 +268,6 @@ const Dropdown = styled.ul`
   }
 `;
 
-
 const BookGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -419,9 +418,9 @@ const BadgeBtn = styled.button`
   display: flex;
   align-items: center;
   border-radius: 99px;
-  border: 1px solid ${({active}) => (active ? '#342e29' : '#f1f1f1')};
-  background-color: ${({active}) => (active ? '#342e29' : '#fff')};
-  color: ${({active}) => (active ? '#fff' : '#393939')};
+  border: 1px solid ${({$active}) => ($active ? '#342e29' : '#f1f1f1')};
+  background-color: ${({$active}) => ($active ? '#342e29' : '#fff')};
+  color: ${({$active}) => ($active ? '#fff' : '#393939')};
   font-size: 14px;
   font-weight: 800;
 `

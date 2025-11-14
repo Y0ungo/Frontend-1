@@ -7,8 +7,8 @@ function Mypage() {
     const navigate = useNavigate();
 
     const [kids] = useState([
-        { id: 1, name: '유이진' },
-        { id: 2, name: '아이2' },
+        { id: 1, name: '유이진', isActive: true },
+        { id: 2, name: '윤태하', isActive: false },
     ]);
 
     const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -72,8 +72,13 @@ function Mypage() {
                     <>
                         {kids.map((kid) => (
                             <ModifyContent key={kid.id}>
-                                {kid.name}
-                                <ArrowRightBtn onClick={() => (navigate('/mypage-kid-detail'))}><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                                <Name>
+                                    {kid.name}
+                                    {kid.isActive && <ActiveDot />}
+                                </Name>
+                                <ArrowRightBtn onClick={() => navigate('/mypage-kid-detail')}>
+                                    <img src='/icons/arrow-right-black.svg' width={16} />
+                                </ArrowRightBtn>
                             </ModifyContent>
                         ))}
                         <RegisterContent onClick={() => (navigate('/mypage-kid-register'))}>+ 등록하기</RegisterContent>
@@ -275,6 +280,7 @@ const ModifyContent = styled.div`
     color: #393939;
     font-size: 14px;
     font-weight: 700;
+    align-items: center;
 `
 
 const RegisterContent = styled.div`
@@ -386,4 +392,21 @@ const Empty = styled.div`
     color: #393939;
     font-size: 14px;
     font-weight: 700;
+`
+
+const Name = styled.div`
+    display: flex;
+    flex-direction: row;
+    height: 22px;
+    align-items: center;
+    gap: 4px;
+`
+
+const ActiveDot = styled.div`
+    width: 6px;
+    height: 6px;
+    background-color: #ffd342;
+    border-radius: 50%;
+    display: 'flex';
+    align-items: center;
 `

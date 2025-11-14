@@ -17,7 +17,7 @@ const BottomBar = () => {
 
     const routes = [
         { path: '/home', label: '홈', activeIcon: HomeActive, inactiveIcon: HomeInactive },
-        { path: '/mystory', label: '나의 동화', activeIcon: MyStoryActive, inactiveIcon: MyStoryInactive },
+        { path: '/mystory/ai_story/step01', label: '나의 동화', activeIcon: MyStoryActive, inactiveIcon: MyStoryInactive },
         { path: '/mylib', label: '내서재', activeIcon: MyLibActive, inactiveIcon: MyLibInactive },
         { path: '/mypage', label: '마이', activeIcon: MypageActive, inactiveIcon: MypageInactive },
     ];
