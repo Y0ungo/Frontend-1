@@ -302,11 +302,6 @@ const ViewMin = styled.div`
   margin-top: 8px;
 `
 
-const Separator = styled.span`
-  color: #DeDeDe;
-  margin: 0 4px;
-`;
-
 const Title = styled.span`
   overflow: hidden;
   color: #393939;

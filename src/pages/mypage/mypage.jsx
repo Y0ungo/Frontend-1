@@ -47,11 +47,11 @@ function Mypage() {
         <Contents>
             <UserContainer>
                 <UserProfile>
-                    <img src='/icons/Avatar.svg' />
+                    <img src='/icons/avatar-1.svg' />
                 </UserProfile>
                 <UserContent>
-                    <UserName>사용자1</UserName>
-                    <UserId>ewha1234</UserId>
+                    <UserName>Ewha1234</UserName>
+                    <UserId>부모/보호자</UserId>
                 </UserContent>
                 <UserEdit onClick={() => (navigate('/mypage-profile'))}>프로필 편집</UserEdit>
             </UserContainer>
@@ -73,7 +73,7 @@ function Mypage() {
                         {kids.map((kid) => (
                             <ModifyContent key={kid.id}>
                                 {kid.name}
-                                <ArrowRightBtn onClick={() => (navigate('/mypage-kid'))}><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                                <ArrowRightBtn onClick={() => (navigate('/mypage-kid-detail'))}><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
                             </ModifyContent>
                         ))}
                         <RegisterContent onClick={() => (navigate('/mypage-kid-register'))}>+ 등록하기</RegisterContent>
@@ -195,6 +195,13 @@ const UserProfile = styled.div`
     width: 56px;
     height: 56px;
     border-radius: 99px;
+    border: 1.5px solid #f1f1f1;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 `
 
 const UserContent = styled.div`

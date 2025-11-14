@@ -20,13 +20,39 @@ function MypageKid() {
     const [seledtedGender, setSelectedGender] = useState('female');
 
     const [showToastModal, setShowToastModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showBackModal, setShowBackModal] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
 
-    const handleToast = () => {
+    const handleSave = () => {
         setShowToastModal(true);
-
+        setIsSaved(true);
+    
         setTimeout(() => {
             setShowToastModal(false);
         }, 1000);
+    };
+    
+    const handleBack = () => {
+        if (isSaved) {
+            navigate('/mypage-kid-detail');
+        } else {
+            setShowBackModal(true);
+        }
+    };
+
+    const handleDeleteModal = () => {
+        setShowDeleteModal(true);
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteModal(false);
+        navigate('/mypage-kid-detail');
+    };
+
+    const confirmDelete = () => {
+        setShowDeleteModal(false);
+        navigate('/mypage');
     };
 
     useEffect(() => {
@@ -50,9 +76,9 @@ function MypageKid() {
     return (
         <Wrapper>
         <Header
-            title="아이 정보"
+            title="수정하기"
             showBack={true}
-            onBack={() => (navigate(-1))}
+            onBack={handleBack}
         />
 
         <Contents>
@@ -117,13 +143,25 @@ function MypageKid() {
                 </GenderSelect>
             </GenderContainer>
 
-            <DeleteContainer>삭제하기</DeleteContainer>
+            <DeleteContainer onClick={handleDeleteModal}>삭제하기</DeleteContainer>
+            {showDeleteModal && (
+                <ModalOverlay>
+                    <ModalBox>
+                        <ModalHeader>정말 삭제하시겠어요?</ModalHeader>
+                        <ModalText>한 번 삭제하면 다시 되돌릴 수 없어요.<br />그래도 삭제하시겠어요?</ModalText>
+                        <ModalBtnContainer>
+                            <CancelBtn onClick={cancelDelete}>취소</CancelBtn>
+                            <ConfirmBtn onClick={confirmDelete}>삭제</ConfirmBtn>
+                        </ModalBtnContainer>
+                    </ModalBox>
+                </ModalOverlay>
+            )}
         </Contents>
 
         <BtnContainer>
             <Button
                 disabled={!isButtonActive}
-                onClick={handleToast}
+                onClick={handleSave}
                 $bgColor='#342e29'
                 $color='#fff'
             >
@@ -133,6 +171,18 @@ function MypageKid() {
 
         {showToastModal && (
             <ToastModal>변경 사항이 저장되었어요.</ToastModal>
+        )}
+        {showBackModal && (
+            <ModalOverlay>
+                <ModalBox>
+                    <ModalHeader>수정이 완료되지 않았어요</ModalHeader>
+                    <ModalText>지금 나가면<br />수정한 내용이 반영되지 않아요.</ModalText>
+                    <ModalBtnContainer>
+                        <CancelBtn onClick={() => navigate('/mypage')}>나가기</CancelBtn>
+                        <ConfirmBtn onClick={() => setShowBackModal(false)}>수정하기</ConfirmBtn>
+                    </ModalBtnContainer>
+                </ModalBox>
+            </ModalOverlay>
         )}
         </Wrapper>
     );
@@ -176,6 +226,8 @@ const SelectedAvatar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid #f1f1f1;
+    border-radius: 99px;
 
     img {
         width: 100%;
@@ -208,6 +260,7 @@ const AvatarBtn = styled.button`
         height: 100%;
         object-fit: cover;
         border-radius: 50%;
+        border: ${({ $isSelected}) => ( $isSelected ? '2px solid transparent' : '2px solid #f1f1f1')};
     }
 `
 
@@ -333,5 +386,84 @@ const DeleteContainer = styled.div`
     font-size: 14px;
     font-weight: 700;
     font-style: normal;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+`
+
+const ModalOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 390px;
+    height: 852px;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+`
+
+const ModalBox = styled.div`
+    width: 320px;
+    height: 196px;
+    padding: 24px 24px 16px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: #fff;
+`
+
+const ModalHeader = styled.div`
+    color: #393939;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+`
+
+const ModalText = styled.div`
+    color: #7a7a7a;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+`
+
+const ModalBtnContainer = styled.div`
+    display: flex;
+    gap: 12px;
+`
+
+const CancelBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #f1f1f1;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+`
+
+const ConfirmBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #ffd342;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
     cursor: pointer;
 `

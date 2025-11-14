@@ -6,6 +6,24 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
     const navigate = useNavigate();
 
+    const kidsData = [
+        {
+            id: 1,
+            name: '아이 1',
+            avatar: '/icons/avatar1.svg',
+        },
+        {
+            id: 2,
+            name: '아이 2',
+            avatar: '/icons/avatar2.svg',
+        },
+        {
+            id: 3,
+            name: '아이 3',
+            avatar: '/icons/avatar3.svg',
+        },
+    ];
+
     const recentHistory = [
         { title: '빨간망토', time: '3:36', img: '/icons/book.svg' },
         { title: '빨간망토', time: '3:36', img: '/icons/book.svg' },
@@ -36,6 +54,13 @@ function Home() {
     const [activeRecommendedId, setActiveRecommendedId] = useState(null);
     const [activeReWriteStoryId, setActiveReWriteStoryId] = useState(null);
 
+    const [selectedKid, setSelectedKid] = useState(kidsData[0]);
+    const [open, setOpen] = useState(false);
+
+    const handleSelect = (kid) => {
+        setSelectedKid(kid);
+        setOpen(false);
+    };
 
     const handleMyStoryClick = (id) => {
         setActiveMyStoryId(activeMyStoryId === id ? null : id);
@@ -47,7 +72,7 @@ function Home() {
 
     const handleReWriteStoryClick = (id) => {
         setActiveReWriteStoryId(activeReWriteStoryId === id? null : id);
-    }
+    };
 
     const playBook = (story) => console.log('재생', story.title);
 
@@ -80,6 +105,30 @@ function Home() {
         <>
         <Logo>
             <img src='/icons/logo_home.svg' />
+
+            <img
+                src={selectedKid.avatar}
+                width={40}
+                onClick={() => setOpen(!open)}
+                style={{ border: "1px solid #f1f1f1", borderRadius: "99px"}}
+            />
+
+            <Dropdown open={open}>
+                {kidsData.map((kid) => (
+                    <DropdownItem
+                        key={kid.id}
+                        onClick={() => handleSelect(kid)}
+                        $selected={selectedKid.id === kid.id}
+                    >
+                        {kid.name}
+                        {selectedKid.id === kid.id &&
+                            <Check>
+                                <img src='/icons/check-home.svg' width={15}/>
+                            </Check>
+                        }
+                    </DropdownItem>
+                ))}
+            </Dropdown>
         </Logo>
 
         <Contents>
@@ -252,6 +301,11 @@ export default Home;
 const Logo = styled.div`
     width: 390px;
     height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    position: relative;
 `
 
 const Banner = styled.div`
@@ -576,3 +630,32 @@ const ConfirmBtn = styled.button`
     font-weight: 800;
     cursor: pointer;
 `
+
+const Dropdown = styled.ul`
+    display: ${({open}) => (open ? 'block' : 'none')};
+    position: absolute;
+    top: 90%;
+    right: 15px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    list-style: none;
+    border-radius: 12px;
+    width: 140px;
+    z-index: 10;
+    overflow: hidden;
+`;
+
+const DropdownItem = styled.div`
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #393939;
+    cursor: pointer;
+    background: ${({ $selected }) => ($selected ? "#FFFBEC" : "#fff")};
+`
+
+const Check = styled.span`
+    position: absolute;
+    right: 16px;
+    width: 15px;
+`;

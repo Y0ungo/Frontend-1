@@ -29,7 +29,8 @@ import Mylib from './pages/mylib/mylib.jsx'; // 내 서재 페이지
 import Script from './pages/mylib/mylib-script.jsx'; // 내 서재와 연결되는 스크립트 페이지
 import Mypage from './pages/mypage/mypage.jsx'; // 마이 페이지
 import Profile from './pages/mypage/mypage-profile.jsx'; //프로필 편집 페이지
-import MypageKid from './pages/mypage/mypage-kid.jsx'; // 아이 정보 페이지
+import MypageKidDetail from './pages/mypage/mypage-kid-detail.jsx'; // 아이 정보 상세 페이지
+import MypageKid from './pages/mypage/mypage-kid.jsx'; // 아이 정보 수정 페이지
 import KidRegister from './pages/mypage/mypage-kid-register.jsx'; // 아이 정보 등록 페이지
 import MypageSupport from './pages/mypage/mypage-support.jsx'; // 고객 지원 페이지
 import IllustPortrait from './pages/illust/illust-portrait.jsx'; // 삽화 스타일 설정 페이지
@@ -97,6 +98,7 @@ function App() {
             <Route path='/mypage-kid' element={<PageWrapper orientation="portrait"><MypageKid /></PageWrapper>} />
             <Route path='/mypage-kid-register' element={<PageWrapper orientation="portrait"><KidRegister /></PageWrapper>} />
             <Route path='/mypage-support/:type' element={<PageWrapper orientation="portrait"><MypageSupport /></PageWrapper>} />
+            <Route path='/mypage-kid-detail' element={<PageWrapper orientation="portrait"><MypageKidDetail /></PageWrapper>} />
 
             {/* 삽화 생성 페이지 */}
             <Route path='/illust-portrait' element={<PageWrapper orientation="portrait"><IllustPortrait /></PageWrapper>} />

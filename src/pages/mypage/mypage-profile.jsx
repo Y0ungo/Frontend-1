@@ -54,11 +54,11 @@ function Profile() {
     }, []);
 
     const avatars = [
-        '/icons/avatar1.svg',
-        '/icons/avatar2.svg',
+        '/icons/avatar-1.svg',
+        '/icons/avatar-2.svg',
         '/icons/avatar3.svg',
-        '/icons/avatar4.svg',
-    ]
+        '/icons/avatar-4.svg',
+    ];
 
     const isButtonActive = 
         userId.trim().length > 0 &&
@@ -218,6 +218,8 @@ const SelectedAvatar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid #f1f1f1;
+    border-radius: 99px;
 
     img {
         width: 100%;
@@ -250,6 +252,7 @@ const AvatarBtn = styled.button`
         height: 100%;
         object-fit: cover;
         border-radius: 50%;
+        border: ${({ $isSelected}) => ( $isSelected ? '2px solid transparent' : '2px solid #f1f1f1')};
     }
 `
 
