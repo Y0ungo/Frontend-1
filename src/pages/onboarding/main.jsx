@@ -13,7 +13,7 @@ const Onboarding_intro_01 = () => {
       <Header
         title="목소리 설정"
         showBack={false}
-        action={{ text: '건너뛰기', handler: () => navigate('/home') }}
+        action={{ text: '건너뛰기', handler: () => navigate('/onboarding/step_04') }}
       />
 
       {/* 중앙 콘텐츠 */}
@@ -36,7 +36,8 @@ const Onboarding_intro_01 = () => {
 
       {/* 하단 버튼 */}
       <BottomArea>
-        <Button onClick={() => navigate('/onboarding/step_01')}>다음</Button>
+        <Button
+        onClick={() => navigate('/onboarding/step_01')}>다음</Button>
       </BottomArea>
     </Screen>
   );

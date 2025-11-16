@@ -50,7 +50,7 @@ const Storystep02 = () => {
 
       {/* 프로그레스 바 */}
       <ProgressWrapper>
-        <ProgressBar $progress={45} />
+        <ProgressBar $progress={40} />
       </ProgressWrapper>
 
       {/* 메인 콘텐츠 */}

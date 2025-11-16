@@ -6,6 +6,7 @@ import Button from '../../components/Button.jsx';
 
 const RECORD_ICON = '/img/onboarding/sound.svg'; // 녹음하기 아이콘 경로
 
+
 const CHARACTERS = [
   { key: 'dog', src: '/img/onboarding/Avatar.svg' },
   { key: 'bear', src: '/img/onboarding/Avatar_1.svg' },
@@ -16,6 +17,7 @@ const CHARACTERS = [
 const OnboardingStep01 = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(CHARACTERS[0].key);
+  const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [error, setError] = useState(false); // 미입력 에러
 
@@ -36,7 +38,7 @@ const OnboardingStep01 = () => {
         title="목소리 설정"
         showBack={true}
         onBack={() => navigate(-1)}
-        action={{ text: '건너뛰기', handler: () => navigate('/home') }}
+        action={{ text: '건너뛰기', handler: () => setOpen(true) }}
       />
 
       <Content>
@@ -76,8 +78,31 @@ const OnboardingStep01 = () => {
         </FieldGroup>
       </Content>
 
+            {/* 모달창*/}
+      {open && (
+        <Dim onClick={() => setOpen(false)}>
+          <Modal role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+            <ModalTitle>목소리 설정을 건너뛰시겠습니까?</ModalTitle>
+            <ModalDesc>
+              지금까지 입력한 정보는 저장되지 않으며,
+              <br />
+              기본 음성으로 동화가 재생돼요.
+            </ModalDesc>
+
+            <BtnRow>
+              <CancelBtn onClick={() => { setOpen(false); navigate('/onboarding/step_04'); }}>
+                건너뛰기
+              </CancelBtn>
+              <DeleteBtn onClick={() => setOpen(false)}>
+                이어서 설정
+              </DeleteBtn>
+            </BtnRow>
+          </Modal>
+        </Dim>
+      )}
+
       <BottomArea>
-        <Button bgColor="#342E29" color="#FFF" onClick={handleNext}>
+        <Button $bgColor="#342E29" color="#FFF" onClick={handleNext}>
           <BtnContent>
             <BtnIcon src={RECORD_ICON} alt="" aria-hidden="true" />
             <BtnText>녹음하기</BtnText>
@@ -239,4 +264,85 @@ const BtnText = styled.span`
   font-style: normal;
   font-weight: 800;
   line-height: 24px;
+`;
+
+//모달 스타일
+const Dim = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 9999;
+`;
+
+const Modal = styled.div`
+  display: flex;
+  width: 320px;
+  max-width: var(--Large-Sizes-sm, 384px);
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--border-radius-2xl, 16px);
+  background: var(--bg-panel, #fff);
+  box-shadow: 0 0 1px 0 rgba(24, 24, 27, 0.3),
+              0 8px 16px 0 rgba(24, 24, 27, 0.1);
+  padding: 20px;
+  text-align: center;
+`;
+
+const ModalTitle = styled.h3`
+  margin: 6px 0 8px;
+  color: #3a372f;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 28px;
+  letter-spacing: -0.01em;
+  text-align: center;
+`;
+
+const ModalDesc = styled.p`
+  margin: 0 0 16px;
+  color: #7a7a7a;
+  font-size: 14px;
+  font-family: NanumSquareRound;
+  line-height: 22px;
+  width: 100%;
+  max-width: 272px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const BtnRow = styled.div`
+  margin-top: 8px;
+  margin-bottom: 4px;
+  display: flex;
+  gap: 8px;
+`;
+
+const CancelBtn = styled.button`
+  width: 132px;
+  height: 48px;
+  border: none;
+  border-radius: 24px;
+  background: #f1f1f1;
+  color: #7a7a7a;
+  font-family: NanumSquareRound;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+const DeleteBtn = styled.button`
+  width: 132px;
+  height: 48px;
+  border: none;
+  border-radius: 24px;
+  background: #ffd342;
+  color: #fff;
+  font-family: NanumSquareRound;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
 `;

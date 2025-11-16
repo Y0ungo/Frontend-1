@@ -107,7 +107,7 @@ const OnboardingStep02 = () => {
             </ModalDesc>
 
             <BtnRow>
-              <CancelBtn onClick={() => { setOpen(false); navigate('/home'); }}>
+              <CancelBtn onClick={() => { setOpen(false); navigate('/onboarding/step_04'); }}>
                 나가기
               </CancelBtn>
               <DeleteBtn onClick={() => setOpen(false)}>

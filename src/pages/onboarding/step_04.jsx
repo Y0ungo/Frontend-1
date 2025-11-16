@@ -13,7 +13,7 @@ const Onboardingsetp04 = () => {
       <Header
         title="아이 정보 등록"
         showBack={false}
-        action={{ text: '건너뛰기', handler: () => navigate('/home') }}
+        action={{ text: '건너뛰기', handler: () => navigate('/onboarding/end') }}
       />
 
       {/* 중앙 콘텐츠 */}

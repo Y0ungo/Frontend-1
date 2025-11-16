@@ -20,7 +20,7 @@ const Storystep04 = () => {
       <Header title="동화 만들기" showBack={true} onBack={() => navigate(-1)} />
 
       <ProgressWrapper>
-        <ProgressBar $progress={65} />
+        <ProgressBar $progress={60} />
       </ProgressWrapper>
 
       <Content>

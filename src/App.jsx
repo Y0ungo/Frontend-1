@@ -44,7 +44,7 @@ import Storystep01 from './pages/ai_story/step_01.jsx' //AI 스토리 생성
 import Storystep02 from './pages/ai_story/step_02.jsx' //AI 스토리 생성 음성
 import Storystep03 from './pages/ai_story/step_03.jsx' //AI 스토리 생성 텍스트
 import Storystep04 from './pages/ai_story/step_04.jsx' //AI 스토리 생성 수정하기
-// import Storystep05 from './pages/ai_story/step_05.jsx' //AI 스토리 생성 교훈 선택
+import Storystep05 from './pages/ai_story/step_05.jsx' //AI 스토리 생성 교훈 선택
 import Storystep06 from './pages/ai_story/step_06.jsx' //AI 스토리 생성 로딩
 import Storystep07 from './pages/ai_story/step_07.jsx' //AI 스토리 생성 최종
 
@@ -114,7 +114,7 @@ function App() {
             <Route path='/mystory/ai_story/step02' element={<PageWrapper orientation="portrait"><Storystep02/></PageWrapper>} />
             <Route path='/mystory/ai_story/step03' element={<PageWrapper orientation="portrait"><Storystep03/></PageWrapper>} />
             <Route path='/mystory/ai_story/step04' element={<PageWrapper orientation="portrait"><Storystep04/></PageWrapper>} />
-            {/* <Route path='/mystory/ai_story/step05' element={<PageWrapper orientation="portrait"><Storystep05/></PageWrapper>} /> */}
+            <Route path='/mystory/ai_story/step05' element={<PageWrapper orientation="portrait"><Storystep05/></PageWrapper>} />
             <Route path='/mystory/ai_story/step06' element={<PageWrapper orientation="portrait"><Storystep06/></PageWrapper>} />
             <Route path='/mystory/ai_story/step07' element={<PageWrapper orientation="portrait"><Storystep07/></PageWrapper>} />
           </Routes>
