@@ -1,58 +1,240 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Button from '../../components/Button';
+
+const CustomEnding = ({ navigate, handleReplay, vote, setVote }) => (
+    <EndingOverlay>
+        <TopBar>
+            <LeftGroup onClick={(e) => e.stopPropagation()}>
+                <img
+                    src='/icons/Leftpart-white.svg'
+                    onClick={() => navigate('/mylib')}
+                />
+                <Title>동화 제목을 입력해주세요</Title>
+            </LeftGroup>
+        </TopBar>
+        <CustomTitle>이야기가 어땠는지 알려주세요</CustomTitle>
+        <VoteContainer>
+            <Good onClick={() => setVote('good')}>
+                <img src={vote === 'good' ? '/imges/Good-active.svg' : '/imges/Good.svg'} />
+            </Good>
+            <Bad onClick={() => setVote('bad')}>
+                <img src={vote === 'bad' ? '/imges/Bad-active.svg' : '/imges/Bad.svg'} />
+            </Bad>
+        </VoteContainer>
+        <EndingButton
+            style={{ position: 'absolute', left: '246px', top: '270px' }}
+            onClick={() => navigate('/mylib')}
+        >
+            나가기
+        </EndingButton>
+        <ReturnButton
+            style={{ position: 'absolute', left: '328px', bottom: '33px' }}
+            onClick={handleReplay}
+        >
+            <img src='/icons/returnbtn.svg' />
+            다시보기
+        </ReturnButton>
+    </EndingOverlay>
+);
+
+const ClassicEnding = ({ navigate, handleReplay }) => (
+    <EndingOverlay>
+        <TopBar>
+            <LeftGroup onClick={(e) => e.stopPropagation()}>
+                <img
+                    src='/icons/Leftpart-white.svg'
+                    onClick={() => navigate('/mylib')}
+                />
+                <Title>동화 제목을 입력해주세요</Title>
+            </LeftGroup>
+        </TopBar>
+        <ExtendButton
+            style={{ position: 'absolute', left: '246px', top: '150px', backgroundColor: '#FFD342' }}
+        >
+            결말 확장하기
+        </ExtendButton>
+        <EndingButton
+            style={{ position: 'absolute', left: '246px', top: '206px' }}
+            onClick={() => navigate('/mylib')}
+        >
+            나가기
+        </EndingButton>
+        <ReturnButton
+            style={{ position: 'absolute', left: '328px', bottom: '97px' }}
+            onClick={handleReplay}
+        >
+            <img src='/icons/returnbtn.svg' />
+            다시보기
+        </ReturnButton>
+    </EndingOverlay>
+);
+
+const ExtendedEnding = ({ navigate, handleReplay }) => (
+    <EndingOverlay>
+        <TopBar>
+            <LeftGroup onClick={(e) => e.stopPropagation()}>
+                <img
+                    src='/icons/Leftpart-white.svg'
+                    onClick={() => navigate('/mylib')}
+                />
+                <Title>동화 제목을 입력해주세요</Title>
+            </LeftGroup>
+        </TopBar>
+        <EndingButton
+            style={{ position: 'absolute', left: '246px', top: '150px' }}
+            onClick={() => navigate('/mylib')}
+        >
+            나가기
+        </EndingButton>
+        <ReturnButton
+            style={{ position: 'absolute', left: '328px', bottom: '153px' }}
+            onClick={handleReplay}
+        >
+            <img src='/icons/returnbtn.svg' />
+            다시보기
+        </ReturnButton>
+    </EndingOverlay>
+);
 
 function StoryPlayer() {
     const navigate = useNavigate();
 
     const pages = [
-        {img: '/imges/illust-landscape.png', page: '1페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니다. 자막 영역입니다'},
-        {img: '/imges/story-play.png', page: '2페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니'},
-        {img: '/imges/illust-style.png', page: '3페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니'},
-        {img: '/imges/illust-style.png', page: '4페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니'},
-        {img: '/imges/illust-style.png', page: '5페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니'},
-        {img: '/imges/illust-style.png', page: '6페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니'},
+        { img: '/imges/illust-landscape.png', page: '1페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니다. 자막 영' },
+        { img: '/imges/story-play.png', page: '2페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니' },
+        { img: '/imges/illust-style.png', page: '3페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니다아아아' },
+        { img: '/imges/illust-style.png', page: '4페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니' },
+        { img: '/imges/illust-style.png', page: '5페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니' },
+        { img: '/imges/illust-style.png', page: '6페이지', type: '자막 영역입니다.자막 영역입니다.자막 영역입니다.자막 영역입니' },
     ];
 
     const voices = [
-        {avatar: '/icons/voice-avatar.svg', name: '목소리1'},
-        {avatar: '/icons/voice-avatar.svg', name: '목소리2'},
+        { avatar: '/icons/avatar3.svg', name: '목소리1' },
+        { avatar: '/icons/avatar1.svg', name: '목소리2' },
+        { avatar: '/icons/avatar5.svg', name: '성우 목소리1' },
     ]
 
     const [selectedImg, setSelectedImg] = useState(0);
     const [selectedVoice, setSelectedVoice] = useState(0);
-
     const [step, setStep] = useState(0);
     const [showMenu, setShowMenu] = useState(false);
     const [typeOn, setTypeOn] = useState(false);
     const [playOn, setPlayOn] = useState(false);
     const [voiceModal, setVoiceModal] = useState(false);
+    const [endingType, setEndingType] = useState(null);
+    //extended(확장), classic(명작), custom(제작)
+    const [showEndingOverlay, setShowEndingOverlay] = useState(false);
+    const [vote, setVote] = useState(null);
+    const isLastPage = selectedImg === pages.length - 1;
 
-    const handleClick = () => {
-        if (showMenu) return;
-        if (step < 2) {
-            setStep(step + 1);
+    useEffect(() => {
+        setEndingType("custom");
+    }, []);
+
+    useEffect(() => {
+        setShowEndingOverlay(false);
+    }, [selectedImg]);
+
+    //더블탭 감지
+    const lastTap = useRef(0);
+    const handleTap = (e) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap.current;
+
+        if (tapLength < 300 && tapLength > 0) {
+            const elementWidth = e.currentTarget.offsetWidth;
+            const x = e.nativeEvent.offsetX;
+
+            if (x < elementWidth / 2) {
+                handleDoubleTap('left');
+            } else {
+                handleDoubleTap('right');
+            }
         } else {
-            setShowMenu(true);
+            if (isLastPage) {
+                if (!showMenu) {
+                    setShowEndingOverlay(true);
+                }
+            }
+            else if (!showMenu) {
+                if (step < 2) {
+                    setStep(step + 1);
+                } else {
+                    setShowMenu(true);
+                }
+            }
         }
+        lastTap.current = currentTime;
+    };
+
+    const maxSubtitle = (text) => {
+        if (!text) return "";
+        let result = '';
+        for (let i = 0; i < text.length; i += 70) {
+            result += text.slice(i, i + 70) + '\n';
+        }
+        return result.trim();
     };
 
     const voiceClick = () => {
         setVoiceModal(true);
-    }
+    };
+
+    const handleDoubleTap = (direction) => {
+        if (direction === 'left' && selectedImg > 0) {
+            setSelectedImg(selectedImg - 1);
+        }
+        if (direction === 'right' && selectedImg < pages.length - 1) {
+            setSelectedImg(selectedImg + 1);
+        }
+    };
+
+    const renderEndingOverlay = () => {
+        if (!isLastPage || !showEndingOverlay) return null;
+
+        switch (endingType) {
+            case 'custom':
+                return <CustomEnding
+                            navigate={navigate}
+                            handleReplay={handleReplay}
+                            vote={vote}
+                            setVote={setVote}
+                        />;
+            case 'classic':
+                return <ClassicEnding navigate={navigate} handleReplay={handleReplay} />;
+            case 'extended':
+                return <ExtendedEnding navigate={navigate} handleReplay={handleReplay} />;
+            default:
+                return null; 
+        }
+    };
+
+    const handleReplay = () => {
+        setSelectedImg(0);
+        setStep(2);
+        setShowMenu(false);
+        setShowEndingOverlay(false);
+        setTypeOn(false);
+        setPlayOn(false);
+    };
 
     return (
-        <Wrapper onClick={handleClick}>
+        <Wrapper onClick={handleTap}>
             <StoryImg>
                 <img src={pages[selectedImg].img} />
 
                 {typeOn && (
-                    <Type>{pages[selectedImg].type}</Type>
+                    <TypeContainer>
+                        <Type>{maxSubtitle(pages[selectedImg].type)}</Type>
+                    </TypeContainer>
+
                 )}
             </StoryImg>
-            {step < 2 && (
-                <Overlay onClick={handleClick}>
+
+            {!isLastPage && step < 2 && (
+                <Overlay>
                     {step === 0 && (
                         <Text01>
                             <img src='/icons/backward.svg' />
@@ -75,14 +257,15 @@ function StoryPlayer() {
                 }}>
                     <TopBar>
                         <LeftGroup onClick={(e) => e.stopPropagation()}>
-                            <img src='/icons/Leftpart-white.svg' />
-                            <Title
-                                placeholder='동화 제목을 입력해주세요'
+                            <img
+                                src='/icons/Leftpart-white.svg'
+                                onClick={() => navigate('/mylib')}
                             />
+                            <Title>동화 제목을 입력해주세요</Title>
                         </LeftGroup>
                         <RightButtons onClick={(e) => e.stopPropagation()}>
                             <BtnContainer onClick={() => setTypeOn(!typeOn)}>
-                                <img 
+                                <img
                                     src={typeOn ? '/icons/type-off.svg' : '/icons/type-on.svg'}
                                     width={24}
                                 />
@@ -119,7 +302,7 @@ function StoryPlayer() {
                                         e.stopPropagation();
                                         setSelectedImg(i);
                                     }}
-                                    >
+                                >
                                     <PageImg $isSelected={selectedImg === i}>
                                         <img src={p.img} />
                                     </PageImg>
@@ -138,26 +321,32 @@ function StoryPlayer() {
                                         onClick={() => setSelectedVoice(i)}
                                     >
                                         <LeftVoice $isSelected={selectedVoice === i}>
-                                            <img src={v.avatar} width={44}/>
+                                            <Img $isSelected={selectedVoice === i}>
+                                                <img src={v.avatar} width={44} />
+                                            </Img>
                                             {v.name}
                                         </LeftVoice>
                                         <RightVoice>
-                                            <img src='/icons/voice-edit.svg' width={20} />
-                                            <img src='/icons/voice-delete.svg' width={20} />
+                                            <img src='/icons/preview-play.svg' width={20} />
                                         </RightVoice>
                                     </VoiceSelect>
                                 ))}
                                 <VoiceSelect>
                                     <LeftVoice>
-                                        <img src='/icons/voice-add.svg' width={44} />
-                                        추가하기                                    </LeftVoice>
+                                        <img
+                                            src='/icons/voice-add.svg'
+                                            width={44}
+                                            onClick={() => navigate('/mypage/voice_set/step03')}
+                                        />
+                                        추가하기
+                                    </LeftVoice>
                                 </VoiceSelect>
                             </VoiceContainer>
                             <Button
                                 $width="272px"
                                 $height="40px"
                                 $bgColor="#393939"
-                                onClick={() => {setVoiceModal(false)}}
+                                onClick={() => { setVoiceModal(false) }}
                             >
                                 확인
                             </Button>
@@ -165,6 +354,7 @@ function StoryPlayer() {
                     )}
                 </Overlay>
             )}
+            {renderEndingOverlay()}
         </Wrapper>
     );
 }
@@ -259,7 +449,7 @@ const RightButtons = styled.div`
     gap: 8px;
 `
 
-const Title = styled.input`
+const Title = styled.div`
     margin-left: 4px;
     height: 22px;
     color: #fff;
@@ -268,12 +458,8 @@ const Title = styled.input`
     background-color: transparent;
     border: none;
     padding: 0 8px;
-    outline: none;
-
-    ::placeholder {
-        color: #fff;
-        opacity: 1;
-    }
+    display: flex;
+    align-items: center;
 `
 
 const BtnContainer = styled.div`
@@ -363,26 +549,35 @@ const PageNum = styled.div`
     color: ${({ $isSelected }) => ($isSelected) ? '#ffd342' : '#fff'};
 `
 
-const Type = styled.div`
+const TypeContainer = styled.div`
     position: absolute;
+    bottom: 0px;
     width: 694px;
     height: 112px;
-    bottom: 0;
-    left: 50%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transform: translateX(-50%);
-    padding: 24px;
-    display: inline-flex;
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    -webkit-text-stroke-width: 0.5px;
-    -webkit-text-stroke-color: #393939;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    font-size: 24px;
-    font-weight: 1200;
-    line-height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+`
+
+const Type = styled.div`
+padding: 8px 16px;
+max-width: calc(694px - 32px);
+
+background: rgba(0,0,0,0.6);
+border-radius: 8px;
+
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;
+overflow: hidden;
+
+color: #fff;
+font-size: 24px;
+font-weight: 800;
+line-height: 32px;
+text-align: center;
+text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 `
 
 const VoiceModal = styled.div`
@@ -402,7 +597,7 @@ const VoiceModal = styled.div`
 `
 
 const VoiceContainer = styled.div`
-    width: 272px;
+    width: 275px;
     overflow-y: auto;
     scrollbar-width: none;
     display: flex;
@@ -411,7 +606,7 @@ const VoiceContainer = styled.div`
 `
 
 const VoiceSelect = styled.div`
-    width: 272px;
+    width: 275px;
     height: 44px;
     display: flex;
     justify-content: space-between;
@@ -425,20 +620,126 @@ const LeftVoice = styled.div`
     font-size: 16px;
     font-weight: 700;
     align-items: center;
+`
+
+const Img = styled.div`
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border:  ${({ $isSelected }) => $isSelected ? '1.5px solid #ffd342' : '1.5px solid transparent'};
 
     img {
-        width: 44px;
-        height: 44px;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
-        border:  ${({ $isSelected }) => $isSelected ? '1.5px solid #ffd342' : '1.5px solid transparent'};
-        box-sizing: border-box;
+        border:  ${({ $isSelected }) => $isSelected ? '1.5px solid transparent' : '1.5px solid #f1f1f1'};
+        object-fit: cover;
     }
 `
 
 const RightVoice = styled.div`
-    width: 52px;
+    width: 20px;
     height: 44px;
     display: flex;
     gap: 12px;
     align-items: center;
+`
+
+const EndingOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+
+    & > * {
+        pointer-events: auto;
+    }
+`
+
+const ExtendButton = styled.button`
+    width: 260px;
+    height: 48px;
+    color: #fff;
+    border-radius: 99px;
+    font-size: 16px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+`
+
+const EndingButton = styled.button`
+    width: 260px;
+    height: 48px;
+    color: #fff;
+    border-radius: 99px;
+    background-color: #342E29;
+    font-size: 16px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+`
+
+const ReturnButton = styled.div`
+    width: 91px;
+    height: 27px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+`
+
+const CustomTitle = styled.div`
+    width: 276px;
+    height: 44px;
+    padding: 8px;
+    position: absolute;
+    left: 238px;
+    top: 44px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+const VoteContainer = styled.div`
+    width: 388px;
+    height: 138px;
+    display: flex;
+    gap: 100px;
+    position: absolute;
+    left: 182px;
+    top: 114px;
+`
+
+const Good = styled.button`
+    width: 144px;
+    height: 134px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: none;
+    background: none;
+`
+
+const Bad = styled.button`
+    width: 144px;
+    height: 134px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: none;
+    background: none;
 `

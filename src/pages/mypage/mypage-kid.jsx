@@ -47,7 +47,6 @@ function MypageKid() {
 
     const cancelDelete = () => {
         setShowDeleteModal(false);
-        navigate('/mypage-kid-detail');
     };
 
     const confirmDelete = () => {
@@ -178,7 +177,7 @@ function MypageKid() {
                     <ModalHeader>수정이 완료되지 않았어요</ModalHeader>
                     <ModalText>지금 나가면<br />수정한 내용이 반영되지 않아요.</ModalText>
                     <ModalBtnContainer>
-                        <CancelBtn onClick={() => navigate('/mypage')}>나가기</CancelBtn>
+                        <CancelBtn onClick={() => navigate('/mypage-kid-detail')}>나가기</CancelBtn>
                         <ConfirmBtn onClick={() => setShowBackModal(false)}>수정하기</ConfirmBtn>
                     </ModalBtnContainer>
                 </ModalBox>

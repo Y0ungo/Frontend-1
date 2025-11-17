@@ -56,7 +56,7 @@ function Profile() {
     const avatars = [
         '/icons/avatar-1.svg',
         '/icons/avatar-2.svg',
-        '/icons/avatar3.svg',
+        '/icons/avatar-3.svg',
         '/icons/avatar-4.svg',
     ];
 
