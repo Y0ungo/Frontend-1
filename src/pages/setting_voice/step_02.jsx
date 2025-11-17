@@ -12,7 +12,7 @@ const ICON_DONE      = '/img/onboarding/done.svg';
 
 const VoiceSetStep02 = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [status, setStatus] = useState('idle');
 
   const handleMicClick = () => {
@@ -44,9 +44,11 @@ const VoiceSetStep02 = () => {
     <Screen>
       <Header
         title="목소리 설정"
-        showBack={true}
-        onBack={() => navigate(-1)}
-        action={{ text: '건너뛰기', handler: () => setOpen(true) }}
+        showBack={false}
+        action={{
+          icon: "/icons/new_right_part.svg",
+          handler: () => setOpenModal(true)
+        }}
       />
 
       <Content>
@@ -92,23 +94,22 @@ const VoiceSetStep02 = () => {
         </ArcArea>
       </Content>
 
-      {/* 모달창 (VoiceSetStep03 동일 디자인 적용) */}
-      {open && (
-        <Dim onClick={() => setOpen(false)}>
+      {openModal && (
+        <Dim onClick={() => setOpenModal(false)}>
           <Modal role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
-            <ModalTitle>목소리 설정을 건너뛰시겠습니까?</ModalTitle>
+            <ModalTitle>등록이 완료되지 않았어요</ModalTitle>
             <ModalDesc>
-              지금까지 입력한 정보는 저장되지 않으며,
+              지금 나가면
               <br />
-              기본 음성으로 동화가 재생돼요.
+              저장된 내용이 모두 사라져요.
             </ModalDesc>
 
             <BtnRow>
-              <CancelBtn onClick={() => { setOpen(false); navigate('/home'); }}>
+              <CancelBtn onClick={() => { navigate('/mypage/voice_set/main'); }}>
                 나가기
               </CancelBtn>
-              <DeleteBtn onClick={() => setOpen(false)}>
-                이어서 설정
+              <DeleteBtn onClick={() => setOpenModal(false)}>
+                이어서 등록
               </DeleteBtn>
             </BtnRow>
           </Modal>
@@ -120,7 +121,7 @@ const VoiceSetStep02 = () => {
 
 export default VoiceSetStep02;
 
-//스타일 컴포넌트
+
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
@@ -176,25 +177,22 @@ const Spacer = styled.div`
 `;
 
 const ArcArea = styled.div`
-  position: relative;       
-  width: 390px;             
-  height: 330px;             
+  position: relative;
+  width: 390px;
+  height: 330px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
 `;
 
-
 const Arc = styled.div`
   position: absolute;
   inset: 0;
-  background: #FFF8E3;     
+  background: #FFF8E3;
   border-top-left-radius: 90% 50%;
   border-top-right-radius: 90% 50%;
 `;
 
-
-/* 반원 안 텍스트 */
 const ArcTexts = styled.div`
   position: absolute;
   bottom: 176px;
@@ -206,11 +204,10 @@ const ArcTexts = styled.div`
 `;
 
 const ArcText = styled.div`
-  color: var(--color-text-interactive-secondary-hovered, #736A64);
+  color: #736A64;
   text-align: center;
   font-family: 'NanumSquareRound';
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
   line-height: 22px;
 `;
@@ -251,7 +248,7 @@ const IconBtn = styled.button`
   cursor: pointer;
 `;
 
-//모달창 스타일
+//모달창
 const Dim = styled.div`
   position: fixed;
   inset: 0;
@@ -266,11 +263,11 @@ const Dim = styled.div`
 const Modal = styled.div`
   display: flex;
   width: 320px;
-  max-width: var(--Large-Sizes-sm, 384px);
+  max-width: 384px;
   flex-direction: column;
   align-items: center;
-  border-radius: var(--border-radius-2xl, 16px);
-  background: var(--bg-panel, #fff);
+  border-radius: 16px;
+  background: #fff;
   box-shadow: 0 0 1px 0 rgba(24, 24, 27, 0.3),
               0 8px 16px 0 rgba(24, 24, 27, 0.1);
   padding: 20px;
@@ -283,8 +280,6 @@ const ModalTitle = styled.h3`
   font-size: 20px;
   font-weight: 800;
   line-height: 28px;
-  letter-spacing: -0.01em;
-  text-align: center;
 `;
 
 const ModalDesc = styled.p`
@@ -295,7 +290,6 @@ const ModalDesc = styled.p`
   line-height: 22px;
   width: 100%;
   max-width: 272px;
-  text-align: center;
   margin-left: auto;
   margin-right: auto;
 `;

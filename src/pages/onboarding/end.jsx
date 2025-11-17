@@ -33,12 +33,9 @@ const Onboardingend = () => {
           >
             홈으로
           </StyledButton>
-
-          {/* ✅ 아래 버튼은 클래스명 'dark'로 색상 분리 */}
           <StyledButton
             className="dark"
-            onClick={() => navigate('/home')} 
-            // 동화 만들기로 라우터 수정 필요
+            onClick={() => navigate('/mystory/ai_story/step01')} 
           >
             동화 만들기
           </StyledButton>

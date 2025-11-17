@@ -18,7 +18,10 @@ import Onboardingend from './pages/onboarding/end.jsx'; // 온보딩 끝
 import VoiceSettingMain from './pages/setting_voice/main.jsx'; //목소리 세팅 기본화면
 import VoiceSetStep01 from './pages/setting_voice/step_01.jsx'; //목소리 세팅 녹음버튼만
 import VoiceSetStep02 from './pages/setting_voice/step_02.jsx'; //목소리 세팅 녹음 프로세스ing
-import VoiceSetStep03 from './pages/setting_voice/step_03.jsx'; //목소리 세팅 목소리 등록 (최종)
+import VoiceSetStep03 from './pages/setting_voice/step_03.jsx'; //목소리 세팅 목소리 등록
+import VoiceSetDetail from './pages/setting_voice/detail.jsx'; //목소리별 디테일
+import VoiceSetDetailedit from './pages/setting_voice/detail_edit.jsx'; //목소리 수정
+
 import Signup from './pages/signup/signup.jsx'; // 회원가입
 import SignupAgree from './pages/signup/signup-agree.jsx'; // 약관 설명 페이지
 import Login from './pages/login/login.jsx'; // 로그인 페이지
@@ -42,7 +45,7 @@ import Endwritestep02 from './pages/end_rewirte/step_02.jsx' //결말 확장 음
 import Endwritestep03 from './pages/end_rewirte/step_03.jsx' //결말 확장 채팅
 import Endwritestep04 from './pages/end_rewirte/step_04.jsx' //결말 확장 완성
 import StoryPlayer from './pages/player/story-player.jsx'; // 동화 재생하기 페이지
-import Storymain from './pages/ai_story/main.jsx' //AI 스토리 메인
+
 import Storystep01 from './pages/ai_story/step_01.jsx' //AI 스토리 생성
 import Storystep02 from './pages/ai_story/step_02.jsx' //AI 스토리 생성 음성
 import Storystep03 from './pages/ai_story/step_03.jsx' //AI 스토리 생성 텍스트
@@ -73,6 +76,8 @@ function App() {
             <Route path="/mypage/voice_set/step01" element={<PageWrapper orientation="portrait"><VoiceSetStep01 /></PageWrapper>} />
             <Route path="/mypage/voice_set/step02" element={<PageWrapper orientation="portrait"><VoiceSetStep02 /></PageWrapper>} />
             <Route path="/mypage/voice_set/step03" element={<PageWrapper orientation="portrait"><VoiceSetStep03 /></PageWrapper>} />
+            <Route path="/mypage/voice_set/detail" element={<PageWrapper orientation="portrait"><VoiceSetDetail /></PageWrapper>} />
+            <Route path="/mypage/voice_set/detail/edit" element={<PageWrapper orientation="portrait"><VoiceSetDetailedit /></PageWrapper>} />
 
             {/* 회원가입 페이지 */}
             <Route path="/signup" element={<PageWrapper orientation="portrait"><Signup /></PageWrapper>} />
@@ -116,7 +121,6 @@ function App() {
             <Route path='/story-player' element={<PageWrapper orientation="landscape"><StoryPlayer /></PageWrapper>} />
 
             {/* AI 스토리 생성 */}
-            <Route path='/mystory/ai_story' element={<PageWrapper orientation="portrait"><Storymain/></PageWrapper>} />
             <Route path='/mystory/ai_story/step01' element={<PageWrapper orientation="portrait"><Storystep01/></PageWrapper>} />
             <Route path='/mystory/ai_story/step02' element={<PageWrapper orientation="portrait"><Storystep02/></PageWrapper>} />
             <Route path='/mystory/ai_story/step03' element={<PageWrapper orientation="portrait"><Storystep03/></PageWrapper>} />

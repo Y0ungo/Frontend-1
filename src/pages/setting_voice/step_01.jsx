@@ -16,12 +16,13 @@ const CHARACTERS = [
 const VoiceSetStep01 = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(CHARACTERS[0].key);
+  const [openModal, setOpenModal] = useState(false);
   const [name, setName] = useState('');
   const [error, setError] = useState(false); // 미입력 에러 상태
 
   const current = CHARACTERS.find(c => c.key === selected) || CHARACTERS[0];
 
-  // ✅ 버튼 클릭 시 이름 입력 검증
+  // 버튼 클릭 시 이름 입력 검증
   const handleNext = () => {
     if (name.trim() === '') {
       setError(true);
@@ -34,9 +35,10 @@ const VoiceSetStep01 = () => {
     <Screen>
       <Header
         title="목소리 등록하기"
-        showBack={true}
-        onBack={() => navigate(-1)}
-        action={false}
+        showBack={false}
+        action={{
+    icon: "/icons/new_right_part.svg",
+    handler: () => setOpenModal(true), }}
       />
 
       <Content>
@@ -73,6 +75,22 @@ const VoiceSetStep01 = () => {
           {error && <ErrorText>목소리 이름을 입력해주세요.</ErrorText>}
         </FieldGroup>
       </Content>
+{openModal && (
+  <Dim onClick={() => setOpenModal(false)}>
+    <Modal onClick={(e) => e.stopPropagation()}>
+      <ModalTitle>등록이 완료되지 않았어요</ModalTitle>
+      <ModalDesc>
+        지금 나가면
+        <br/>저장된 내용이 모두 사라져요.
+      </ModalDesc>
+
+      <BtnRow>
+        <CancelBtn onClick={() => navigate('/mypage/voice_set/main')}>나가기</CancelBtn>
+        <DeleteBtn onClick={() => setOpenModal(false)}>이어서 등록</DeleteBtn>
+      </BtnRow>
+    </Modal>
+  </Dim>
+)}
 
       <BottomArea>
         <Button
@@ -237,3 +255,82 @@ const BtnText = styled.span`
   font-weight: 800;
   line-height: 24px;
 `;
+
+const Dim = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1000;
+`;
+
+const Modal = styled.div`
+  display: flex;
+  width: 320px;
+  max-width: var(--Large-Sizes-sm, 384px);
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--border-radius-2xl, 16px);
+  background: var(--bg-panel, #fff);
+  box-shadow: 0 0 1px 0 rgba(24, 24, 27, 0.3),
+    0 8px 16px 0 rgba(24, 24, 27, 0.1);
+  padding: 20px;
+  text-align: center;
+`;
+
+const ModalTitle = styled.h3`
+  margin: 6px 0 8px;
+  color: #3a372f;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 28px;
+  letter-spacing: -0.01em;
+`;
+
+const ModalDesc = styled.p`
+  margin: 0 0 16px;
+  color: #7a7a7a;
+  font-size: 14px;
+  font-family: NanumSquareRound;
+  line-height: 22px;
+  width: 100%;
+  max-width: 272px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const BtnRow = styled.div`
+  margin-top: 8px;
+  margin-bottom: 4px;
+  display: flex;
+  gap: 8px;
+`;
+
+const CancelBtn = styled.button`
+  width: 132px;
+  height: 48px;
+  border: none;
+  border-radius: 24px;
+  background: #f1f1f1;
+  color: #7a7a7a;
+  font-family: NanumSquareRound;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+const DeleteBtn = styled.button`
+  width: 132px;
+  height: 48px;
+  border: none;
+  border-radius: 24px;
+  background: #ffd342;
+  color: #fff;
+  font-family: NanumSquareRound;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+`;
+

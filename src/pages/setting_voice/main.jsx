@@ -49,7 +49,7 @@ const VoiceSettingMain = () => {
 
   return (
     <Container>
-      <Header title="목소리 설정" showBack={true} />
+      <Header title="목소리 설정" showBack={true} onBack={() => navigate('/mypage')} />
       {/* 탭 메뉴 */}
       <TabWrapper>
         <TabButton
@@ -77,7 +77,7 @@ const VoiceSettingMain = () => {
                 </LeftArea>
                 <RightArea>
                   <IconButton>
-                    <img src="/img/setting_voice/edit.svg" alt="edit" />
+                    <img src="/img/setting_voice/play.svg" alt="edit" />
                   </IconButton>
                   <IconButton onClick={() => handleDeleteClick(voice.id)}>
                     <img src="/img/setting_voice/delete.svg" alt="delete" />
@@ -92,7 +92,7 @@ const VoiceSettingMain = () => {
                   <VoiceName>{voice.name}</VoiceName>
                 </LeftArea>
                 <RightArea>
-                  <IconButton>
+                  <IconButton onClick={() => navigate(`/mypage/voice_set/play/step_03`)}>
                     <img src="/img/setting_voice/play.svg" alt="play" />
                   </IconButton>
                 </RightArea>
@@ -116,13 +116,11 @@ const VoiceSettingMain = () => {
             aria-modal="true"
             onClick={(e) => e.stopPropagation()}
           >
-            <ModalTitle>목소리를 삭제하시겠어요?</ModalTitle>
+            <ModalTitle>정말 삭제하시겠어요?</ModalTitle>
             <ModalDesc>
-              이 목소리로 저장된
+              한번 삭제하면 되돌릴 수 없어요.
               <br />
-              모든 동화 오디오가 함께 사라져요.
-              <br />
-              삭제 후에는 복구할 수 없어요.
+              그래도 삭제하시겠어요?
             </ModalDesc>
 
             <BtnRow>
