@@ -8,60 +8,69 @@ function Profile() {
     const navigate = useNavigate();
 
     const mockUserData = {
-        nickname: '예린',
-        birth: '2006.09.07',
         userId: 'yerin06',
         password: 'yerin1234',
         avatar: '/icons/avatar2.svg',
-        gender: 'female',
     }
 
-    const [nickname, setNickname] = useState('');
-    const [birth, setBirth] = useState('');
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [seledtedAvatar, setSelectedAvatar] = useState('/icons/avatar1.svg')
-    
-    const [showPw, setShowPw] = useState(false);
 
-    const [seledtedGender, setSelectedGender] = useState('female');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [pwError, setPwError] = useState(false);
+
+    const [showPw, setShowPw] = useState(false);
+    const [showPwConfirm, setShowPwConfirm] = useState(false);
+
+    const [isSaved, setIsSaved] = useState(false);
 
     const [showToastModal, setShowToastModal] = useState(false);
+    const [showBackModal, setShowBackModal] = useState(false);
 
-    const handleToast = () => {
+    const handleSave = () => {
         setShowToastModal(true);
+        setIsSaved(true);
 
         setTimeout(() => {
             setShowToastModal(false);
         }, 1000);
     };
 
+    const handleBack = () => {
+        if (isSaved) {
+            navigate('/mypage');
+        } else {
+            setShowBackModal(true);
+        }
+    };
+
     useEffect(() => {
         if (mockUserData) {
-            setNickname(mockUserData.nickname || '');
-            setBirth(mockUserData.birth || '');
             setUserId(mockUserData.userId || '');
             setPassword(mockUserData.password || '');
-            setSelectedGender(mockUserData.gender || '');
             setSelectedAvatar(mockUserData.avatar || '/icons/avatar1.svg');
         }
     }, []);
 
     const avatars = [
-        '/icons/avatar1.svg',
-        '/icons/avatar2.svg',
-        '/icons/avatar3.svg',
-        '/icons/avatar4.svg',
-    ]
+        '/icons/avatar-1.svg',
+        '/icons/avatar-2.svg',
+        '/icons/avatar-3.svg',
+        '/icons/avatar-4.svg',
+    ];
 
-    const isButtonActive = nickname.trim().length > 0 && birth.trim().length > 0 && userId.trim().length > 0 && password.trim().length > 0;
+    const isButtonActive = 
+        userId.trim().length > 0 &&
+        password.trim().length > 0 &&
+        password === passwordConfirm;
 
     return (
         <Wrapper>
         <Header
             title="프로필 편집"
             showBack={true}
-            onBack={() => (navigate(-1))}
+            onBack={handleBack}
         />
 
         <Contents>
@@ -85,28 +94,6 @@ function Profile() {
             </AvatarContainer>
 
             <InputContainer>
-                <InputLabel>이름</InputLabel>
-                <Input
-                    type='text'
-                    value={nickname}
-                    onChange={(e) => setNickname(e.target.value)}
-                    placeholder='이름 입력'
-                    $filled={nickname !== ''}
-                />
-            </InputContainer>
-
-            <InputContainer>
-                <InputLabel>출생연도</InputLabel>
-                <Input
-                    type='text'
-                    value={birth}
-                    onChange={(e) => setBirth(e.target.value)}
-                    placeholder='출생연도 입력'
-                    $filled={birth !== ''}
-                />
-            </InputContainer>
-
-            <InputContainer>
                 <InputLabel>아이디</InputLabel>
                 <Input
                     type='text'
@@ -126,9 +113,10 @@ function Profile() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder='비밀번호 입력'
                     $filled={password !== ''}
+                    $error={pwError}
                 />
                 <ShowButton onClick={() => setShowPw(prev => !prev)}>
-                    {showPw 
+                    {showPw
                         ? <img src="/icons/noshowimg.svg" />
                         : <img src="/icons/showimg.svg" />
                     }
@@ -136,31 +124,35 @@ function Profile() {
                 </PwWrapper>
             </InputContainer>
 
-            <GenderContainer>
-                <GenderLabel>성별</GenderLabel>
-                <GenderSelect>
-                    <Female onClick={() => setSelectedGender('female')}>
-                        {seledtedGender === 'female'
-                            ? <img src='/icons/radio-filled.svg' />
-                            : <img src='/icons/radio.svg' />
-                        }
-                        여자
-                    </Female>
-                    <Female onClick={() => setSelectedGender('male')}>
-                        {seledtedGender === 'male'
-                            ? <img src='/icons/radio-filled.svg' />
-                            : <img src='/icons/radio.svg' />
-                        }
-                        남자
-                    </Female>
-                </GenderSelect>
-            </GenderContainer>
+            <InputContainer>
+                <InputLabel>비밀번호 확인</InputLabel>
+                <PwWrapper>
+                <Input
+                    type={showPwConfirm ? 'text' : 'password'}
+                    value={passwordConfirm}
+                    onChange={(e) => {
+                        setPasswordConfirm(e.target.value);
+                        setPwError(password !== e.target.value);
+                    }}
+                    placeholder='비밀번호 재입력'
+                    $filled={password !== ''}
+                    $error={pwError}
+                />
+                <ShowButton onClick={() => setShowPwConfirm(prev => !prev)}>
+                    {showPwConfirm
+                        ? <img src="/icons/noshowimg.svg" />
+                        : <img src="/icons/showimg.svg" />
+                    }
+                </ShowButton>
+                </PwWrapper>
+                {pwError && <ErrorText>비밀번호가 일치하지 않습니다.</ErrorText>}
+            </InputContainer>
         </Contents>
 
         <BtnContainer>
             <Button
                 disabled={!isButtonActive}
-                onClick={handleToast}
+                onClick={handleSave}
                 $bgColor='#342e29'
                 $color='#fff'
             >
@@ -171,6 +163,19 @@ function Profile() {
         {showToastModal && (
             <ToastModal>변경 사항이 저장되었어요.</ToastModal>
         )}
+
+        {showBackModal && (
+            <ModalOverlay>
+                <ModalBox>
+                    <ModalHeader>수정이 완료되지 않았어요</ModalHeader>
+                    <ModalText>지금 나가면<br />수정한 내용이 반영되지 않아요.</ModalText>
+                    <ModalBtnContainer>
+                        <CancelBtn onClick={() => navigate('/mypage')}>나가기</CancelBtn>
+                        <ConfirmBtn onClick={() => setShowBackModal(false)}>수정하기</ConfirmBtn>
+                    </ModalBtnContainer>
+                </ModalBox>
+            </ModalOverlay>
+        )}
         </Wrapper>
     );
 }
@@ -179,7 +184,7 @@ export default Profile;
 
 const Wrapper = styled.div`
     width: 390px;
-    height: 100%;
+    height: 798px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -213,6 +218,8 @@ const SelectedAvatar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid #f1f1f1;
+    border-radius: 99px;
 
     img {
         width: 100%;
@@ -245,6 +252,7 @@ const AvatarBtn = styled.button`
         height: 100%;
         object-fit: cover;
         border-radius: 50%;
+        border: ${({ $isSelected}) => ( $isSelected ? '2px solid transparent' : '2px solid #f1f1f1')};
     }
 `
 
@@ -327,42 +335,6 @@ const PwWrapper = styled.div`
     width: 358px;
 `;
 
-const GenderContainer = styled.div`
-    width: 358px;
-    height: 60px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-`
-
-const GenderLabel = styled.div`
-    width: 358px;
-    height: 24px;
-    font-size: 16px;
-    font-weight: 800;
-`
-
-const GenderSelect = styled.div`
-    width: 358px;
-    height: 24px;
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-`
-
-const Female = styled.div`
-    width: 62px;
-    height: 24px;
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    color: #393939;
-    font-size: 16px;
-    font-weight: 800;
-    align-items: center;
-    cursor: pointer;
-`
-
 const ToastModal = styled.div`
     height: 46px;
     width: 358px;
@@ -376,4 +348,89 @@ const ToastModal = styled.div`
     align-items: center;
     position: absolute;
     top: 16px;
+`
+
+const ErrorText = styled.div`
+    padding: 0 16px;
+    font-size: 12px;
+    font-style: regular;
+    font-weight: 400;
+    color: #ff4242;
+`
+
+const ModalOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 390px;
+    height: 852px;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+`
+
+const ModalBox = styled.div`
+    width: 320px;
+    height: 196px;
+    padding: 24px 24px 16px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: #fff;
+`
+
+const ModalHeader = styled.div`
+    color: #393939;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+`
+
+const ModalText = styled.div`
+    color: #7a7a7a;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+`
+
+const ModalBtnContainer = styled.div`
+    display: flex;
+    gap: 12px;
+`
+
+const CancelBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #f1f1f1;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+`
+
+const ConfirmBtn = styled.button`
+    width: 130px;
+    height: 40px;
+    background-color: #ffd342;
+    border-radius: 99px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
 `

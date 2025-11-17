@@ -13,6 +13,14 @@ function KidRegister() {
     const [seledtedGender, setSelectedGender] = useState('female');
 
     const [showRegisterModal, setShowRegisterModal] = useState(false);
+    const [showBackModal, setShowBackModal] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+
+    const handleBack = () => {
+        if (!isSaved) {
+            setShowBackModal(true);
+        }
+    };
 
     const handleRegister = () => {
         setShowRegisterModal(true);
@@ -21,19 +29,19 @@ function KidRegister() {
     const AddRegister = () => {
         setShowRegisterModal(false);
         navigate(0)
-    }
+    };
 
     const confirmRegister = () => {
         setShowRegisterModal(false);
         navigate('/mypage')
-    }
+    };
 
     const avatars = [
         '/icons/avatar1.svg',
         '/icons/avatar2.svg',
         '/icons/avatar3.svg',
         '/icons/avatar4.svg',
-    ]
+    ];
 
     const isButtonActive = nickname.trim().length > 0 && birth.trim().length > 0;
 
@@ -42,7 +50,7 @@ function KidRegister() {
         <Header
             title="아이 정보 등록"
             showBack={true}
-            onBack={() => (navigate(-1))}
+            onBack={handleBack}
         />
 
         <Contents>
@@ -131,6 +139,18 @@ function KidRegister() {
                 </ModalBox>
             </ModalOverlay>
         )}
+        {showBackModal && (
+            <ModalOverlay>
+                <ModalBox>
+                    <ModalHeader>등록이 완료되지 않았어요</ModalHeader>
+                    <ModalText>지금 나가면<br />저장한 내용이 모두 사라져요.</ModalText>
+                    <ModalBtnContainer>
+                        <AddBtn onClick={() => navigate('/mypage')}>나가기</AddBtn>
+                        <ConfirmBtn onClick={() => setShowBackModal(false)}>이어서 등록</ConfirmBtn>
+                    </ModalBtnContainer>
+                </ModalBox>
+            </ModalOverlay>
+        )}
         </Wrapper>
     );
 }
@@ -174,6 +194,8 @@ const SelectedAvatar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid #f1f1f1;
+    border-radius: 99px;
 
     img {
         width: 100%;
@@ -206,6 +228,7 @@ const AvatarBtn = styled.button`
         height: 100%;
         object-fit: cover;
         border-radius: 50%;
+        border: ${({ $isSelected}) => ( $isSelected ? '2px solid transparent' : '2px solid #f1f1f1')};
     }
 `
 

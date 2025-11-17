@@ -7,8 +7,8 @@ function Mypage() {
     const navigate = useNavigate();
 
     const [kids] = useState([
-        { id: 1, name: '유이진' },
-        { id: 2, name: '아이2' },
+        { id: 1, name: '유이진', isActive: true },
+        { id: 2, name: '윤태하', isActive: false },
     ]);
 
     const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -20,7 +20,7 @@ function Mypage() {
 
     const confirmLogout = () => {
         setShowLogoutModal(false);
-        navigate('/login');
+        navigate('/intro');
     };
 
     const cancelLogout = () => {
@@ -47,11 +47,11 @@ function Mypage() {
         <Contents>
             <UserContainer>
                 <UserProfile>
-                    <img src='/icons/Avatar.svg' />
+                    <img src='/icons/avatar-1.svg' />
                 </UserProfile>
                 <UserContent>
-                    <UserName>사용자1</UserName>
-                    <UserId>ewha1234</UserId>
+                    <UserName>Ewha1234</UserName>
+                    <UserId>부모/보호자</UserId>
                 </UserContent>
                 <UserEdit onClick={() => (navigate('/mypage-profile'))}>프로필 편집</UserEdit>
             </UserContainer>
@@ -72,8 +72,13 @@ function Mypage() {
                     <>
                         {kids.map((kid) => (
                             <ModifyContent key={kid.id}>
-                                {kid.name}
-                                <ArrowRightBtn onClick={() => (navigate('/mypage-kid'))}><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                                <Name>
+                                    {kid.name}
+                                    {kid.isActive && <ActiveDot />}
+                                </Name>
+                                <ArrowRightBtn onClick={() => navigate('/mypage-kid-detail')}>
+                                    <img src='/icons/arrow-right-black.svg' width={16} />
+                                </ArrowRightBtn>
                             </ModifyContent>
                         ))}
                         <RegisterContent onClick={() => (navigate('/mypage-kid-register'))}>+ 등록하기</RegisterContent>
@@ -98,15 +103,21 @@ function Mypage() {
                 <ModifyHeader>고객 지원</ModifyHeader>
                 <ModifyContent>
                     기기 및 버전 정보
-                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                    <ArrowRightBtn onClick={() => navigate('/mypage-support/a')}>
+                        <img src='/icons/arrow-right-black.svg' width={16}/>
+                    </ArrowRightBtn>
                 </ModifyContent>
                 <ModifyContent>
                     고객센터
-                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                    <ArrowRightBtn onClick={() => navigate('/mypage-support/b')}>
+                        <img src='/icons/arrow-right-black.svg' width={16}/>
+                    </ArrowRightBtn>
                 </ModifyContent>
                 <ModifyContent>
                     약관 및 정책
-                    <ArrowRightBtn><img src='/icons/arrow-right-black.svg' width={16}/></ArrowRightBtn>
+                    <ArrowRightBtn onClick={() => navigate('/mypage-support/c')}>
+                        <img src='/icons/arrow-right-black.svg' width={16}/>
+                        </ArrowRightBtn>
                 </ModifyContent>
             </ModifyContainer>
 
@@ -189,6 +200,13 @@ const UserProfile = styled.div`
     width: 56px;
     height: 56px;
     border-radius: 99px;
+    border: 1.5px solid #f1f1f1;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 `
 
 const UserContent = styled.div`
@@ -262,6 +280,7 @@ const ModifyContent = styled.div`
     color: #393939;
     font-size: 14px;
     font-weight: 700;
+    align-items: center;
 `
 
 const RegisterContent = styled.div`
@@ -280,6 +299,8 @@ const Logout = styled.div`
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
 `
 
 const ArrowRightBtn = styled.div`
@@ -371,4 +392,21 @@ const Empty = styled.div`
     color: #393939;
     font-size: 14px;
     font-weight: 700;
+`
+
+const Name = styled.div`
+    display: flex;
+    flex-direction: row;
+    height: 22px;
+    align-items: center;
+    gap: 4px;
+`
+
+const ActiveDot = styled.div`
+    width: 6px;
+    height: 6px;
+    background-color: #ffd342;
+    border-radius: 50%;
+    display: 'flex';
+    align-items: center;
 `

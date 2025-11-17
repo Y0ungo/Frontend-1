@@ -175,7 +175,12 @@ function Signup() {
         </Contents>
 
         <ButtonContainer>
-            <Button disabled={!isButtonActive}>다음</Button>
+            <Button
+                disabled={!isButtonActive}
+                onClick={() => navigate('/onboarding')}
+            >
+                다음
+            </Button>
         </ButtonContainer>
         </>
     );
