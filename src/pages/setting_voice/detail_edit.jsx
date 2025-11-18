@@ -316,22 +316,33 @@ const BottomArea = styled.div`
 `;
 
 const Dim = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  position: absolute;    /* fixed → absolute */
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 852px;
+  background-color: rgba(0,0,0,0.4);  /* 투명도 동일하게 */
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 2000;
+  align-items: center;
+  z-index: 999;
 `;
+
 
 const Modal = styled.div`
   width: 320px;
-  padding: 20px;
+  height: 196px;
+  padding: 24px 24px 16px 24px;
   background: #fff;
   border-radius: 16px;
-  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  justify-content: center;
+  align-items: center;
 `;
+
 
 const ModalTitle = styled.h3`
   font-size: 18px;
@@ -348,31 +359,33 @@ const ModalDesc = styled.p`
 
 const ModalBtnRow = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 12px;
 `;
 
 const ModalBtnGray = styled.button`
-  flex: 1;
-  height: 48px;
-  border-radius: 24px;
-  background: #f1f1f1;
-  color: #7a7a7a;
-  font-family: NanumSquareRound;
-  font-size: 16px;
+  width: 130px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border-radius: 99px;
   border: none;
+  color: #7a7a7a;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
 `;
 
 const ModalBtnYellow = styled.button`
-  flex: 1;
-  height: 48px;
-  border-radius: 24px;
-  background: #ffd342;
-  color: #fff;
-  font-family: NanumSquareRound;
-  font-weight: 700;
-  font-size: 16px;
+  width: 130px;
+  height: 40px;
+  background-color: #ffd342;
+  border-radius: 99px;
   border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
 `;
+
 
 const Toast = styled.div`
   position: fixed;
@@ -389,4 +402,6 @@ const Toast = styled.div`
   font-size: 14px;
   color: #3a372f;
   z-index: 2500;
+  flex-direction: column;
+  align-items: flex-start;
 `;

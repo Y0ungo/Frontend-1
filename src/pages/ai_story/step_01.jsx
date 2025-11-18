@@ -21,7 +21,7 @@ const Storystep01 = () => {
 
       {/* 프로그레스 바 */}
       <ProgressWrapper>
-        <ProgressBar $progress={20} />
+        <ProgressBar $progress={10} />
       </ProgressWrapper>
 
       <Content>

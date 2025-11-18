@@ -4,6 +4,8 @@ import Header from "../../components/Header.jsx";
 import { useNavigate } from "react-router-dom";
 
 const EDIT_ICON = "/img/setting_voice/edit.svg";
+const ICON_ROTATE = "/img/ai_story/rotate.svg";
+const ICON_EXIT = "/icons/new_right_part.svg";
 
 const Storystep07 = () => {
   const navigate = useNavigate();
@@ -17,20 +19,26 @@ const Storystep07 = () => {
 여우는 털이 북슬북슬하고 두루미는 아주 키가 컸어요.옛날옛날에 여우와 두루미가 살았어요. 여우는 털이 북슬북슬하고 두루미는 아주 키가 컸어요.옛날옛날에 여우와 두루미가 살았어요. 여우는 털이 북슬북슬하고 두루미는 아주 키가 컸어요.`
   );
 
-  //제목 상태
   const [isEditing, setIsEditing] = useState(false);
 
-  //edit 클릭 시 편집 모드
-  const handleEditClick = () => {
-    setIsEditing((prev) => !prev);
-  };
+  const [showModal, setShowModal] = useState(false);
+  const handleExit = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   return (
     <Screen>
-      <Header title="동화 만들기" showBack={true} onBack={() => navigate(-1)} />
+      <Header
+        title="동화 만들기"
+        showBack={true}
+        onBack={() => navigate(-1)}
+        action={{
+          icon: ICON_EXIT,
+          handler: handleExit,
+        }}
+      />
 
       <ProgressWrapper>
-        <ProgressBar $progress={100} />
+        <ProgressBar $progress={80} />
       </ProgressWrapper>
 
       <Content>
@@ -44,24 +52,50 @@ const Storystep07 = () => {
           />
           <EditIcon
             src={EDIT_ICON}
-            alt="수정 아이콘"
-            onClick={handleEditClick}
+            alt="수정"
+            onClick={() => setIsEditing((prev) => !prev)}
             $active={isEditing}
           />
         </TitleInputWrapper>
 
         <Label>스토리</Label>
-        <StoryBox
-          value={story}
-          onChange={(e) => setStory(e.target.value)}
-        />
+        <StoryBox value={story} onChange={(e) => setStory(e.target.value)} />
       </Content>
 
       <BottomArea>
-        <NextButton onClick={() => navigate("/mystory/ai_story/main")}>
+        <RewriteRow onClick={() => navigate("/mystory/ai_story/step06")}>
+          <RewriteText>AI 스토리 다시쓰기</RewriteText>
+          <RewriteIcon src={ICON_ROTATE} alt="icon" />
+        </RewriteRow>
+
+        <NextButton onClick={() => navigate("/illust-portrait")}>
           다음
         </NextButton>
       </BottomArea>
+
+      {showModal && (
+        <Dim onClick={closeModal}>
+          <Modal onClick={(e) => e.stopPropagation()}>
+            <ModalTitle>앗! 그만두시겠어요?</ModalTitle>
+
+            <ModalDesc>
+              아직 동화를 완성하지 못했어요.
+              <br />
+              나가면 지금까지의 기록을 되돌릴 수 없어요.
+            </ModalDesc>
+
+            <ModalBtnRow>
+              <ModalBtnGray onClick={() => navigate("/home")}>
+                그만두기
+              </ModalBtnGray>
+
+              <ModalBtnYellow onClick={closeModal}>
+                계속 제작하기
+              </ModalBtnYellow>
+            </ModalBtnRow>
+          </Modal>
+        </Dim>
+      )}
     </Screen>
   );
 };
@@ -81,11 +115,10 @@ const ProgressWrapper = styled.div`
   height: 4px;
   background: #f2f2f2;
 `;
-
 const ProgressBar = styled.div`
   width: ${({ $progress }) => $progress || 0}%;
   height: 100%;
-  background: var(--color-bg-primary, #FFD342);
+  background: #ffd342;
   transition: width 0.3s ease;
 `;
 
@@ -97,49 +130,39 @@ const Content = styled.div`
   gap: 16px;
   overflow-y: auto;
 
-  /* 스크롤바 숨김 */
   scrollbar-width: none;
-  -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
 const Label = styled.h3`
-  color: var(--color-text-primary, #393939);
   font-family: NanumSquareRound;
   font-size: 16px;
   font-weight: 800;
-  line-height: 24px;
+  color: #393939;
 `;
 
 const TitleInputWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  padding: 10px 40px 10px 12px;
   border: 1px solid #e8e8e8;
   border-radius: 8px;
-  padding: 10px 40px 10px 12px;
-  background: #fff;
 `;
 
 const TitleInput = styled.input`
   width: 100%;
   border: none;
   outline: none;
-  background: transparent;
-  color: var(--color-text-primary, #393939);
   font-family: NanumSquareRound;
   font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-
 
   ${({ readOnly }) =>
     readOnly &&
     `
-      color: #7a7a7a;
-      cursor: default;
+    color: #7a7a7a;
   `}
 `;
 
@@ -147,51 +170,58 @@ const EditIcon = styled.img`
   position: absolute;
   right: 12px;
   width: 20px;
-  height: 20px;
   cursor: pointer;
-  opacity: ${({ $active }) => ($active ? 1 : 0.7)};
-  transition: opacity 0.2s ease;
+  opacity: ${({ $active }) => ($active ? 1 : 0.6)};
 `;
 
 const StoryBox = styled.textarea`
   width: 100%;
   height: 456px;
+  padding: 12px;
   border: 1px solid #e8e8e8;
   border-radius: 8px;
-  background: #fff;
-  padding: 12px;
-  resize: none;
-  overflow-y: scroll;
 
-  color: var(--color-text-primary, #393939);
+  resize: none;
+  overflow-y: auto;
+
   font-family: NanumSquareRound;
   font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
   line-height: 24px;
 
-  &::placeholder {
-    color: #bbb;
-  }
-
   &:focus {
-    outline: none;
-    border-color: var(--color-bg-primary, #FFD342);
+    border-color: #ffd342;
   }
 
   scrollbar-width: none;
-  -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
 const BottomArea = styled.div`
-  padding: 16px 24px calc(env(safe-area-inset-bottom, 0) + 24px);
+  padding: 16px 24px calc(env(safe-area-inset-bottom) + 24px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
+`;
+
+const RewriteRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+`;
+
+const RewriteText = styled.p`
+  font-family: NanumSquareRound;
+  font-size: 14px;
+  color: #bbb;
+`;
+
+const RewriteIcon = styled.img`
+  width: 12px;
+  height: 12px;
 `;
 
 const NextButton = styled.button`
@@ -200,15 +230,77 @@ const NextButton = styled.button`
   height: 56px;
   border-radius: 999px;
   border: none;
-  background: var(--color-bg-primary, #FFD342);
-  color: var(--color-text-interactive-inverse, #FFF);
+  background: #ffd342;
   font-family: NanumSquareRound;
   font-size: 16px;
   font-weight: 800;
+  color: #fff;
   cursor: pointer;
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: default;
-  }
 `;
+
+const Dim = styled.div`
+  position: absolute;
+  inset: 0;
+  width: 390px;
+  height: 852px;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+`;
+
+const Modal = styled.div`
+  width: 320px;
+  height: 196px;
+  padding: 24px 24px 16px;
+  background: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: center;
+`;
+
+const ModalTitle = styled.h3`
+  color: #393939;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+`;
+
+const ModalDesc = styled.p`
+  color: #7a7a7a;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 22px;
+`;
+
+const ModalBtnRow = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+
+const ModalBtnGray = styled.button`
+  width: 130px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border-radius: 99px;
+  border: none;
+  color: #7a7a7a;
+  font-size: 14px;
+  font-weight: 800;
+`;
+
+const ModalBtnYellow = styled.button`
+  width: 130px;
+  height: 40px;
+  background: #ffd342;
+  border-radius: 99px;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+`;
+

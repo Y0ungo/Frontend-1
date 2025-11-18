@@ -64,12 +64,12 @@ const Endwritestep02 = () => {
             </ModalDesc>
 
             <BtnRow>
-              <CancelBtn onClick={() => navigate("/rewrite_end/")}>
+              <ModalBtnGray onClick={() => navigate("/rewrite_end/")}>
                 나가기
-              </CancelBtn>
-              <DeleteBtn onClick={() => setOpen(false)}>
+              </ModalBtnGray>
+              <ModalBtnYellow onClick={() => setOpen(false)}>
                 계속 대화하기
-              </DeleteBtn>
+              </ModalBtnYellow>
             </BtnRow>
           </Modal>
         </Dim>
@@ -194,22 +194,33 @@ const IconButton = styled.button`
 
 
 const Dim = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  position: absolute;    /* fixed → absolute */
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 852px;
+  background-color: rgba(0,0,0,0.4);  /* 투명도 동일하게 */
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 9990;
+  align-items: center;
+  z-index: 999;
 `;
+
 
 const Modal = styled.div`
   width: 320px;
-  border-radius: 16px;
+  height: 196px;
+  padding: 24px 24px 16px 24px;
   background: #fff;
-  padding: 20px 20px 16px;
-  text-align: center;
+  border-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  justify-content: center;
+  align-items: center;
 `;
+
 
 const ModalTitle = styled.h3`
   color: #3a372f;
@@ -227,28 +238,31 @@ const ModalDesc = styled.p`
 
 const BtnRow = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 12px;
 `;
 
-const CancelBtn = styled.button`
-  flex: 1;
-  height: 48px;
-  background: #f1f1f1;
-  border-radius: 24px;
+
+const ModalBtnGray = styled.button`
+  width: 130px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border-radius: 99px;
   border: none;
   color: #7a7a7a;
-  font-family: NanumSquareRound;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
 `;
 
-const DeleteBtn = styled.button`
-  flex: 1;
-  height: 48px;
-  background: #ffd342;
-  border-radius: 24px;
+const ModalBtnYellow = styled.button`
+  width: 130px;
+  height: 40px;
+  background-color: #ffd342;
+  border-radius: 99px;
   border: none;
   color: #fff;
-  font-weight: 700;
-  font-family: NanumSquareRound;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
 `;
+

@@ -90,12 +90,12 @@ const OnboardingStep01 = () => {
             </ModalDesc>
 
             <BtnRow>
-              <CancelBtn onClick={() => { setOpen(false); navigate('/onboarding/step_04'); }}>
+              <ModalBtnGray onClick={() => { setOpen(false); navigate('/onboarding/step_04'); }}>
                 건너뛰기
-              </CancelBtn>
-              <DeleteBtn onClick={() => setOpen(false)}>
+              </ModalBtnGray>
+              <ModalBtnYellow onClick={() => setOpen(false)}>
                 이어서 설정
-              </DeleteBtn>
+              </ModalBtnYellow>
             </BtnRow>
           </Modal>
         </Dim>
@@ -268,29 +268,33 @@ const BtnText = styled.span`
 
 //모달 스타일
 const Dim = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  position: absolute;    /* fixed → absolute */
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 852px;
+  background-color: rgba(0,0,0,0.4);  /* 투명도 동일하게 */
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 24px;
-  z-index: 9999;
+  align-items: center;
+  z-index: 999;
 `;
 
+
 const Modal = styled.div`
-  display: flex;
   width: 320px;
-  max-width: var(--Large-Sizes-sm, 384px);
+  height: 196px;
+  padding: 24px 24px 16px 24px;
+  background: #fff;
+  border-radius: 16px;
+
+  display: flex;
   flex-direction: column;
+  gap: 22px;
+  justify-content: center;
   align-items: center;
-  border-radius: var(--border-radius-2xl, 16px);
-  background: var(--bg-panel, #fff);
-  box-shadow: 0 0 1px 0 rgba(24, 24, 27, 0.3),
-              0 8px 16px 0 rgba(24, 24, 27, 0.1);
-  padding: 20px;
-  text-align: center;
 `;
+
 
 const ModalTitle = styled.h3`
   margin: 6px 0 8px;
@@ -319,30 +323,30 @@ const BtnRow = styled.div`
   margin-top: 8px;
   margin-bottom: 4px;
   display: flex;
-  gap: 8px;
+  gap: 12px;
 `;
 
-const CancelBtn = styled.button`
-  width: 132px;
-  height: 48px;
+const ModalBtnGray = styled.button`
+  width: 130px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border-radius: 99px;
   border: none;
-  border-radius: 24px;
-  background: #f1f1f1;
   color: #7a7a7a;
-  font-family: NanumSquareRound;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
 `;
 
-const DeleteBtn = styled.button`
-  width: 132px;
-  height: 48px;
+const ModalBtnYellow = styled.button`
+  width: 130px;
+  height: 40px;
+  background-color: #ffd342;
+  border-radius: 99px;
   border: none;
-  border-radius: 24px;
-  background: #ffd342;
   color: #fff;
-  font-family: NanumSquareRound;
-  font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
 `;
+

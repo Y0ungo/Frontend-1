@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header.jsx";
 import Button from "../../components/Button.jsx";
 
-const ADD_ICON = "/img/ai_story/add.svg";
+const ICON_RIGHT_HEADER = "/icons/new_right_part.svg";
 const LIGHTNING_ICON = "/img/ai_story/flash.svg";
+const ADD_ICON = "/img/ai_story/add.svg";
 
 const RECOMMENDED_VALUES = ["끈기", "배려", "인내"];
 const ALL_VALUES = [
@@ -16,13 +17,16 @@ const ALL_VALUES = [
 
 const Storystep05 = () => {
   const navigate = useNavigate();
+
   const [selected, setSelected] = useState([]);
   const [recommended, setRecommended] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [customInput, setCustomInput] = useState("");
   const [customList, setCustomList] = useState([]);
   const [focused, setFocused] = useState(false);
 
+  const [showQuitModal, setShowQuitModal] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,7 +43,6 @@ const Storystep05 = () => {
       setSelected([...selected, value]);
     }
   };
-
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && customInput.trim() !== "") {
@@ -62,11 +65,14 @@ const Storystep05 = () => {
         title="동화 만들기"
         showBack={true}
         onBack={() => navigate(-1)}
-        action={false}
+        action={{
+          icon: ICON_RIGHT_HEADER,
+          handler: () => setShowQuitModal(true),
+        }}
       />
 
       <ProgressBarContainer>
-        <ProgressBar $progress={80} />
+        <ProgressBar $progress={60} />
       </ProgressBarContainer>
 
       <Content>
@@ -80,7 +86,7 @@ const Storystep05 = () => {
         <AIBoxWrapper>
           <AIBox>
             <AIHeader>
-              <LightningIcon src={LIGHTNING_ICON} alt="AI 추천" />
+              <LightningIcon src={LIGHTNING_ICON} />
               <AILabel>AI 추천 교훈</AILabel>
             </AIHeader>
 
@@ -111,7 +117,6 @@ const Storystep05 = () => {
           </AIBox>
         </AIBoxWrapper>
 
-
         <TagList>
           {ALL_VALUES.map((v) => (
             <DefaultTag
@@ -124,7 +129,7 @@ const Storystep05 = () => {
           ))}
         </TagList>
 
-        {/* === 직접 입력 === */}
+        {/* 직접 입력 */}
         <CustomBox>
           <Label>찾으시는 교훈이 없으신가요?</Label>
 
@@ -136,14 +141,9 @@ const Storystep05 = () => {
               </CustomChip>
             ))}
 
-            <InputWrapper
-              $focused={focused}
-              $filled={!!customInput}
-              onClick={() => setFocused(true)}
-            >
-              <AddIcon src={ADD_ICON} alt="직접 입력하기" />
+            <InputWrapper>
+              <AddIconImg src={ADD_ICON} />
               <CustomInput
-                type="text"
                 placeholder="직접 입력하기"
                 value={customInput}
                 onChange={(e) => setCustomInput(e.target.value)}
@@ -167,6 +167,29 @@ const Storystep05 = () => {
           </Button>
         </ButtonWrapper>
       </BottomArea>
+
+      {/* 종료 모달 */}
+      {showQuitModal && (
+        <Dim onClick={() => setShowQuitModal(false)}>
+          <Modal onClick={(e) => e.stopPropagation()}>
+            <ModalTitle>앗! 그만두시겠어요?</ModalTitle>
+            <ModalDesc>
+              아직 동화를 완성하지 못했어요.
+              <br />
+              나가면 지금까지의 기록을 되돌릴 수 없어요.
+            </ModalDesc>
+
+            <ModalBtnRow>
+              <ModalBtnGray onClick={() => navigate("/home")}>
+                그만두기
+              </ModalBtnGray>
+              <ModalBtnYellow onClick={() => setShowQuitModal(false)}>
+                계속 제작하기
+              </ModalBtnYellow>
+            </ModalBtnRow>
+          </Modal>
+        </Dim>
+      )}
     </Screen>
   );
 };
@@ -174,33 +197,28 @@ const Storystep05 = () => {
 export default Storystep05;
 
 
-//스타일 컴포넌트
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
   background: #fff;
-  overflow-x: hidden;
 `;
-
 
 const ProgressBarContainer = styled.div`
   width: 100%;
   height: 4px;
   background: #f1f1f1;
 `;
+
 const ProgressBar = styled.div`
-  width: 85%;
+  width: ${({ $progress }) => $progress}%;
   height: 100%;
   background: #ffd342;
-  border-radius: 4px;
-  transition: width 0.4s ease;
 `;
 
 const Content = styled.div`
   flex: 1;
   padding: 24px;
-  overflow-y: auto;
 `;
 
 const TitleBox = styled.div`
@@ -212,41 +230,29 @@ const Title = styled.div`
   font-weight: 800;
   font-family: NanumSquareRound;
   color: #3a372f;
-  display: flex;
-  align-items: center;
-  gap: 4px;
 `;
 
 const Star = styled.span`
   color: #ff8041;
-  font-family: NanumSquareRound;
-  font-size: 16px;
-  font-weight: 800;
 `;
 
 const Subtitle = styled.div`
   font-size: 14px;
   color: #8d8d8d;
-  margin-top: 4px;
 `;
-
 
 const AIBoxWrapper = styled.div`
   margin-bottom: 24px;
 `;
 
 const AIBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
   padding: 16px;
   width: calc(100% + 48px);
   margin-left: -24px;
+
   border-radius: 8px;
   border: 1px solid #fcf9e6;
   background: linear-gradient(274deg, #fcf9e6 -8.83%, #f2fbe0 100%);
-  box-sizing: border-box;
 `;
 
 const AIHeader = styled.div`
@@ -261,11 +267,8 @@ const LightningIcon = styled.img`
 `;
 
 const AILabel = styled.div`
-  color: var(--color-green-500, #c1e776);
-  font-family: NanumSquareRound;
-  font-size: 14px;
+  color: #c1e776;
   font-weight: 800;
-  line-height: 22px;
 `;
 
 const blink = keyframes`
@@ -282,14 +285,11 @@ const LoadingText = styled.div`
   display: flex;
   align-items: center;
   color: #bab6b2;
-  font-family: NanumSquareRound;
-  font-size: 14px;
   font-weight: 700;
 `;
 
-const Dots = styled.span`
+const Dots = styled.div`
   display: flex;
-  align-items: center;
   margin-left: 6px;
 `;
 
@@ -297,10 +297,10 @@ const Dot = styled.span`
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: ${(props) => props.color || "#C1E776"};
+  background: ${(p) => p.color};
   margin-left: 4px;
   animation: ${blink} 1.2s infinite;
-  animation-delay: ${(props) => props.delay || "0s"};
+  animation-delay: ${(p) => p.delay};
 `;
 
 const AITagList = styled.div`
@@ -311,30 +311,23 @@ const AITagList = styled.div`
 `;
 
 const AITag = styled.button`
-  display: flex;
   height: 36px;
   padding: 0 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
   border-radius: 999px;
-  font-family: NanumSquareRound;
-  font-size: 14px;
   font-weight: 800;
-  line-height: 22px;
   cursor: pointer;
-  transition: all 0.2s ease;
 
   ${({ $active }) =>
     $active
       ? css`
-          background: var(--color-green-500, #c1e776);
-          color: var(--color-text-interactive-inverse, #fff);
+          background: #c1e776;
+          color: white;
+          border: none !important;
         `
       : css`
-          border: 1px solid var(--color-green-300, #d6f29c);
-          background: var(--color-green-100, #f9fdf0);
-          color: var(--color-green-500, #c1e776);
+          border: 1px solid #d6f29c;
+          background: #f9fdf0;
+          color: #c1e776;
         `}
 `;
 
@@ -342,33 +335,26 @@ const TagList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 8px;
 `;
 
 const DefaultTag = styled.button`
-  display: flex;
   height: 36px;
   padding: 0 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
   border-radius: 999px;
-  font-family: NanumSquareRound;
-  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  border: none;
-  transition: all 0.2s ease;
 
   ${({ $active }) =>
     $active
       ? css`
-          background: var(--color-bg-inverse-bold, #342e29);
-          color: #fff;
+          background: #342e29;
+          color: white;
+          border: none !important;
         `
       : css`
-          background: var(--color-Grey-100, #f1f1f1);
+          background: #f1f1f1;
           color: #bbbbbb;
+          border: none !important; 
         `}
 `;
 
@@ -377,9 +363,6 @@ const CustomBox = styled.div`
 `;
 
 const Label = styled.div`
-  color: #393939;
-  font-family: NanumSquareRound;
-  font-size: 14px;
   font-weight: 800;
   margin-bottom: 8px;
 `;
@@ -391,42 +374,35 @@ const ChipContainer = styled.div`
 `;
 
 const CustomChip = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: #342e29;
-  color: #fff;
-  border-radius: 999px;
+  color: white;
   padding: 0 12px;
   height: 36px;
-  font-size: 14px;
-  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
 `;
 
 const DeleteBtn = styled.button`
-  border: none;
   background: none;
-  color: #fff;
-  font-size: 14px;
+  border: none;
+  color: white;
   margin-left: 6px;
   cursor: pointer;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
-  width: 138px;
+  align-items: center;
   height: 36px;
   padding: 0 16px;
-  align-items: center;
-  gap: 4px;
+
+  border: 1px solid #f1f1f1;
   border-radius: 999px;
-  border: 1px solid var(--color-Grey-100, #f1f1f1);
-  background: transparent;
-  transition: all 0.2s ease;
-  cursor: text;
 `;
 
-const AddIcon = styled.img`
+const AddIconImg = styled.img`
   width: 14px;
   height: 14px;
   margin-right: 6px;
@@ -435,27 +411,86 @@ const AddIcon = styled.img`
 const CustomInput = styled.input`
   border: none;
   background: transparent;
-  font-size: 14px;
-  color: #3a372f;
   width: 90px;
-  font-family: NanumSquareRound;
+
   &:focus {
     outline: none;
-  }
-  &::placeholder {
-    color: #bdbdbd;
   }
 `;
 
 const BottomArea = styled.div`
-  padding: 0 24px calc(env(safe-area-inset-bottom, 0) + 20px);
+  padding: 0 24px calc(env(safe-area-inset-bottom) + 16px);
   display: flex;
   justify-content: center;
 `;
 
 const ButtonWrapper = styled.div`
-  transform: translateX(4px);
   width: 100%;
+`;
+
+
+const Dim = styled.div`
+  position: absolute;
+  inset: 0;
+  width: 390px;
+  height: 852px;
+  background: rgba(0, 0, 0, 0.4);
+
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+`;
+
+const Modal = styled.div`
+  width: 320px;
+  height: 196px;
+
+  padding: 24px 24px 16px;
+  background: #fff;
+  border-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: center;
+`;
+
+const ModalTitle = styled.div`
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+`;
+
+const ModalDesc = styled.div`
+  font-size: 14px;
+  color: #7a7a7a;
+  text-align: center;
+  line-height: 22px;
+`;
+
+const ModalBtnRow = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+
+const ModalBtnGray = styled.button`
+  width: 130px;
+  height: 40px;
+  border-radius: 99px;
+  background: #f1f1f1;
+  color: #7a7a7a;
+  border: none;
+  font-weight: 800;
+`;
+
+const ModalBtnYellow = styled.button`
+  width: 130px;
+  height: 40px;
+  background: #ffd342;
+  color: white;
+  border-radius: 99px;
+  border: none;
+  font-weight: 800;
 `;

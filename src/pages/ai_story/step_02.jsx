@@ -3,113 +3,126 @@ import styled from "styled-components";
 import Header from "../../components/Header.jsx";
 import { useNavigate } from "react-router-dom";
 
-const ICON_RECORDING = "/img/onboarding/recording.svg";
-const ICON_RECORD11 = "/img/onboarding/Record11.svg";
+const ICON_RIGHT_HEADER = "/icons/new_right_part.svg";
+const ICON_TEXT_RIGHT = "/img/ai_story/right.svg";
+const ICON_RECORD = "/img/ai_story/Record.svg";
 const ICON_PAUSE = "/img/onboarding/record_pause.svg";
-const ICON_RESTART = "/img/onboarding/restart.svg";
-const ICON_DONE = "/img/onboarding/done.svg";
+const ICON_AGAIN = "/img/ai_story/again.svg";
+const ICON_CLEAR = "/img/ai_story/clear.svg";
+const ICON_DONE = "/img/ai_story/done.svg";
 
 const Storystep02 = () => {
   const navigate = useNavigate();
 
-  //녹음 상태 관리
   const [status, setStatus] = useState("idle");
+  const [showQuitModal, setShowQuitModal] = useState(false);
 
   const handleMicClick = () => {
     if (status === "idle") setStatus("recording");
-    else if (status === "recording") setStatus("paused");
-    else setStatus("idle");
+    else if (status === "recording") setStatus("select");
   };
 
-  const statusIcon =
-    status === "idle"
-      ? ICON_RECORDING
-      : status === "recording"
-      ? ICON_RECORD11
-      : ICON_PAUSE;
+  const statusIcon = status === "idle" ? ICON_RECORD : ICON_PAUSE;
 
-  //하단 상태 루프
   const renderArcTexts = () => {
-    if (status === "recording") {
+    if (status === "select")
+      return <ArcText>에피소드 음성 입력이 완료되었어요.</ArcText>;
+    if (status === "recording")
       return <ArcText>버튼을 눌러 말하기를 멈출 수 있어요.</ArcText>;
-    }
-    if (status === "paused") {
-      return <ArcText>버튼을 눌러 말하기를 멈출 수 있어요.</ArcText>;
-    }
-    return (
-      <>
-        <ArcText>조용한 곳에서 또박또박 말씀해주세요.</ArcText>
-      </>
-    );
+    return <ArcText>조용한 곳에서 또박또박 말씀해주세요.</ArcText>;
   };
+
+  const handleAgain = () => setStatus("idle");
+  const handleDone = () => navigate("/mystory/ai_story/step04");
 
   return (
     <Screen>
-      {/* 공통 헤더 */}
-      <Header title="동화 만들기" showBack={true} onBack={() => navigate(-1)} />
+      <Header
+        title="동화 만들기"
+        showBack={true}
+        onBack={() => navigate(-1)}
+        action={{
+          icon: ICON_RIGHT_HEADER,
+          handler: () => setShowQuitModal(true),
+        }}
+      />
 
-      {/* 프로그레스 바 */}
       <ProgressWrapper>
-        <ProgressBar $progress={40} />
+        <ProgressBar $progress={20} />
       </ProgressWrapper>
 
-      {/* 메인 콘텐츠 */}
       <Content>
         <MainText>
           아이에게 들려주고 싶은 이야기를
           <br />
           자유롭게 말씀해주세요.
         </MainText>
-        <SubText onClick={() => navigate("/mystory/ai_story/step03")}>
-          텍스트로 입력하기 &gt;
-        </SubText>
+
+        <SubTextRow onClick={() => navigate("/mystory/ai_story/step03")}>
+          <SubText>텍스트로 입력하기</SubText>
+          <RightArrow src={ICON_TEXT_RIGHT} />
+        </SubTextRow>
       </Content>
 
-      {/* 하단 반원 + 녹음 상태 */}
+      {/* 반원 영역 */}
       <ArcArea>
         <Arc />
+
         <ArcTexts>{renderArcTexts()}</ArcTexts>
 
-        {/* 상태별 컨트롤 */}
-        {status !== "paused" ? (
-          <MicButton type="button" onClick={handleMicClick}>
-            <img src={statusIcon} alt="녹음 버튼" width="64" height="64" />
+        {(status === "idle" || status === "recording") && (
+          <MicButton onClick={handleMicClick}>
+            <img src={statusIcon} alt="mic" width="64" height="64" />
           </MicButton>
-        ) : (
+        )}
+
+        {status === "select" && (
           <ControlRow>
-            <IconBtn
-              type="button"
-              aria-label="다시 녹음"
-              onClick={() => setStatus("recording")}
-            >
-              <img src={ICON_RESTART} alt="다시 녹음" width="64" height="64" />
-            </IconBtn>
+            <ControlBtn onClick={handleAgain}>
+              <img src={ICON_AGAIN} alt="again" width="64" height="64" />
+            </ControlBtn>
 
-            <IconBtn
-              type="button"
-              aria-label="일시정지"
-              onClick={handleMicClick}
-            >
-              <img src={ICON_PAUSE} alt="일시정지" width="64" height="64" />
-            </IconBtn>
+            <ControlBtnDisabled>
+              <div className="bg" />
+              <img src={ICON_CLEAR} alt="clear" width="64" height="64" />
+            </ControlBtnDisabled>
 
-            <IconBtn
-              type="button"
-              aria-label="완료"
-              onClick={() => navigate("/mystory/ai_story/step04")}
-            >
-              <img src={ICON_DONE} alt="완료" width="64" height="64" />
-            </IconBtn>
+            <ControlBtn onClick={handleDone}>
+              <img src={ICON_DONE} alt="done" width="64" height="64" />
+            </ControlBtn>
           </ControlRow>
         )}
       </ArcArea>
+
+      {showQuitModal && (
+        <Dim onClick={() => setShowQuitModal(false)}>
+          <Modal onClick={(e) => e.stopPropagation()}>
+            <ModalTitle>앗! 그만두시겠어요?</ModalTitle>
+            <ModalDesc>
+              아직 동화를 완성하지 못했어요.
+              <br />
+              나가면 지금까지의 기록을 되돌릴 수 없어요.
+            </ModalDesc>
+
+            <ModalBtnRow>
+              <ModalBtnGray onClick={() => navigate("/home")}>
+                그만두기
+              </ModalBtnGray>
+
+              <ModalBtnYellow onClick={() => setShowQuitModal(false)}>
+                계속 제작하기
+              </ModalBtnYellow>
+            </ModalBtnRow>
+          </Modal>
+        </Dim>
+      )}
     </Screen>
   );
 };
 
 export default Storystep02;
 
-//스타일 컴포넌트
+
 const Screen = styled.div`
   display: flex;
   flex-direction: column;
@@ -118,7 +131,6 @@ const Screen = styled.div`
   overflow: hidden;
 `;
 
-//프로그레스
 const ProgressWrapper = styled.div`
   width: 100%;
   height: 4px;
@@ -126,12 +138,11 @@ const ProgressWrapper = styled.div`
 `;
 
 const ProgressBar = styled.div`
-  width: ${({ $progress }) => $progress || 0}%;
+  width: ${({ $progress }) => $progress}%;
   height: 100%;
-  background: var(--color-bg-primary, #ffd342);
+  background: #ffd342;
   transition: width 0.3s ease;
 `;
-
 
 const Content = styled.div`
   flex: 1;
@@ -140,29 +151,33 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  text-align: center;
 `;
 
 const MainText = styled.p`
-  color: var(--color-text-interactive-secondary, #342e29);
+  color: #342e29;
   text-align: center;
-  font-family: NanumSquareRound;
   font-size: 20px;
   font-weight: 700;
   line-height: 28px;
 `;
 
-const SubText = styled.p`
-  color: var(--color-icon-tertiary, #bbb);
-  text-align: center;
-  font-family: NanumSquareRound;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 22px;
+const SubTextRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
   cursor: pointer;
 `;
 
-//하단
+const SubText = styled.p`
+  color: #bbb;
+  font-size: 14px;
+`;
+
+const RightArrow = styled.img`
+  width: 14px;
+  height: 14px;
+`;
+
 const ArcArea = styled.div`
   position: relative;
   width: 390px;
@@ -185,17 +200,13 @@ const ArcTexts = styled.div`
   bottom: 176px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 320px;
+  width: 320px;
   text-align: center;
 `;
 
 const ArcText = styled.div`
-  color: var(--color-text-interactive-secondary-hovered, #736a64);
-  text-align: center;
-  font-family: "NanumSquareRound";
+  color: #736a64;
   font-size: 14px;
-  font-weight: 400;
   line-height: 22px;
 `;
 
@@ -204,16 +215,11 @@ const MicButton = styled.button`
   bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
-  width: 64px;
-  height: 64px;
-  padding: 0;
   border: none;
   background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
 `;
+
 
 const ControlRow = styled.div`
   position: absolute;
@@ -221,16 +227,105 @@ const ControlRow = styled.div`
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 60px;
+  gap: 40px;
 `;
 
-const IconBtn = styled.button`
+const SmallMicBtn = styled(MicButton)`
+  position: static;
+  transform: none;
+  bottom: auto;
+  left: auto;
+`;
+
+const ControlBtn = styled(SmallMicBtn)`
+  cursor: pointer;
+`;
+
+const ControlBtnDisabled = styled(SmallMicBtn)`
+  position: relative;
   width: 64px;
   height: 64px;
-  padding: 0;
+  pointer-events: none;
+  cursor: default;
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background: #c5e384
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  img {
+    position: relative;
+    z-index: 2;
+  }
+`;
+
+
+const Dim = styled.div`
+  position: absolute;
+  inset: 0;
+  width: 390px;
+  height: 852px;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+`;
+
+const Modal = styled.div`
+  width: 320px;
+  height: 196px;
+  padding: 24px 24px 16px;
+  background: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalTitle = styled.h3`
+  color: #393939;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+`;
+
+const ModalDesc = styled.p`
+  color: #7a7a7a;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 22px;
+`;
+
+const ModalBtnRow = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+
+const ModalBtnGray = styled.button`
+  width: 130px;
+  height: 40px;
+  background-color: #f1f1f1;
+  border-radius: 99px;
   border: none;
-  background: transparent;
-  cursor: pointer;
+  color: #7a7a7a;
+  font-size: 14px;
+  font-weight: 800;
+`;
+
+const ModalBtnYellow = styled.button`
+  width: 130px;
+  height: 40px;
+  background-color: #ffd342;
+  border-radius: 99px;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
 `;
